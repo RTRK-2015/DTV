@@ -22,5 +22,8 @@ struct config_init_ch_info
 };
 
 
+/// \brief Reads the initial settings from the specified file
+struct config_init_ch_info config_get_init_ch_info(FILE *f);
+
 
 #endif
