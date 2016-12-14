@@ -1,4 +1,4 @@
-// Matching include
+/*// Matching include
 #include "mapping.h"
 // C includes
 #include <errno.h>
@@ -87,3 +87,5 @@ void start_event_loop(const char *dev, struct key_mapping km)
         FAIL_STD("%s\n", nameof(pthread_create));
 
     pthread_cond_wait(&args_cond, &args_mutex);
+}
+*/
