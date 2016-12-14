@@ -52,10 +52,13 @@ struct
 static int32_t status_callback(t_LockStatus status)
 {
 	static size_t tries = 0;
+	const static size_t max_tries = 2;
+
+	printf("Locking: %zu. try (of %zu)\n", tries + 1, max_tries) + 1;
 
     if (status == STATUS_LOCKED)
         pthread_cond_signal(&status_cond);
-    else if (tries++ == 2)
+    else if (tries++ == max_tries)
         FAIL("%s\n", nameof(status_callback));
 }
 
@@ -65,6 +68,7 @@ static int32_t pat_callback(uint8_t *buffer)
 {
     if (buffer[0] == 0x00)
     {
+    	printf("Parsing pat...\n");
         my_pat = parse_pat(buffer);
         Demux_Free_Filter(player_handle, filter_handle);
     }
@@ -76,14 +80,17 @@ static int32_t pat_callback(uint8_t *buffer)
 void dtv_init(struct dtv_init_ch_info init_info)
 {
     // Tuner
+    printf("Initializing tuner...\n");
     if (Tuner_Init() == ERROR)
         FAIL("%s\n", nameof(Tuner_Init));
     exit_flags.tuner = 1;
 
+	printf("Registering locking callback...\n");
     if (Tuner_Register_Status_Callback(status_callback) == ERROR)
         FAIL("%s\n", nameof(Tuner_Register_Status_Callback));
     exit_flags.tuner_callback = 1;
 
+	printf("Locking to frequency...\n");
     if (Tuner_Lock_To_Frequency
     	( init_info.freq
     	, init_info.bandwidth
@@ -98,19 +105,23 @@ void dtv_init(struct dtv_init_ch_info init_info)
     if (pthread_cond_timedwait(&status_cond, &status_mutex, &ts_status) < 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 
+	printf("Initializing player...\n");
     // Player
     if (Player_Init(&player_handle) == ERROR)
         FAIL("%s\n", nameof(Player_Init));
     exit_flags.player = 1;
 
+	printf("Open source...\n");
     if (Player_Source_Open(player_handle, &source_handle) == ERROR)
         FAIL("%s\n", nameof(Player_Source_Open));
     exit_flags.source = 1;
 
+	printf("Setting PAT filter...\n");
     // Demux
     if (Demux_Set_Filter(player_handle, 0x0000, 0x00, &filter_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_Filter));
 
+	printf("Registering PAT callback...\n");
     if (Demux_Register_Section_Filter_Callback(pat_callback) == ERROR)
         FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
     exit_flags.demux_callback = 1;
@@ -121,6 +132,24 @@ void dtv_init(struct dtv_init_ch_info init_info)
     
     if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) < 0)
     	FAIL("%s\n", nameof(pthread_cond_timedwait));
+}
+
+
+static uint16_t *channels = NULL;
+const uint16_t* dtv_get_channels()
+{
+	if (channels == NULL)
+	{
+		channels = (uint16_t *)malloc((my_pat.pmt_len + 1) * sizeof(uint16_t));
+		if (channels == NULL)
+			FAIL_STD("%s\n", nameof(malloc));
+
+		for (size_t i = 0; i < my_pat.pmt_len; ++i)
+			channels[i] = my_pat.pmts[i].ch_num;
+		channels[my_pat.pmt_len] = END_OF_CHANNELS;
+	}
+	
+	return channels;
 }
 
 
