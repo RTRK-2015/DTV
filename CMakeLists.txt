@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 PROJECT(Projekat)
 
 LINK_DIRECTORIES(
-	"./../../tdp_api"
+	"/home/student/pputvios1/vezbe/TDP_API/tdp_api/"
 	"$ENV{SDK_ROOTFS}/home/galois/lib/")
 	
 	
@@ -10,7 +10,7 @@ FILE(GLOB_RECURSE Projekat_SRC_FILES "${PROJECT_SOURCE_DIR}/src/*.c")
 
 ADD_EXECUTABLE("${PROJECT_NAME}" "${Projekat_SRC_FILES}")
 TARGET_INCLUDE_DIRECTORIES("${PROJECT_NAME}" PUBLIC
-		"./../../tdp_api"
+		"/home/student/pputvios1/vezbe/TDP_API/tdp_api/"
 		"$ENV{SDK_ROOTFS}/usr/include/"
 		"$ENV{SDK_GALOIS}/Common/include/"
 		"$ENV{SDK_GALOIS}/OSAL/include/"
