@@ -6,24 +6,11 @@
 
 
 #include "tdp_api.h"
-
-
-/// \brief A structure that holds the initial dtv settings.
-struct dtv_init_ch_info
-{
-	uint32_t freq;
-	uint32_t bandwidth;
-	t_Module module; ///< Whether the channel uses DTB-T or DTB-T2.
-	uint16_t vpid; ///< pid of the initial video stream.
-	uint16_t apid; ///< pid of the initial audio stream.
-	t_StreamType vtype; ///< type of the inital video stream.
-	t_StreamType atype; ///< type of the initial audio stream.
-	uint32_t ch_num; ///< Channel number.
-};
+#include "config.h"
 
 
 /// \brief Function that initializes internal DTV state.
-void dtv_init(struct dtv_init_ch_info init_info);
+void dtv_init(struct config_init_ch_info init_info);
 /// \brief Returns a pointer to the array of program (channel) numbers.
 const uint16_t* dtv_get_channels();
 /// \brief Tries to switch to the desired channel.
