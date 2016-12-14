@@ -5,8 +5,13 @@
 #define DTV_H
 
 
+#include <stdint.h>
+#include <inttypes.h>
 #include "tdp_api.h"
 #include "config.h"
+
+
+#define END_OF_CHANNELS UINT16_C(0xFFFF);
 
 
 /// \brief Function that initializes internal DTV state.
