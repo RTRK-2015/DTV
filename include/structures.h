@@ -46,7 +46,7 @@ struct pat_header
 
 struct pat_body
 {
-    uint16_t pr_num;
+    uint16_t ch_num;
 
     union
     {
@@ -66,7 +66,7 @@ struct pmt_header
 {
     struct table_header hdr;
 
-    uint16_t pr_num;
+    uint16_t ch_num;
 
     struct
     {

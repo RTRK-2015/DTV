@@ -26,7 +26,7 @@ struct pat parse_pat(const uint8_t *buffer)
     // been parsed, the array will probably have to be expanded at some point.
     // The starting guess is 5 PMT entries.
     size_t res = 5;
-    my_pat.pmts = (struct pmt *)malloc(res * sizeof(struct pmt));
+    my_pat.pmts = (struct pmt_basic *)malloc(res * sizeof(struct pmt_basic));
     if (my_pat.pmts == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
@@ -49,8 +49,10 @@ struct pat parse_pat(const uint8_t *buffer)
         if (my_pat.pmt_len >= res)
         {
             res *= 2;
-            my_pat.pmts =
-                (struct pmt *)realloc(my_pat.pmts, res * sizeof(struct pmt));
+            my_pat.pmts = (struct pmt_basic *)realloc
+            ( my_pat.pmts
+            , res * sizeof(struct pmt_basic)
+            );
 
             if (my_pat.pmts == NULL)
                 FAIL_STD("%s\n", nameof(realloc));
@@ -84,11 +86,11 @@ struct pmt parse_pmt(const uint8_t *buffer)
         video_res = 5,
         audio_res = 5,
         data_res  = 5;
-    my_pmt->video_pids = (uint16_t *)malloc(video_res * sizeof(uint16_t));
-    if (my_pmt->video_pids == NULL)
+    my_pmt.video_pids = (uint16_t *)malloc(video_res * sizeof(uint16_t));
+    if (my_pmt.video_pids == NULL)
         FAIL_STD("%s\n", nameof(malloc));
-    my_pmt->audio_pids = (uint16_t *)malloc(audio_res * sizeof(uint16_t));
-    if (my_pmt->audio_pids == NULL)
+    my_pmt.audio_pids = (uint16_t *)malloc(audio_res * sizeof(uint16_t));
+    if (my_pmt.audio_pids == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
 
@@ -110,26 +112,26 @@ struct pmt parse_pmt(const uint8_t *buffer)
         // If the number of stored elements has grown to be equal to the number
         // of reserved slots, the array will have to be reallocated. It is
         // expanded by a factor of 2, which holds no special meaning.
-        if (my_pmt->video_len >= video_res)
+        if (my_pmt.video_len >= video_res)
         {
             video_res *= 2;
-            my_pmt->video_pids = (uint16_t *)realloc
-            ( my_pmt->video_pids
+            my_pmt.video_pids = (uint16_t *)realloc
+            ( my_pmt.video_pids
             , video_res * sizeof(uint16_t)
             );
 
-            if (my_pmt->video_pids == NULL)
+            if (my_pmt.video_pids == NULL)
                 FAIL_STD("%s\n", nameof(realloc));
         }
-        if (my_pmt->audio_len >= audio_res)
+        if (my_pmt.audio_len >= audio_res)
         {
             audio_res *= 2;
-            my_pmt->audio_pids = (uint16_t *)realloc
-            ( my_pmt->audio_pids
+            my_pmt.audio_pids = (uint16_t *)realloc
+            ( my_pmt.audio_pids
             , audio_res * sizeof(uint16_t)
             );
 
-            if (my_pmt->audio_pids == NULL)
+            if (my_pmt.audio_pids == NULL)
                 FAIL_STD("%s\n", nameof(realloc));
         }
 
@@ -137,9 +139,9 @@ struct pmt parse_pmt(const uint8_t *buffer)
         // If the current body section contains a supported type of stream,
         // add it to the matching array.
         if (pmt_b.type == 0x02)
-            my_pmt->video_pids[my_pmt->video_len++] = pmt_b.b1u.b1s.pid;
+            my_pmt.video_pids[my_pmt.video_len++] = pmt_b.b1u.b1s.pid;
         else if (pmt_b.type == 0x03)
-            my_pmt->audio_pids[my_pmt->audio_len++] = pmt_b.b1u.b1s.pid;
+            my_pmt.audio_pids[my_pmt.audio_len++] = pmt_b.b1u.b1s.pid;
 
         // Finally, advance the current_ptr by the size of the body section
         // and the size of the descriptors section that belongs to every

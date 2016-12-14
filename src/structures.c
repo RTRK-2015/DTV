@@ -30,7 +30,7 @@ struct pat_body get_pat_body(const uint8_t *buffer)
     struct pat_body pat_b =
         *(const struct pat_body *)buffer;
 
-    pat_b.pr_num = ntohs(pat_b.pr_num);
+    pat_b.ch_num = ntohs(pat_b.ch_num);
     pat_b.b1u.bitfield1 = ntohs(pat_b.b1u.bitfield1);
 
     return pat_b;
@@ -44,7 +44,7 @@ struct pmt_header get_pmt_header(const uint8_t *buffer)
         *(const struct pmt_header *)buffer;
 
     fix_table_header(&pmt_h.hdr);
-    pmt_h.pr_num = ntohs(pmt_h.pr_num);
+    pmt_h.ch_num = ntohs(pmt_h.ch_num);
     pmt_h.b1u.bitfield1 = ntohs(pmt_h.b1u.bitfield1);
     pmt_h.b2u.bitfield2 = ntohs(pmt_h.b2u.bitfield2);
 

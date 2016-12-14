@@ -15,11 +15,11 @@ struct pat
     uint16_t tsi;
 
     size_t pmt_len;
-    struct
+    struct pmt_basic
     { 
     	uint16_t pid;
     	uint16_t ch_num;
-    } pmts;
+    } *pmts;
 };
 
 
