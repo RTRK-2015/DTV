@@ -1,7 +1,6 @@
 // Matching include
 #include "parsing.h"
 // C includes
-#include <errno.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -58,16 +57,10 @@ struct pat parse_pat(const uint8_t *buffer)
         }
 
         // Every pmt entry is "initialized" here. The most important part is
-        // the pr_num field, which will allow every PMT to find its place
+        // the ch_num field, which will allow every PMT to find its place
         // in the pmts array.
         my_pat.pmts[my_pat.pmt_len].pid = pat_b.b1u.b1s.pid;
-        my_pat.pmts[my_pat.pmt_len].pr_num = pat_b.pr_num;
-        my_pat.pmts[my_pat.pmt_len].video_len = 0;
-        my_pat.pmts[my_pat.pmt_len].video_pids = NULL;
-        my_pat.pmts[my_pat.pmt_len].audio_len = 0;
-        my_pat.pmts[my_pat.pmt_len].audio_pids = NULL;
-        my_pat.pmts[my_pat.pmt_len].data_len = 0;
-        my_pat.pmts[my_pat.pmt_len].data_pids = NULL;
+        my_pat.pmts[my_pat.pmt_len].ch_num = pat_b.ch_num;
 
         ++my_pat.pmt_len;
 
@@ -78,23 +71,11 @@ struct pat parse_pat(const uint8_t *buffer)
 }
 
 
-void parse_pmt(const uint8_t *buffer, struct pat *my_pat)
+struct pmt parse_pmt(const uint8_t *buffer)
 {	
     struct pmt_header pmt_h = get_pmt_header(buffer);
 
-    // Find the appropriate place for this PMT
-    size_t idx = 0;
-    struct pmt *my_pmt = my_pat->pmts;
-    while (idx < my_pat->pmt_len && pmt_h.pr_num != my_pmt->pr_num)
-    {
-        ++idx;
-        ++my_pmt;
-    }
-    if (idx == my_pat->pmt_len)
-        FAIL("Cannot find a place for PMT %d\n", pmt_h.pr_num);
-
-	if (my_pmt->video_pids != NULL || my_pmt->audio_pids != NULL || my_pmt->data_pids != NULL)
-		return;
+    struct pmt my_pmt;
 
     // The number of streams in a PMT is unknown, so the corresponding arrays
     // will have to be expanded at some point. The starting guess is 5 of each
@@ -108,9 +89,6 @@ void parse_pmt(const uint8_t *buffer, struct pat *my_pat)
         FAIL_STD("%s\n", nameof(malloc));
     my_pmt->audio_pids = (uint16_t *)malloc(audio_res * sizeof(uint16_t));
     if (my_pmt->audio_pids == NULL)
-        FAIL_STD("%s\n", nameof(malloc));
-    my_pmt->data_pids = (uint16_t *)malloc(data_res * sizeof(uint16_t));
-    if (my_pmt->data_pids == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
 
@@ -154,17 +132,6 @@ void parse_pmt(const uint8_t *buffer, struct pat *my_pat)
             if (my_pmt->audio_pids == NULL)
                 FAIL_STD("%s\n", nameof(realloc));
         }
-        if (my_pmt->data_len >= data_res)
-        {
-            data_res *= 2;
-            my_pmt->data_pids = (uint16_t *)realloc
-            ( my_pmt->data_pids
-            , data_res * sizeof(uint16_t)
-            );
-
-            if (my_pmt->data_pids == NULL)
-                FAIL_STD("%s\n", nameof(realloc));
-        }
 
 
         // If the current body section contains a supported type of stream,
@@ -173,8 +140,6 @@ void parse_pmt(const uint8_t *buffer, struct pat *my_pat)
             my_pmt->video_pids[my_pmt->video_len++] = pmt_b.b1u.b1s.pid;
         else if (pmt_b.type == 0x03)
             my_pmt->audio_pids[my_pmt->audio_len++] = pmt_b.b1u.b1s.pid;
-        else if (pmt_b.type == 0x06)
-            my_pmt->data_pids[my_pmt->data_len++] = pmt_b.b1u.b1s.pid;
 
         // Finally, advance the current_ptr by the size of the body section
         // and the size of the descriptors section that belongs to every
