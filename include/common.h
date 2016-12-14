@@ -3,9 +3,9 @@
 
 
 // C includes
-/*#include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
-#include <errno.h>*/
+#include <errno.h>
 
 
 #define nameof(x) #x
