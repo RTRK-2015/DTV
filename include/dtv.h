@@ -1,3 +1,6 @@
+/*! \file dtv.h
+    \brief Contains DTV API
+*/
 #ifndef DTV_H
 #define DTV_H
 
