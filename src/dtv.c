@@ -26,11 +26,11 @@ static pthread_mutex_t pat_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
 static uint32_t
-	player_handle,
-	source_handle,
-	filter_handle,
-	video_handle,
-	audio_handle;
+    player_handle,
+    source_handle,
+    filter_handle,
+    video_handle,
+    audio_handle;
 
 
 struct
@@ -44,17 +44,17 @@ struct
     uint32_t demux_callback : 1;
 
     uint32_t video : 1;
-	uint32_t audio : 1;
+    uint32_t audio : 1;
 } static exit_flags;
 
 
 
 static int32_t status_callback(t_LockStatus status)
 {
-	static size_t tries = 0;
-	const static size_t max_tries = 2;
+    static size_t tries = 0;
+    const static size_t max_tries = 2;
 
-	printf("Locking: %zu. try (of %zu)\n", tries + 1, max_tries) + 1;
+    printf("Locking: %zu. try (of %zu)\n", tries + 1, max_tries) + 1;
 
     if (status == STATUS_LOCKED)
         pthread_cond_signal(&status_cond);
@@ -68,7 +68,7 @@ static int32_t pat_callback(uint8_t *buffer)
 {
     if (buffer[0] == 0x00)
     {
-    	printf("Parsing pat...\n");
+        printf("Parsing pat...\n");
         my_pat = parse_pat(buffer);
         Demux_Free_Filter(player_handle, filter_handle);
     }
@@ -85,17 +85,17 @@ void dtv_init(struct dtv_init_ch_info init_info)
         FAIL("%s\n", nameof(Tuner_Init));
     exit_flags.tuner = 1;
 
-	printf("Registering locking callback...\n");
+    printf("Registering locking callback...\n");
     if (Tuner_Register_Status_Callback(status_callback) == ERROR)
         FAIL("%s\n", nameof(Tuner_Register_Status_Callback));
     exit_flags.tuner_callback = 1;
 
-	printf("Locking to frequency...\n");
+    printf("Locking to frequency...\n");
     if (Tuner_Lock_To_Frequency
-    	( init_info.freq
-    	, init_info.bandwidth
-    	, init_info.module
-    	) == ERROR)
+        ( init_info.freq
+        , init_info.bandwidth
+        , init_info.module
+        ) == ERROR)
         FAIL("%s\n", nameof(Tuner_Lock_To_Frequency));
 
     struct timespec ts_status;
@@ -105,23 +105,23 @@ void dtv_init(struct dtv_init_ch_info init_info)
     if (pthread_cond_timedwait(&status_cond, &status_mutex, &ts_status) < 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 
-	printf("Initializing player...\n");
+    printf("Initializing player...\n");
     // Player
     if (Player_Init(&player_handle) == ERROR)
         FAIL("%s\n", nameof(Player_Init));
     exit_flags.player = 1;
 
-	printf("Open source...\n");
+    printf("Open source...\n");
     if (Player_Source_Open(player_handle, &source_handle) == ERROR)
         FAIL("%s\n", nameof(Player_Source_Open));
     exit_flags.source = 1;
 
-	printf("Setting PAT filter...\n");
+    printf("Setting PAT filter...\n");
     // Demux
     if (Demux_Set_Filter(player_handle, 0x0000, 0x00, &filter_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_Filter));
 
-	printf("Registering PAT callback...\n");
+    printf("Registering PAT callback...\n");
     if (Demux_Register_Section_Filter_Callback(pat_callback) == ERROR)
         FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
     exit_flags.demux_callback = 1;
@@ -129,27 +129,27 @@ void dtv_init(struct dtv_init_ch_info init_info)
     struct timespec ts_pat;
     clock_gettime(CLOCK_REALTIME, &ts_pat);
     ts_pat.tv_sec += 5;
-    
+
     if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) < 0)
-    	FAIL("%s\n", nameof(pthread_cond_timedwait));
+        FAIL("%s\n", nameof(pthread_cond_timedwait));
 }
 
 
 static uint16_t *channels = NULL;
 const uint16_t* dtv_get_channels()
 {
-	if (channels == NULL)
-	{
-		channels = (uint16_t *)malloc((my_pat.pmt_len + 1) * sizeof(uint16_t));
-		if (channels == NULL)
-			FAIL_STD("%s\n", nameof(malloc));
+    if (channels == NULL)
+    {
+        channels = (uint16_t *)malloc((my_pat.pmt_len + 1) * sizeof(uint16_t));
+        if (channels == NULL)
+            FAIL_STD("%s\n", nameof(malloc));
 
-		for (size_t i = 0; i < my_pat.pmt_len; ++i)
-			channels[i] = my_pat.pmts[i].ch_num;
-		channels[my_pat.pmt_len] = END_OF_CHANNELS;
-	}
-	
-	return channels;
+        for (size_t i = 0; i < my_pat.pmt_len; ++i)
+            channels[i] = my_pat.pmts[i].ch_num;
+        channels[my_pat.pmt_len] = END_OF_CHANNELS;
+    }
+
+    return channels;
 }
 
 
