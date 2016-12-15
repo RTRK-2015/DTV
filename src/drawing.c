@@ -11,7 +11,7 @@ if (err != DFB_OK)                                           \
     }                                                        \
 }                                                           
 
-void draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
+int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 {
     DFBCHECK(DirectFBInit(argc, argv));
 
@@ -31,29 +31,29 @@ void draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 
 }
 
-void draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info)
+int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info)
 {
 }
 
-void draw_volume(struct draw_interface *draw_i, uint8_t vol)
+int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
 {
 }
 
-void draw_blackscreen(struct draw_interface *draw_i)
+int32_t draw_blackscreen(struct draw_interface *draw_i)
 {
 }
 
-void draw_clear(struct draw_interface *draw_i)
+int32_t draw_clear(struct draw_interface *draw_i)
 {
-    draw_i->surface->Clear(draw_i->surface, 0, 0, 0, 0);
+    DFBCHECK(draw_i->surface->Clear(draw_i->surface, 0, 0, 0, 0));
 }
 
-void draw_refresh(struct draw_interface *draw_i)
+int32_t draw_refresh(struct draw_interface *draw_i)
 {
-    draw_i->surface->Flip(draw_i->surface, NULL, 0);
+    DFBCHECK(draw_i->surface->Flip(draw_i->surface, NULL, 0));
 }
 
-void draw_deinit(struct draw_interface *draw_i)
+int32_t draw_deinit(struct draw_interface *draw_i)
 {
     draw_i->surface->Release(draw_i->surface);
     draw_i->dfb_interface->Release(draw_i->dfb_interface);
