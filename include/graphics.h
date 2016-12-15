@@ -25,7 +25,7 @@ t_Error graphics_show_channel_info(struct graphics_channel_info info);
 t_Error graphics_show_volume(uint8_t vol);
 
 /// \brief Renders graphic elements on screen
-void render();
+void graphics_render();
 
 #endif
 

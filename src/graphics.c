@@ -30,9 +30,22 @@ t_Error graphics_show_volume(uint8_t vol)
     to_draw_vol = vol;
 }
 
-void render()
+void handle_signal(int no)
+{
+    exit(0);
+}
+
+void release()
+{
+    draw_deinit(&draw_interface);
+}
+
+void graphics_render()
 {
     draw_init(&draw_interface);
+    atexit(release);
+    signal(SIGINT, handle_signal);
+
 
     while (true)
     {
