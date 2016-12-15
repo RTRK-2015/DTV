@@ -13,33 +13,37 @@ struct graphics_flags
 };
 
 struct graphics_flags gf = { .info = false, .volume = false };
-static IDirectFBSurface *primary = NULL;
-IDirectFB *dfb_interface = NULL;
-static int32_t screen_width = 0;
-static int32_t screen_geight = 0;
 
+struct draw_interface draw_interface;
 
+struct graphics_channel_info to_draw_info;
 t_Error graphics_show_channel_info(struct graphics_channel_info info)
 {
     gf.info = true;
+    to_draw_info = info;
 }
 
+uint8_t to_draw_vol;
 t_Error graphics_show_volume(uint8_t vol)
 {
     gf.volume = true;
+    to_draw_vol = vol;
 }
 
 void render()
 {
+    draw_init(&draw_interface);
 
     while (true)
     {
         if (gf.info)
         {
+            draw_channel_info(&draw_interface, to_draw_info);
         }
 
         if (gf.volume)
         {
+            draw_volume(&draw_interface, to_draw_vol);
         }
     }
 }
