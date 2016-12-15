@@ -26,7 +26,7 @@ t_Error graphics_show_volume(uint8_t vol);
 /// \brief Clears all graphics elements from screen
 void graphics_clear();
 /// \brief Renders graphic elements on screen
-void graphics_render();
+void graphics_render(int *argc, char ***argv);
 
 #endif
 

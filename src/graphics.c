@@ -12,9 +12,15 @@ struct graphics_flags
     bool volume;
 };
 
-struct graphics_flags gf = { .info = false, .volume = false };
+static struct graphics_flags gf = { .info = false, .volume = false };
 
-struct draw_interface draw_interface;
+struct draw_interface draw_interface =
+{
+    .surface = NULL,
+    .dfb_interface = NULL,
+    .screen_width = 0,
+    .screen_height = 0,
+};
 
 struct graphics_channel_info to_draw_info;
 t_Error graphics_show_channel_info(struct graphics_channel_info info)
@@ -46,9 +52,9 @@ void release()
     draw_deinit(&draw_interface);
 }
 
-void graphics_render()
+void graphics_render(int *argc, char ***argv)
 {
-    draw_init(&draw_interface);
+    draw_init(&draw_interface, argc, argv);
     atexit(release);
     signal(SIGINT, handle_signal);
 

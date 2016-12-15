@@ -14,10 +14,13 @@ struct draw_interface
 {
     IDirectFBSurface *surface; ///< Surface on which to draw
     IDirectFB *dfb_interface; ///< Main DFB interface
+    int screen_width;
+    int screen_height;
+    DFBSurfaceDescription surface_desc;
 };
 
 /// \brief Initialize drawing interface
-void draw_init(struct draw_interface *draw_i);
+void draw_init(struct draw_interface *draw_i, int *argc, char ***argv);
 
 /// \brief Draw channel_info graphics element
 void draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info);
