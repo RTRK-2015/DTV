@@ -23,7 +23,8 @@ struct graphics_channel_info
 t_Error graphics_show_channel_info(struct graphics_channel_info info);
 /// \brief Displays volume information on the screen.
 t_Error graphics_show_volume(uint8_t vol);
-
+/// \brief Clears all graphics elements from screen
+void graphics_clear();
 /// \brief Renders graphic elements on screen
 void graphics_render();
 

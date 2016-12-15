@@ -30,6 +30,12 @@ t_Error graphics_show_volume(uint8_t vol)
     to_draw_vol = vol;
 }
 
+void graphics_clear()
+{
+    gf.info = false;
+    gf.volume = false;
+}
+
 void handle_signal(int no)
 {
     exit(0);
@@ -49,6 +55,8 @@ void graphics_render()
 
     while (true)
     {
+        draw_clear(&draw_interface);
+
         if (gf.info)
         {
             draw_channel_info(&draw_interface, to_draw_info);
@@ -58,5 +66,7 @@ void graphics_render()
         {
             draw_volume(&draw_interface, to_draw_vol);
         }
+
+        draw_refresh(&draw_interface);
     }
 }

@@ -14,6 +14,18 @@ void draw_volume(struct draw_interface *draw_i, uint8_t vol)
 {
 }
 
+void draw_blackscreen(struct draw_interface *draw_i)
+{
+}
+
+void draw_clear(struct draw_interface *draw_i)
+{
+}
+
+void draw_refresh(struct draw_interface *draw_i)
+{
+}
+
 void draw_deinit(struct draw_interface *draw_i)
 {
 }
