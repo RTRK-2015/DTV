@@ -19,15 +19,13 @@ struct graphics_channel_info
 };
 
 
-/// \brief Initializes the internal graphics state.
-t_Error graphics_init();
 /// \brief Displays some basic information about a channel on the screen.
 t_Error graphics_show_channel_info(struct graphics_channel_info info);
 /// \brief Displays volume information on the screen.
 t_Error graphics_show_volume(uint8_t vol);
-/// \brief Deinitializes the internal graphics state.
-void graphics_deinit();
 
+/// \brief Renders graphic elements on screen
+void render();
 
 #endif
 
