@@ -20,13 +20,15 @@ struct graphics_channel_info
 
 
 /// \brief Displays some basic information about a channel on the screen.
-t_Error graphics_show_channel_info(struct graphics_channel_info info);
+void graphics_show_channel_info(struct graphics_channel_info info);
 /// \brief Displays volume information on the screen.
-t_Error graphics_show_volume(uint8_t vol);
+void graphics_show_volume(uint8_t vol);
 /// \brief Clears all graphics elements from screen
 void graphics_clear();
 /// \brief Renders graphic elements on screen
-void graphics_render(int *argc, char ***argv);
+t_Error graphics_render(int *argc, char ***argv);
+/// \brief Stops graphics_render loop
+void graphics_stop();
 
 #endif
 
