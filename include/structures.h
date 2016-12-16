@@ -131,6 +131,67 @@ struct pmt_body
 } __attribute__((packed));
 
 
+struct sdt_header
+{
+	struct table_header hdr;
+	
+	uint16_t tsi;
+	
+	struct
+    {
+        uint8_t cni : 1;
+        uint8_t version : 5;
+        uint8_t res : 2;
+    } b1s;
+    
+    uint8_t sec;
+    uint8_t lsn;
+    
+    uint16_t oni;
+    uint8_t res2;
+} __attribute__((packed));
+
+
+struct sdt_body
+{
+	uint16_t sid;
+	
+	struct
+	{
+		uint8_t epff : 1;
+		uint8_t esf : 1;
+		uint8_t res : 6;
+	} b1s;
+	
+	union
+	{
+		struct
+		{
+			uint16_t dlen : 12;
+			uint16_t fcm : 1;
+			uint16_t rs : 3;
+		} b2s;
+		
+		uint16_t bitfield2;
+	} b2u;
+} __attribute__((packed));
+
+
+struct sdt_descriptor1
+{
+	uint8_t tag;
+	uint8_t len;
+	uint8_t type;
+	uint8_t spnlen;
+} __attribute__((packed));
+
+
+struct sdt_descriptor2
+{
+	uint8_t snlen;
+} __attribute__((packed));
+
+
 // These functions retrieve the corresponding structures from the stream,
 // performing the needed network-to-host conversions.
 struct pat_header get_pat_header(const uint8_t *buffer);
@@ -138,6 +199,11 @@ struct pat_body get_pat_body(const uint8_t *buffer);
 
 struct pmt_header get_pmt_header(const uint8_t *buffer);
 struct pmt_body get_pmt_body(const uint8_t *buffer);
+
+struct sdt_header get_sdt_header(const uint8_t *buffer);
+struct sdt_body get_sdt_body(const uint8_t *buffer);
+struct sdt_descriptor1 get_sdt_descriptor1(const uint8_t *buffer);
+struct sdt_descriptor2 get_sdt_descriptor2(const uint8_t *buffer);
 
 
 #endif
