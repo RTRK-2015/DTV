@@ -55,13 +55,12 @@ int32_t main(int argc, char **argv)
     sleep(2);
     graphics_show_channel_info(info);
 
-    
+    while(true);
     printf("Clear\n");
     sleep(2);
     graphics_clear();
 
     printf("End\n");
-    sleep(2);
     graphics_stop();
 
 

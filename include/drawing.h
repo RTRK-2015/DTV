@@ -18,6 +18,7 @@ struct draw_interface
     int screen_width;
     int screen_height;
     DFBSurfaceDescription surface_desc;
+    //TODO: add volume images to interface and update draw_init
 };
 
 /// \brief Initialize drawing interface

@@ -59,6 +59,7 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                             window_width,
                                             window_height));
 
+    return EXIT_SUCCESS;
 }
 
 int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
