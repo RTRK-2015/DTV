@@ -102,7 +102,7 @@ struct pmt parse_pmt(const uint8_t *buffer)
         // add it to the matching array.
         if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
             my_pmt.video_pid = pmt_b.b1u.b1s.pid;
-        else if (pmt_b.type == 0x03 && my_pmt.audio_pid = UINT16_C(0xFFFF))
+        else if (pmt_b.type == 0x03 && my_pmt.audio_pid == UINT16_C(0xFFFF))
             my_pmt.audio_pid = pmt_b.b1u.b1s.pid;
 
         // Finally, advance the current_ptr by the size of the body section

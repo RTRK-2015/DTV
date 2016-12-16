@@ -96,7 +96,7 @@ static int32_t pmt_callback(uint8_t *buffer)
 }
 
 
-void dtv_init(struct dtv_init_ch_info init_info)
+void dtv_init(struct config_init_ch_info init_info)
 {
     // Tuner
     printf("Initializing tuner...\n");
@@ -240,8 +240,9 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 		if (Player_Stream_Create
 			( player_handle
 			, source_handle
+			, my_pmt.video_pid
 			, VIDEO_TYPE_MPEG2
-			, &video_pid
+			, &video_handle
 			) == ERROR)
 			FAIL("%s\n", nameof(Player_Stream_Create));
 			
@@ -249,8 +250,9 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 		if (Player_Stream_Create
 			( player_handle
 			, source_handle
-			, AUDIO_TYPE_AAC
-			, &audio_pid
+			, my_pmt.audio_pid
+			, AUDIO_TYPE_MPEG_AUDIO
+			, &audio_handle
 			) == ERROR)
 			FAIL("%s\n", nameof(Player_Stream_Create));
 }
