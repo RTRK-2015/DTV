@@ -77,21 +77,10 @@ struct pmt parse_pmt(const uint8_t *buffer)
 {	
     struct pmt_header pmt_h = get_pmt_header(buffer);
 
-    struct pmt my_pmt;
-
-    // The number of streams in a PMT is unknown, so the corresponding arrays
-    // will have to be expanded at some point. The starting guess is 5 of each
-    // type of stream.
-    size_t
-        video_res = 5,
-        audio_res = 5,
-        data_res  = 5;
-    my_pmt.video_pids = (uint16_t *)malloc(video_res * sizeof(uint16_t));
-    if (my_pmt.video_pids == NULL)
-        FAIL_STD("%s\n", nameof(malloc));
-    my_pmt.audio_pids = (uint16_t *)malloc(audio_res * sizeof(uint16_t));
-    if (my_pmt.audio_pids == NULL)
-        FAIL_STD("%s\n", nameof(malloc));
+    struct pmt my_pmt = 
+    { .video_pid = UINT16_C(0xFFFF)
+    , .audio_pid = UINT16_C(0xFFFF)
+    };
 
 
     // current_ptr tracks the current body section. At the start, it points
@@ -109,39 +98,12 @@ struct pmt parse_pmt(const uint8_t *buffer)
     	
         struct pmt_body pmt_b = get_pmt_body(current_ptr);
 
-        // If the number of stored elements has grown to be equal to the number
-        // of reserved slots, the array will have to be reallocated. It is
-        // expanded by a factor of 2, which holds no special meaning.
-        if (my_pmt.video_len >= video_res)
-        {
-            video_res *= 2;
-            my_pmt.video_pids = (uint16_t *)realloc
-            ( my_pmt.video_pids
-            , video_res * sizeof(uint16_t)
-            );
-
-            if (my_pmt.video_pids == NULL)
-                FAIL_STD("%s\n", nameof(realloc));
-        }
-        if (my_pmt.audio_len >= audio_res)
-        {
-            audio_res *= 2;
-            my_pmt.audio_pids = (uint16_t *)realloc
-            ( my_pmt.audio_pids
-            , audio_res * sizeof(uint16_t)
-            );
-
-            if (my_pmt.audio_pids == NULL)
-                FAIL_STD("%s\n", nameof(realloc));
-        }
-
-
         // If the current body section contains a supported type of stream,
         // add it to the matching array.
-        if (pmt_b.type == 0x02)
-            my_pmt.video_pids[my_pmt.video_len++] = pmt_b.b1u.b1s.pid;
-        else if (pmt_b.type == 0x03)
-            my_pmt.audio_pids[my_pmt.audio_len++] = pmt_b.b1u.b1s.pid;
+        if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
+            my_pmt.video_pid = pmt_b.b1u.b1s.pid;
+        else if (pmt_b.type == 0x03 && my_pmt.audio_pid = UINT16_C(0xFFFF))
+            my_pmt.audio_pid = pmt_b.b1u.b1s.pid;
 
         // Finally, advance the current_ptr by the size of the body section
         // and the size of the descriptors section that belongs to every

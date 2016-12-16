@@ -28,11 +28,8 @@ struct pmt
     uint16_t pid;
     uint16_t ch_num;
 
-    size_t video_len;
-    uint16_t *video_pids;
-
-    size_t audio_len;
-    uint16_t *audio_pids;
+    uint16_t video_pid;
+    uint16_t audio_pid;
 };
 
 

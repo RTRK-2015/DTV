@@ -3,6 +3,7 @@
 // Matching include
 #include "dtv.h"
 // C includes
+#include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,6 +24,11 @@ static pthread_mutex_t status_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static pthread_cond_t pat_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t pat_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+static pthread_cond_t pmt_cond = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t pmt_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+static Demux_Section_Filter_Callback current_callback = NULL;
 
 
 static uint32_t
@@ -76,6 +82,19 @@ static int32_t pat_callback(uint8_t *buffer)
     pthread_cond_signal(&pat_cond);
 }
 
+static struct pmt my_pmt;
+static int32_t pmt_callback(uint8_t *buffer)
+{
+	if (buffer[0] = 0x02)
+	{
+		printf("Parsing pmt...\n");
+		my_pmt = parse_pmt(buffer);
+		Demux_Free_Filter(player_handle, filter_handle);
+	}
+	
+	pthread_cond_signal(&pmt_cond);
+}
+
 
 void dtv_init(struct dtv_init_ch_info init_info)
 {
@@ -124,6 +143,7 @@ void dtv_init(struct dtv_init_ch_info init_info)
     printf("Registering PAT callback...\n");
     if (Demux_Register_Section_Filter_Callback(pat_callback) == ERROR)
         FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
+    current_callback = pat_callback;
     exit_flags.demux_callback = 1;
 
     struct timespec ts_pat;
@@ -132,7 +152,12 @@ void dtv_init(struct dtv_init_ch_info init_info)
 
     if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) < 0)
         FAIL("%s\n", nameof(pthread_cond_timedwait));
-        
+
+    if (Demux_Unregister_Section_Filter_Callback(pat_callback) == ERROR)
+    	FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
+    current_callback = NULL;
+    exit_flags.demux_callback = 0;
+    
     if (Player_Stream_Create
     	( player_handle
    		, source_handle
@@ -172,6 +197,65 @@ const uint16_t* dtv_get_channels()
 }
 
 
+t_Error dtv_switch_channel(uint16_t ch_num)
+{
+	uint16_t pid = UINT16_C(0xFFFF);
+	
+	for (size_t i = 0; i < my_pat.pmt_len; ++i)
+	{
+		if (my_pat.pmts[i].ch_num == ch_num)
+		{
+			pid = my_pat.pmts[i].pid;
+			break;
+		}
+	}
+	
+	if (pid == UINT16_C(0xFFFF))
+		return ERROR;
+		
+	if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
+		FAIL("%s\n", nameof(Demux_Set_Filter));
+		
+	if (Demux_Register_Section_Filter_Callback(pmt_callback) == ERROR)
+		FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
+	current_callback = pmt_callback;
+	exit_flags.demux_callback = 1;
+	
+	struct timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	ts.tv_sec += 5;
+	
+	if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) < 0)
+		FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
+		
+	if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
+		FAIL("%s\n", nameof(Player_Stream_Remove));
+	exit_flags.video = 0;
+	
+	if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
+		FAIL("%s\n", nameof(Player_Stream_Remove));
+	exit_flags.audio = 0;
+	
+	if (my_pmt.video_pid != UINT16_C(0xFFFF))
+		if (Player_Stream_Create
+			( player_handle
+			, source_handle
+			, VIDEO_TYPE_MPEG2
+			, &video_pid
+			) == ERROR)
+			FAIL("%s\n", nameof(Player_Stream_Create));
+			
+	if (my_pmt.audio_pid != UINT16_C(0xFFFF))
+		if (Player_Stream_Create
+			( player_handle
+			, source_handle
+			, AUDIO_TYPE_AAC
+			, &audio_pid
+			) == ERROR)
+			FAIL("%s\n", nameof(Player_Stream_Create));
+}
+
+
 t_Error dtv_set_volume(uint8_t vol)
 {
 	if (vol > 10)
@@ -183,13 +267,16 @@ t_Error dtv_set_volume(uint8_t vol)
 
 void dtv_deinit()
 {
+	if (channels != NULL)
+		free(channels);
+
     if (exit_flags.video)
         Player_Stream_Remove(player_handle, source_handle, video_handle);
     if (exit_flags.audio)
         Player_Stream_Remove(player_handle, source_handle, audio_handle);
 
-    if (exit_flags.demux_callback)
-        Demux_Unregister_Section_Filter_Callback(pat_callback);
+    if (exit_flags.demux_callback && current_callback != NULL)
+        Demux_Unregister_Section_Filter_Callback(current_callback);
 
     if (exit_flags.source)
         Player_Source_Close(player_handle, source_handle);
