@@ -287,6 +287,8 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 
 t_Error dtv_set_volume(uint8_t vol)
 {
+	printf("Setting volume to %d\n", vol);
+	
 	if (vol > 10)
 		return ERROR;
 
