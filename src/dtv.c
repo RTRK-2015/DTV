@@ -132,6 +132,25 @@ void dtv_init(struct dtv_init_ch_info init_info)
 
     if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) < 0)
         FAIL("%s\n", nameof(pthread_cond_timedwait));
+        
+    if (Player_Stream_Create
+    	( player_handle
+   		, source_handle
+    	, init_info.vpid
+    	, init_info.vtype
+    	, &video_handle
+    	) == ERROR)
+    	FAIL("%s\n", nameof(Player_Stream_Create));
+    exit_flags.video = 1;
+    
+    if (Player_Stream_Create
+    	( player_handle
+    	, source_handle
+    	, init_info.apid
+    	, init_info.atype
+    	, &audio_handle
+    	) == ERROR)
+    	FAIL("%s\n", nameof(Player_Stream_Create));
 }
 
 
