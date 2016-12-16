@@ -79,6 +79,9 @@ static int32_t pat_callback(uint8_t *buffer)
         Demux_Free_Filter(player_handle, filter_handle);
     }
 
+	printf("Found pat\n");
+	for (size_t i = 0; i < my_pat.pmt_len; ++i)
+		printf("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
     pthread_cond_signal(&pat_cond);
 }
 
@@ -92,6 +95,10 @@ static int32_t pmt_callback(uint8_t *buffer)
 		Demux_Free_Filter(player_handle, filter_handle);
 	}
 	
+	printf("Found pmt\n");
+	printf("audio_pid: %d\n", my_pmt.audio_pid);
+	printf("video_pid: %d\n", my_pmt.video_pid);
+
 	pthread_cond_signal(&pmt_cond);
 }
 
@@ -210,6 +217,7 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 		}
 	}
 	
+	printf("pmt pid: %d\n", pid);
 	if (pid == UINT16_C(0xFFFF))
 		return ERROR;
 		
@@ -227,16 +235,28 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 	
 	if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) < 0)
 		FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
-		
-	if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
+	printf("Got pmt\n");
+	
+	if (Demux_Unregister_Section_Filter_Callback(pmt_callback) == ERROR)
+		FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
+	exit_flags.demux_callback = 0;
+
+	if (video_handle != -1 &&
+		Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
 		FAIL("%s\n", nameof(Player_Stream_Remove));
 	exit_flags.video = 0;
+	video_handle = -1;
+	printf("Removed video\n");
 	
-	if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
+	if (audio_handle != - 1 &&
+		Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
 		FAIL("%s\n", nameof(Player_Stream_Remove));
 	exit_flags.audio = 0;
+	audio_handle = -1;
+	printf("Removed audio\n");
 	
 	if (my_pmt.video_pid != UINT16_C(0xFFFF))
+	{
 		if (Player_Stream_Create
 			( player_handle
 			, source_handle
@@ -245,8 +265,12 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 			, &video_handle
 			) == ERROR)
 			FAIL("%s\n", nameof(Player_Stream_Create));
+		printf("Started video with pid: %d\n", my_pmt.video_pid);
+		exit_flags.video = 1;
+	}
 			
 	if (my_pmt.audio_pid != UINT16_C(0xFFFF))
+	{
 		if (Player_Stream_Create
 			( player_handle
 			, source_handle
@@ -255,6 +279,9 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 			, &audio_handle
 			) == ERROR)
 			FAIL("%s\n", nameof(Player_Stream_Create));
+		printf("Started audio with pid: %d\n", my_pmt.audio_pid);
+		exit_flags.audio = 1;
+	}	
 }
 
 
