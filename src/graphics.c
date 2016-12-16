@@ -61,8 +61,12 @@ void release()
 
 t_Error graphics_render(int *argc, char ***argv)
 {
-    if (draw_init(&draw_interface, argc, argv) < 0);
-        FAIL("%s\n", nameof(draw_init));    
+    printf("\nTry init draw_interface with arguements: %d, %s\n", *argc, *argv[0]);
+    if (draw_init(&draw_interface, argc, argv) < 0)
+        FAIL("%s\n", nameof(draw_init));
+
+    printf("Successfully init draw_i, screen width: %d, screen height: %d\n", 
+            draw_interface.screen_width, draw_interface.screen_height);
 
     atexit(release);
     signal(SIGINT, handle_signal);

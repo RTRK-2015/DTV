@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #include "common.h"
 #include "graphics.h"
@@ -15,8 +16,12 @@ struct args
 void* render(void *args)
 {
     struct args *a = (struct args *)args;
+    int argc = *(a->argcx);
+    char **argv = *(a->argvx);
 
-    if (graphics_render(a->argcx, a->argvx) == ERROR)
+    printf("Enter render thread with args: %d, %s\n", argc, argv[0]);
+    
+    if (graphics_render(&argc, &argv) == ERROR)
         FAIL("%s", nameof(graphics_render));
 
 }
@@ -24,7 +29,9 @@ void* render(void *args)
 int32_t main(int argc, char **argv)
 {
     pthread_t th;
-    
+    char c;
+
+    printf("main args: %d, %s\n", argc, argv[0]);
 
     struct args a =
     {
@@ -34,19 +41,27 @@ int32_t main(int argc, char **argv)
 
     pthread_create(&th, NULL, render, &a);
 
+
     for(int i = 0; i < 11; ++i)
     {
         printf("Show volume %d\n", i);
-        getchar();
+        sleep(1);
         graphics_show_volume(i);
     }
 
-    printf("Clear\n");
-    getchar();
-    graphics_clear();
+
+    printf("Show info\n");
+    struct graphics_channel_info info = { 0 };
+    sleep(2);
+    graphics_show_channel_info(info);
+
     
+    printf("Clear\n");
+    sleep(2);
+    graphics_clear();
+
     printf("End\n");
-    getchar();
+    sleep(2);
     graphics_stop();
 
 

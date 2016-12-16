@@ -16,21 +16,30 @@ if (err != DFB_OK)                                           \
 
 int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 {
+    printf("Try DFBInit with args: %d, %s\n", *argc, *argv[0]);
     DFBCHECK(DirectFBInit(argc, argv));
+    printf("Successfully init\n");
 
-    DFBCHECK(DirectFBCreate(&(draw_i->dfb_interface)));
-
+    printf("Try DFBCreate\n");
+    DFBCHECK(DirectFBCreate(&draw_i->dfb_interface));
+    printf("Created interface\n");
+    
+    printf("Try SetCoopLvl\n");
     DFBCHECK(draw_i->dfb_interface->SetCooperativeLevel(draw_i->dfb_interface, DFSCL_FULLSCREEN));
+    printf("SetCoopLvl\n");
 
     draw_i->surface_desc.flags = DSDESC_CAPS;
     draw_i->surface_desc.caps = DSCAPS_PRIMARY | DSCAPS_FLIPPING;
     DFBCHECK(draw_i->dfb_interface->CreateSurface(draw_i->dfb_interface,
                                                 &(draw_i->surface_desc),
                                                 &(draw_i->surface)));
+    printf("Created surface\n");
 
     DFBCHECK(draw_i->surface->GetSize(draw_i->surface,
                                     &(draw_i->screen_width),
                                     &(draw_i->screen_height)));
+
+    printf("Screen_h: %d, Screen_w: %d\n", draw_i->screen_width, draw_i->screen_height);
 
     return EXIT_SUCCESS;
 }
@@ -43,6 +52,13 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
     const int window_x = draw_i->screen_width - window_width - 20;
     const int window_y = draw_i->screen_height - window_height - 20;
 
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 88, 88, 88, 0xff));
+    DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
+                                            window_x,
+                                            window_y,
+                                            window_width,
+                                            window_height));
+
 }
 
 int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
@@ -51,8 +67,8 @@ int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
     IDirectFBSurface *image_surface = NULL;
     int32_t image_height, image_width;
 
-    char image_name[sizeof("assets/volume_xx")];
-    sprintf(image_name, "assets/volume_%d", vol);
+    char image_name[sizeof("assets/volume_xx.png")];
+    sprintf(image_name, "assets/volume_%d.png", vol);
 
     DFBCHECK(draw_i->dfb_interface->CreateImageProvider(draw_i->dfb_interface,
                                                         image_name,
