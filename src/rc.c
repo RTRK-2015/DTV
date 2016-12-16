@@ -1,7 +1,8 @@
-/*// Matching include
-#include "mapping.h"
+// Matching include
+#include "rc.h"
 // C includes
 #include <errno.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -29,12 +30,13 @@ static ssize_t get_keys(int fd, size_t count, char *buf)
 struct args
 {
     int fd;
-    struct key_mapping km;
+    rc_key_callback kc;
 };
 
 
 static pthread_mutex_t args_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
+bool stop = false;
 static void* event_loop(void *args)
 {
     static const size_t NUM_EVENTS = 5;
@@ -46,31 +48,20 @@ static void* event_loop(void *args)
     if (event_buffer == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
-    while (1)
+    while (!stop)
     {
         ssize_t event_count = get_keys(a.fd, NUM_EVENTS, (char *)event_buffer);
 
         for (size_t i = 0; i < event_count; ++i)
         {
         	if (event_buffer[i].value == 1)
-        	{
-            	switch (event_buffer[i].code)
-	            {
-	            case 62:
-	            	a.km.key_prog_up(62);
-	            	break;
-	            	
-	            case 61:
-	            	a.km.key_prog_down(61);
-	            	break;
-	            }
-	        }
+            	a.kc(event_buffer[i].code);
         }
     }
 }
 
 
-void start_event_loop(const char *dev, struct key_mapping km)
+void rc_start_loop(const char *dev, rc_key_callback kc)
 {
     int fd = open(dev, O_RDWR);
     if (fd < 0)
@@ -80,7 +71,7 @@ void start_event_loop(const char *dev, struct key_mapping km)
     if (ioctl(fd, EVIOCGNAME(sizeof(device_name)), device_name) < 0)
         FAIL_STD("%s\n", nameof(ioctl));
 
-    struct args a = { .fd = fd, .km = km };
+    struct args a = { .fd = fd, .kc = kc };
 
     pthread_t loop_thread;
     if (pthread_create(&loop_thread, NULL, event_loop, (void *)&a) < 0)
@@ -88,4 +79,11 @@ void start_event_loop(const char *dev, struct key_mapping km)
 
     pthread_cond_wait(&args_cond, &args_mutex);
 }
-*/
+
+
+void rc_stop_loop()
+{
+	stop = true;
+}
+
+

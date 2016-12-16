@@ -13,7 +13,8 @@ typedef void (*rc_key_callback)(int key_no);
 
 /// \brief A function that starts the loop that waits for input events
 /// from the remote control.
-t_Error rc_start_loop(const char *dev, key_callback callback);
+void rc_start_loop(const char *dev, rc_key_callback callback);
+void rc_stop_loop();
 
 
 #endif
