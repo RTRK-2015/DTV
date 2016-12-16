@@ -172,6 +172,15 @@ const uint16_t* dtv_get_channels()
 }
 
 
+t_Error dtv_set_volume(uint8_t vol)
+{
+	if (vol > 10)
+		return ERROR;
+
+	return Player_Volume_Set(player_handle, vol);
+}
+
+
 void dtv_deinit()
 {
     if (exit_flags.video)
