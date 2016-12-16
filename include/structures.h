@@ -133,6 +133,8 @@ struct pmt_body
 
 struct sdt_header
 {
+	uint8_t tid;
+	
 	struct table_header hdr;
 	
 	uint16_t tsi;
@@ -192,6 +194,37 @@ struct sdt_descriptor2
 } __attribute__((packed));
 
 
+struct tdt
+{
+	uint8_t tid;
+	
+	struct table_header hdr;
+	
+	uint8_t time[5];
+} __attribute__((packed));
+
+
+struct tot_header
+{
+	uint8_t tid;
+	
+	struct table_header hdr;
+	
+	uint8_t time[5];
+	
+	union
+	{
+		struct
+		{
+			uint16_t dlen : 12;
+			uint16_t res : 4;
+		} b1s;
+		
+		uint16_t bitfield1;
+	} b1u;
+} __attribute__((packed));
+
+
 // These functions retrieve the corresponding structures from the stream,
 // performing the needed network-to-host conversions.
 struct pat_header get_pat_header(const uint8_t *buffer);
@@ -204,6 +237,9 @@ struct sdt_header get_sdt_header(const uint8_t *buffer);
 struct sdt_body get_sdt_body(const uint8_t *buffer);
 struct sdt_descriptor1 get_sdt_descriptor1(const uint8_t *buffer);
 struct sdt_descriptor2 get_sdt_descriptor2(const uint8_t *buffer);
+
+struct tdt get_tdt(const uint8_t *buffer);
+struct tot_header get_tot_header(const uint8_t *buffer);
 
 
 #endif

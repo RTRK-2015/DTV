@@ -2,9 +2,8 @@
 #include "structures.h"
 // C includes
 #include <stdint.h>
+#include <arpa/inet.h>
 // Unix includes
-
-uint16_t ntohs(uint16_t x);
 
 
 static void fix_table_header(struct table_header *hdr)
@@ -98,5 +97,22 @@ struct sdt_descriptor1 get_sdt_descriptor1(const uint8_t *buffer)
 struct sdt_descriptor2 get_sdt_descriptor2(const uint8_t *buffer)
 {
 	return *(const struct sdt_descriptor2 *)buffer;
+}
+
+
+struct tdt get_tdt(const uint8_t *buffer)
+{
+	return *(const struct tdt *)buffer;
+}
+
+
+struct tot_header get_tot_header(const uint8_t *buffer)
+{
+	struct tot_header tot_h =
+		*(const struct tot_header *)buffer;
+		
+	tot_h.b1u.bitfield1 = ntohs(tot_h.b1u.bitfield1);
+	
+	return tot_h;
 }
 
