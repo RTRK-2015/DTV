@@ -23,7 +23,7 @@ static const uint16_t DEFAULT_AUDIO_PID = UINT16_C(103);
 static const uint16_t DEFAULT_CH_NUM    = UINT16_C(490);
 static const int      DEFAULT_MODULE    = DVB_T;
 static const int      DEFAULT_VIDEO_TYPE = VIDEO_TYPE_MPEG2;
-static const int      DEFAULT_AUDIO_TYPE = AUDIO_TYPE_AAC;
+static const int      DEFAULT_AUDIO_TYPE = AUDIO_TYPE_MPEG_AUDIO;
 
 
 #define MAKE_GETTER(TYPE, NAME, NOT_FOUND, CONVERSION) \
@@ -82,5 +82,5 @@ struct config_init_ch_info config_get_init_ch_info(FILE *f)
     int audio_type = get_audio_type(f);
     init_info.atype = (audio_type == NO_AUDIO_TYPE)? DEFAULT_AUDIO_TYPE : audio_type;
 
-    return info;
+    return init_info;
 }
