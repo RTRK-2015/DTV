@@ -93,21 +93,21 @@ struct pmt parse_pmt(const uint8_t *buffer)
         *end_ptr = buffer + sizeof(struct table_header) + pmt_h.hdr.b1u.b1s.len - 4;
 
     while (current_ptr < end_ptr)
-    {
-    	printf("%d\n", current_ptr - buffer);
-    	
+    {	
         struct pmt_body pmt_b = get_pmt_body(current_ptr);
 
-        // If the current body section contains a supported type of stream,
-        // add it to the matching array.
+		printf("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
+		
         if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
             my_pmt.video_pid = pmt_b.b1u.b1s.pid;
         else if (pmt_b.type == 0x03 && my_pmt.audio_pid == UINT16_C(0xFFFF))
             my_pmt.audio_pid = pmt_b.b1u.b1s.pid;
 
-        // Finally, advance the current_ptr by the size of the body section
+        // Advance the current_ptr by the size of the body section
         // and the size of the descriptors section that belongs to every
         // body section.
         current_ptr += sizeof(struct pmt_body) + pmt_b.b2u.b2s.esilen;
     }
+    
+    return my_pmt;
 }
