@@ -31,8 +31,13 @@ static pthread_mutex_t pmt_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t tot_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t tot_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+static pthread_cond_t sdt_cond = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t sdt_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 static Demux_Section_Filter_Callback current_callback = NULL;
 
+
+static uint16_t sdt_ch_num;
 
 static uint32_t
     player_handle,
@@ -109,6 +114,17 @@ static int32_t tot_callback(uint8_t *buffer)
     Demux_Free_Filter(player_handle, filter_handle);
 
     pthread_cond_signal(&tot_cond);
+}
+
+
+static struct sdt my_sdt;
+static int32_t sdt_callback(uint8_t *buffer)
+{
+    printf("Parsing sdt...\n");
+    my_sdt = parse_sdt(buffer, sdt_ch_num);
+    Demux_Free_Filter(player_handle, filter_handle);
+
+    pthread_cond_signal(&sdt_cond);
 }
 
 
@@ -322,7 +338,40 @@ struct tm dtv_get_time()
     if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) < 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 
+    if (Demux_Unregister_Section_Filter_Callback(tot_callback) == ERROR)
+        FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
+    current_callback = NULL;
+    exit_flags.demux_callback = 0;
+
     return my_tm;
+}
+
+
+struct sdt dtv_get_info(uint16_t ch_num)
+{
+    sdt_ch_num = ch_num;
+
+    if (Demux_Set_Filter(player_handle, 0x0011, 0x42, &filter_handle) == ERROR)
+        FAIL("%s\n", nameof(Demux_Set_FilteR));
+
+    if (Demux_Register_Section_Filter_Callback(sdt_callback) == ERROR)
+        FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
+    current_callback = sdt_callback;
+    exit_flags.demux_callback = 1;
+
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    ts.tv_sec += 5;
+
+    if (pthread_cond_timedwait(&sdt_cond, &sdt_mutex, &ts) < 0)
+        FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
+
+    if (Demux_Unregister_Section_Filter_Callback(sdt_callback) == ERROR)
+        FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
+    current_callback = NULL;
+    exit_flags.demux_callback = 0;
+    
+    return my_sdt;
 }
 
 

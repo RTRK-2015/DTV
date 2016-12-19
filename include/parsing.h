@@ -34,9 +34,17 @@ struct pmt
 };
 
 
+struct sdt
+{
+    uint8_t st;
+    char name[100];
+};
+
+
 struct pat parse_pat(const uint8_t *buffer);
 struct pmt parse_pmt(const uint8_t *buffer);
 struct tm  parse_tot(const uint8_t *buffer);
+struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num);
 
 
 #endif

@@ -10,6 +10,8 @@
 #include <inttypes.h>
 #include "tdp_api.h"
 #include "config.h"
+#include "parsing.h"
+
 
 
 #define END_OF_CHANNELS UINT16_C(0xFFFF)
@@ -26,6 +28,8 @@ t_Error dtv_switch_channel(uint16_t ch_num);
 t_Error dtv_set_volume(uint8_t vol);
 /// \brief Gets the time information
 struct tm dtv_get_time();
+/// \brief Gets the channel descriptions
+struct sdt dtv_get_info(uint16_t ch_num);
 /// \brief Deinitializes the internal DTV state.
 void dtv_deinit();
 

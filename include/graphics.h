@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include "tdp_api.h"
+#include "parsing.h"
 
 
 /// \brief A struct that contains some basic channel info.
@@ -16,6 +17,7 @@ struct graphics_channel_info
 	bool teletex; ///< Whether the channel has teletext.
 	uint16_t vpid; ///< The video PID of the channel.
 	uint16_t apid; ///< The audio PID of the channel.
+        struct sdt sdt;
 };
 
 

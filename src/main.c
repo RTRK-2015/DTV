@@ -74,27 +74,24 @@ void react_to_keypress(int key_code)
 		break;
 
 	case 62:
-		if (channels_idx == channels_len - 1)
-			channels_idx = 0;
-		else
-			++channels_idx;
+		++channels_idx;
 			
 		printf("Index: %d\n", channels_idx);
 		printf("Switching to channel %d\n", channels[channels_idx]);
 		
-		dtv_switch_channel(channels[channels_idx]);
+		if (channels_idx < channels_len)
+                    dtv_switch_channel(channels[channels_idx]);
 		break;
 		
 	case 61:
-		if (channels_idx == 0)
-			channels_idx = channels_len - 1;
-		else
-			--channels_idx;
+		if (channels_idx >  0)
+	    	    --channels_idx;
 			
 		printf("Index: %d\n", channels_idx);
 		printf("Switching to channel %d\n", channels[channels_idx]);
 		
-		dtv_switch_channel(channels[channels_idx]);
+		if (channels_idx < channels_len)
+                    dtv_switch_channel(channels[channels_idx]);
 		break;
 	
 	case 63:
@@ -149,6 +146,7 @@ int main(int argc, char **argv)
 	rc_start_loop("/dev/input/event0", react_to_keypress);
 	atexit(rc_stop_loop);
 
+        dtv_get_info(491);
         dtv_get_time();
 
 	while (true);

@@ -113,6 +113,51 @@ struct pmt parse_pmt(const uint8_t *buffer)
 }
 
 
+struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
+{
+    struct sdt_header sdt_h = get_sdt_header(buffer);
+
+    struct sdt my_sdt = { 0 };
+
+    const uint8_t
+        *current_ptr = buffer + sizeof(sdt_h),
+        *end_ptr = buffer + sizeof(struct table_header) + sdt_h.hdr.b1u.b1s.len - 4;
+
+    while (current_ptr < end_ptr)
+    {
+        struct sdt_body sdt_b = get_sdt_body(current_ptr);
+
+        if (sdt_b.sid == ch_num)
+        {
+            printf("Found appropriate sdt\n");
+
+            current_ptr += sizeof(sdt_b);
+            struct sdt_descriptor1 sdt_d1 = get_sdt_descriptor1(current_ptr);
+            printf("Service type: %d\n", sdt_d1.type);
+            my_sdt.st = sdt_d1.type;
+
+            current_ptr += sizeof(sdt_d1) - 1 + sdt_d1.spnlen;
+            struct sdt_descriptor2 sdt_d2 = get_sdt_descriptor2(current_ptr);
+            current_ptr += sizeof(sdt_d2);
+            for (int i = 1; ; ++i)
+            {
+                if (current_ptr[i] == 1)
+                    break;
+                else
+                    my_sdt.name[i - 1] = current_ptr[i];
+            }
+            break;
+        }
+        else
+        {
+            current_ptr += sizeof(sdt_b) + sdt_b.b2u.b2s.dlen - 2;
+        }
+    }
+
+    return my_sdt;
+}
+
+
 struct tm parse_tot(const uint8_t *buffer)
 {
     struct tot_header tot_h = get_tot_header(buffer);
@@ -126,7 +171,8 @@ struct tm parse_tot(const uint8_t *buffer)
     uint8_t bcd_second = tot_h.time[4];
     uint8_t second = (bcd_second / 16) * 10 + bcd_second % 16;
 
-    uint16_t date = tot_h.time[0] << 8 + tot_h.time[1];
+    uint16_t date = (tot_h.time[0] << 8) | tot_h.time[1];
+    printf("encoded date: %x\n", date);
 
     struct tot_descriptor_header tot_d_h = get_tot_descriptor_header(buffer);
     if (tot_d_h.tag == 0x58)
@@ -137,7 +183,8 @@ struct tm parse_tot(const uint8_t *buffer)
 
     int yprime = (date - 15078.2) / 365.25;
     int mprime = (date - 14956.1 - (int)(yprime * 365.25)) / 30.6001;
-    int d = date - (int)(yprime * 365.25) - (int)(mprime * 30.6001);
+    int d = date - 14956 - (int)(yprime * 365.25) - (int)(mprime * 30.6001);
+    printf("y': %d, m': %d, d: %d\n", yprime, mprime, d);
 
     int k = (mprime == 14 || mprime == 15);
     int y = yprime + k;
@@ -149,11 +196,11 @@ struct tm parse_tot(const uint8_t *buffer)
     , .tm_hour = hour
     , .tm_mday = d
     , .tm_mon = m - 1
-    , .tm_year = y - 1900
+    , .tm_year = y
     };
 
     char buf[100] = "";
-    strftime(buf, 100, "Time: %F:%R", &tm);
+    strftime(buf, 100, "Time: %Y-%m-%dT%H:%M:%S", &tm);
     puts(buf);
 
     return tm;
