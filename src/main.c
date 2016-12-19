@@ -54,7 +54,9 @@ void react_to_keypress(int key_code)
 	printf("received code: %d\n", key_code);
 		
 	struct itimerspec ts = { .it_value.tv_sec = 1, .it_value.tv_nsec = 500000000 };
-	
+        struct dtv_channel_info dci;
+        struct graphics_channel_info gci;
+
 	switch (key_code)
 	{
 	case 2 ... 11:
@@ -69,21 +71,20 @@ void react_to_keypress(int key_code)
 		}
 		printf("selected_channel: %d\n", selected_channel);
 		timer_settime(ch_timer, 0, &reset, NULL);
-		timer_settime(ch_timer, 0, &ts, NULL);
-		
+		timer_settime(ch_timer, 0, &ts, NULL);	
 		break;
 
 	case 62:
                 ++selected_channel;
 		printf("Switching to channel %d\n", selected_channel);
 		
-                dtv_switch_channel(selected_channel);
+                dci = dtv_switch_channel(selected_channel);
 		
 	case 61:
                 --selected_channel;
 		printf("Switching to channel %d\n", selected_channel);
 		
-                dtv_switch_channel(selected_channel);	
+                dci = dtv_switch_channel(selected_channel);	
 	case 63:
 		if (volume < 10)
 			++volume;
