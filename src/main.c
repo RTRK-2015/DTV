@@ -5,6 +5,7 @@
 #include <time.h>
 #include <signal.h>
 #include "common.h"
+#include "graphics.h"
 #include "config.h"
 #include "dtv.h"
 #include "rc.h"

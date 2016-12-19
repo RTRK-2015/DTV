@@ -51,10 +51,6 @@ void graphics_stop()
     end = true;
 }
 
-void handle_signal(int no)
-{
-    exit(0);
-}
 
 void release()
 {
@@ -71,8 +67,6 @@ t_Error graphics_render(int *argc, char ***argv)
             draw_interface.screen_width, draw_interface.screen_height);
 
     atexit(release);
-    signal(SIGINT, handle_signal);
-
 
     do
     {
