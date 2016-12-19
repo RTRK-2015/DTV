@@ -87,14 +87,22 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 
 int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info)
 {
+    const int16_t frame_width = 814;
+    const int16_t frame_height = 314;
     const int16_t window_width = 800;
     const int16_t window_height = 300;
     const int16_t font_height = draw_i->font_height;
-
+    
     const int16_t window_x = draw_i->screen_width - window_width - 20;
     const int16_t window_y = draw_i->screen_height - window_height - 20;
 
-    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 88, 88, 88, 0xff));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 45, 45, 45, 0x88));
+    DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
+                                            window_x - 7,
+                                            window_y - 7,
+                                            frame_width,
+                                            frame_height));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 88, 88, 88, 0x88));
     DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
                                             window_x,
                                             window_y,
@@ -109,7 +117,7 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
     const int16_t offset = 20;
     const int16_t str1_x = window_x + offset;
     const int16_t str1_y = window_y + font_height + offset;
-    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0x10, 0x80, 0x40, 0xff));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0x13, 0x96, 0x14, 0xAA));
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                         ch_num_tel,
                                         -1, 
