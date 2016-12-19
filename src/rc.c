@@ -86,4 +86,3 @@ void rc_stop_loop()
 	stop = true;
 }
 
-
