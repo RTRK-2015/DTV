@@ -229,7 +229,7 @@ const uint16_t* dtv_get_channels()
 }
 
 
-t_Error dtv_switch_channel(uint16_t ch_num)
+struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 {
 	uint16_t pid = UINT16_C(0xFFFF);
 	
@@ -244,7 +244,15 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 	
 	printf("pmt pid: %d\n", pid);
 	if (pid == UINT16_C(0xFFFF))
-		return ERROR;
+        {
+            struct dtv_channel_info channel_info =
+            { .ch_num = ch_num
+            , .vpid = -1
+            , .apid = -1
+            };
+
+            return channel_info;
+        }
 		
 	if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
 		FAIL("%s\n", nameof(Demux_Set_Filter));
@@ -306,7 +314,15 @@ t_Error dtv_switch_channel(uint16_t ch_num)
 			FAIL("%s\n", nameof(Player_Stream_Create));
 		printf("Started audio with pid: %d\n", my_pmt.audio_pid);
 		exit_flags.audio = 1;
-	}	
+	}
+
+        struct dtv_channel_info channel_info =
+        { .ch_num = ch_num
+        , .vpid = my_pmt.video_pid
+        , .apid = my_pmt.audio_pid
+        };
+
+        return channel_info;
 }
 
 
