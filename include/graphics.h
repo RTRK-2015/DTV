@@ -29,8 +29,8 @@ void graphics_show_channel_info(struct graphics_channel_info info);
 void graphics_show_volume(uint8_t vol);
 /// \brief Clears all graphics elements from screen
 void graphics_clear();
-/// \brief Renders graphic elements on screen
-t_Error graphics_render(int *argc, char ***argv);
+/// \brief Starts rendering graphic elements on screen
+void graphics_start_render(int *argc, char ***argv);
 /// \brief Stops graphics_render loop
 void graphics_stop();
 

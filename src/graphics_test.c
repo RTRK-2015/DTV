@@ -13,35 +13,19 @@ struct args
     char ***argvx;
 };
 
-void* render(void *args)
+void handle_signal(int no)
 {
-    struct args *a = (struct args *)args;
-    int argc = *(a->argcx);
-    char **argv = *(a->argvx);
-
-    printf("Enter render thread with args: %d, %s\n", argc, argv[0]);
-    
-    if (graphics_render(&argc, &argv) == ERROR)
-        FAIL("%s", nameof(graphics_render));
-
+    exit(0);
 }
 
 int32_t f(int argc, char **argv)
 {
-    pthread_t th;
-    char c;
-
     printf("main args: %d, %s\n", argc, argv[0]);
 
-    struct args a =
-    {
-        .argcx = &argc,
-        .argvx = &argv
-    };
+    graphics_start_render(&argc, &argv);
+    atexit(graphics_stop);
 
-    pthread_create(&th, NULL, render, &a);
-
-
+    
     for(int i = 0; i < 11; ++i)
     {
         //printf("Show volume %d\n", i);
@@ -57,23 +41,15 @@ int32_t f(int argc, char **argv)
         .teletext = true,
         .vpid = 101,
         .apid = 103
-        /*.tm = 
-        {
-            .tm_sec = 33,
-            .tm_min = 27,
-            .tm_hour = 16,
-            .tm_day = 19,
-            .tm_mon = 9,
-            .tm_year = 116,
-        }*/
     };
-
     info.tm.tm_sec = 33;
     info.tm.tm_min = 27;
     info.tm.tm_hour = 16;
     info.tm.tm_mday = 19;
     info.tm.tm_mon = 9;
     info.tm.tm_year = 116;
+    info.sdt.st = 1;
+    strcpy(info.sdt.name, "La 1");
     sleep(2);
     graphics_show_channel_info(info);
 
@@ -84,10 +60,6 @@ int32_t f(int argc, char **argv)
 
     printf("End\n");
     graphics_stop();
-
-
-    pthread_join(th, NULL);
-
 
     return EXIT_SUCCESS;
 }

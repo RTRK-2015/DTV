@@ -147,7 +147,18 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                          str1_x,
                                          str3_y,
                                          DSTF_LEFT));
+#undef TIME_SIZE
 
+    const char fmt4[] = "S_type: %d, Ch_name: %s";
+    char sdt_str[sizeof(fmt4) + 20];
+    sprintf(sdt_str, fmt4, info.sdt.st, info.sdt.name);
+    const int16_t str4_y = str3_y + font_height + offset;
+    DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
+                                         sdt_str,
+                                         -1,
+                                         str1_x,
+                                         str4_y,
+                                         DSTF_LEFT));
     return EXIT_SUCCESS;
 }
 

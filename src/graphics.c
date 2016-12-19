@@ -1,7 +1,12 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <directfb.h>
+#include <pthread.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "common.h"
 #include "drawing.h"
@@ -11,6 +16,9 @@ struct graphics_flags
 {
     bool info;
     bool volume;
+    bool blackscreen;
+    bool no_channel;
+    bool audio_only;
 };
 
 bool end = false;
@@ -66,10 +74,11 @@ t_Error graphics_render(int *argc, char ***argv)
     printf("Successfully init draw_i, screen width: %d, screen height: %d\n", 
             draw_interface.screen_width, draw_interface.screen_height);
 
-    atexit(release);
-
     do
     {
+        struct timespec tp;
+        clock_gettime(CLOCK_REALTIME, &tp);
+
         if (draw_clear(&draw_interface) < 0)
         {
             release();
@@ -100,7 +109,55 @@ t_Error graphics_render(int *argc, char ***argv)
             return ERROR;
         }
 
+        struct timespec ts;
+        clock_gettime(CLOCK_REALTIME, &ts);
+
+        if (ts.tv_sec - tp.tv_sec == 0 && ts.tv_nsec - tp.tv_nsec < 16000000)
+        {
+            struct timespec tr;
+            tr.tv_sec = ts.tv_sec;
+            tr.tv_nsec = 160000000 - (ts.tv_nsec - tp.tv_nsec);
+            nanosleep(&tr, NULL);
+        }
+
     } while (!end);
+
+    release();
 
     return NO_ERROR;
 }
+
+
+struct args
+{
+    int *argcx;
+    char ***argvx;
+};
+
+static pthread_mutex_t args_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
+
+static void* graphics_render_loop(void *args)
+{
+    struct args a = *(struct args *)args;
+    pthread_cond_signal(&args_cond);
+
+    graphics_render(a.argcx, a.argvx);
+}
+
+void graphics_start_render(int *argc, char ***argv)
+{
+    pthread_t th;
+    struct args a =
+    {
+        .argcx = argc,
+        .argvx = argv
+    };
+
+    if (pthread_create(&th, NULL, graphics_render_loop, (void *)&a) < 0)
+        FAIL_STD("%s\n", nameof(pthread_create));
+
+    pthread_cond_wait(&args_cond, &args_mutex);
+
+}
+
