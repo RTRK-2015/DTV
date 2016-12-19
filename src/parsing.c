@@ -111,3 +111,51 @@ struct pmt parse_pmt(const uint8_t *buffer)
     
     return my_pmt;
 }
+
+
+struct tm parse_tot(const uint8_t *buffer)
+{
+    struct tot_header tot_h = get_tot_header(buffer);
+
+    uint8_t bcd_hour = tot_h.time[2];
+    uint8_t hour = (bcd_hour / 16) * 10 + bcd_hour % 16;
+
+    uint8_t bcd_minute = tot_h.time[3];
+    uint8_t minute = (bcd_minute / 16) * 10 + bcd_minute % 16;
+
+    uint8_t bcd_second = tot_h.time[4];
+    uint8_t second = (bcd_second / 16) * 10 + bcd_second % 16;
+
+    uint16_t date = tot_h.time[0] << 8 + tot_h.time[1];
+
+    struct tot_descriptor_header tot_d_h = get_tot_descriptor_header(buffer);
+    if (tot_d_h.tag == 0x58)
+    {
+        struct tot_descriptor_body tot_d_b = get_tot_descriptor_body(buffer);
+        date += tot_d_b.lto;
+    }
+
+    int yprime = (date - 15078.2) / 365.25;
+    int mprime = (date - 14956.1 - (int)(yprime * 365.25)) / 30.6001;
+    int d = date - (int)(yprime * 365.25) - (int)(mprime * 30.6001);
+
+    int k = (mprime == 14 || mprime == 15);
+    int y = yprime + k;
+    int m = mprime - 1 - k * 12;
+
+    struct tm tm =
+    { .tm_sec = second
+    , .tm_min = minute
+    , .tm_hour = hour
+    , .tm_mday = d
+    , .tm_mon = m - 1
+    , .tm_year = y - 1900
+    };
+
+    char buf[100] = "";
+    strftime(buf, 100, "Time: %F:%R", &tm);
+    puts(buf);
+
+    return tm;
+}
+

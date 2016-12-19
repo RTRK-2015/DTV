@@ -5,6 +5,7 @@
 // C includes
 #include <stdlib.h>
 #include <stdint.h>
+#include <time.h>
 
 
 struct pmt;
@@ -33,9 +34,9 @@ struct pmt
 };
 
 
-
 struct pat parse_pat(const uint8_t *buffer);
 struct pmt parse_pmt(const uint8_t *buffer);
+struct tm  parse_tot(const uint8_t *buffer);
 
 
 #endif

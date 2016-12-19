@@ -6,6 +6,7 @@
 
 
 #include <stdint.h>
+#include <time.h>
 #include <inttypes.h>
 #include "tdp_api.h"
 #include "config.h"
@@ -23,6 +24,8 @@ t_Error dtv_switch_channel(uint16_t ch_num);
 /// \brief Tries to set the volume to the desired value.
 /// \param vol Desired volume, should be [0-10].
 t_Error dtv_set_volume(uint8_t vol);
+/// \brief Gets the time information
+struct tm dtv_get_time();
 /// \brief Deinitializes the internal DTV state.
 void dtv_deinit();
 

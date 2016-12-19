@@ -28,6 +28,9 @@ static pthread_mutex_t pat_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t pmt_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t pmt_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+static pthread_cond_t tot_cond = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t tot_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 static Demux_Section_Filter_Callback current_callback = NULL;
 
 
@@ -72,34 +75,40 @@ static int32_t status_callback(t_LockStatus status)
 static struct pat my_pat;
 static int32_t pat_callback(uint8_t *buffer)
 {
-    if (buffer[0] == 0x00)
-    {
-        printf("Parsing pat...\n");
-        my_pat = parse_pat(buffer);
-        Demux_Free_Filter(player_handle, filter_handle);
-    }
+    printf("Parsing pat...\n");
+    my_pat = parse_pat(buffer);
+    Demux_Free_Filter(player_handle, filter_handle);
 
-	printf("Found pat\n");
-	for (size_t i = 0; i < my_pat.pmt_len; ++i)
-		printf("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
+    printf("Found pat\n");
+    for (size_t i = 0; i < my_pat.pmt_len; ++i)
+	printf("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
+
     pthread_cond_signal(&pat_cond);
 }
 
 static struct pmt my_pmt;
 static int32_t pmt_callback(uint8_t *buffer)
 {
-	if (buffer[0] = 0x02)
-	{
-		printf("Parsing pmt...\n");
-		my_pmt = parse_pmt(buffer);
-		Demux_Free_Filter(player_handle, filter_handle);
-	}
+    printf("Parsing pmt...\n");
+    my_pmt = parse_pmt(buffer);
+    Demux_Free_Filter(player_handle, filter_handle);
 	
-	printf("Found pmt\n");
-	printf("audio_pid: %d\n", my_pmt.audio_pid);
-	printf("video_pid: %d\n", my_pmt.video_pid);
+    printf("Found pmt\n");
+    printf("audio_pid: %d\n", my_pmt.audio_pid);
+    printf("video_pid: %d\n", my_pmt.video_pid);
 
-	pthread_cond_signal(&pmt_cond);
+    pthread_cond_signal(&pmt_cond);
+}
+
+
+static struct tm my_tm;
+static int32_t tot_callback(uint8_t *buffer)
+{
+    printf("Parsing tot...\n");
+    my_tm = parse_tot(buffer);
+    Demux_Free_Filter(player_handle, filter_handle);
+
+    pthread_cond_signal(&tot_cond);
 }
 
 
@@ -293,6 +302,27 @@ t_Error dtv_set_volume(uint8_t vol)
 		return ERROR;
 
 	return Player_Volume_Set(player_handle, vol);
+}
+
+
+struct tm dtv_get_time()
+{
+    if (Demux_Set_Filter(player_handle, 0x0014, 0x73, &filter_handle) == ERROR)
+        FAIL("%s\n", nameof(Demux_Set_Filter));
+
+    if (Demux_Register_Section_Filter_Callback(tot_callback) == ERROR)
+        FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
+    current_callback = tot_callback;
+    exit_flags.demux_callback = 1;
+
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    ts.tv_sec += 5;
+
+    if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) < 0)
+        FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
+
+    return my_tm;
 }
 
 

@@ -96,23 +96,35 @@ struct sdt_descriptor1 get_sdt_descriptor1(const uint8_t *buffer)
 
 struct sdt_descriptor2 get_sdt_descriptor2(const uint8_t *buffer)
 {
-	return *(const struct sdt_descriptor2 *)buffer;
-}
-
-
-struct tdt get_tdt(const uint8_t *buffer)
-{
-	return *(const struct tdt *)buffer;
+    return *(const struct sdt_descriptor2 *)buffer;
 }
 
 
 struct tot_header get_tot_header(const uint8_t *buffer)
 {
-	struct tot_header tot_h =
-		*(const struct tot_header *)buffer;
-		
-	tot_h.b1u.bitfield1 = ntohs(tot_h.b1u.bitfield1);
+    struct tot_header tot_h =
+        *(const struct tot_header *)buffer;
+
+    fix_table_header(&tot_h.hdr);
+    tot_h.b1u.bitfield1 = ntohs(tot_h.b1u.bitfield1);
 	
-	return tot_h;
+    return tot_h;
+}
+
+
+struct tot_descriptor_header get_tot_descriptor_header(const uint8_t *buffer)
+{
+    return *(const struct tot_descriptor_header *)buffer;
+}
+
+
+struct tot_descriptor_body get_tot_descriptor_body(const uint8_t *buffer)
+{
+    struct tot_descriptor_body tot_d_b =
+        *(const struct tot_descriptor_body *)buffer;
+
+    tot_d_b.b1u.bitfield1 = ntohl(tot_d_b.b1u.bitfield1);
+
+    return tot_d_b;
 }
 

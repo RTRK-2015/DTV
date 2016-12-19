@@ -148,6 +148,8 @@ int main(int argc, char **argv)
 	
 	rc_start_loop("/dev/input/event0", react_to_keypress);
 	atexit(rc_stop_loop);
-	
+
+        dtv_get_time();
+
 	while (true);
 }
