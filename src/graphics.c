@@ -22,6 +22,8 @@ struct draw_interface draw_interface =
     .dfb_interface = NULL,
     .screen_width = 0,
     .screen_height = 0,
+    .vol_surfaces = { NULL },
+    .font_interface = NULL
 };
 
 struct graphics_channel_info to_draw_info;

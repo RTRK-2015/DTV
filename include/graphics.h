@@ -6,6 +6,7 @@
 
 
 #include <stdbool.h>
+#include <time.h>
 #include "tdp_api.h"
 
 
@@ -13,9 +14,10 @@
 struct graphics_channel_info
 {
 	uint16_t ch_num; ///< The number of the channel.
-	bool teletex; ///< Whether the channel has teletext.
+	bool teletext; ///< Whether the channel has teletext.
 	uint16_t vpid; ///< The video PID of the channel.
 	uint16_t apid; ///< The audio PID of the channel.
+        struct tm tm;
 };
 
 

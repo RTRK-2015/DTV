@@ -15,10 +15,12 @@ struct draw_interface
 {
     IDirectFBSurface *surface; ///< Surface on which to draw
     IDirectFB *dfb_interface; ///< Main DFB interface
-    int screen_width;
-    int screen_height;
-    DFBSurfaceDescription surface_desc;
-    //TODO: add volume images to interface and update draw_init
+    int32_t screen_width;
+    int32_t screen_height;
+    DFBSurfaceDescription surface_desc;    
+    IDirectFBSurface *vol_surfaces[11];
+    IDirectFBFont *font_interface;
+    int16_t font_height;
 };
 
 /// \brief Initialize drawing interface
