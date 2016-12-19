@@ -26,7 +26,7 @@ void* render(void *args)
 
 }
 
-int32_t main(int argc, char **argv)
+int32_t f(int argc, char **argv)
 {
     pthread_t th;
     char c;

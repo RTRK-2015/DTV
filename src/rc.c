@@ -83,6 +83,6 @@ void rc_start_loop(const char *dev, rc_key_callback kc)
 
 void rc_stop_loop()
 {
-	stop = true;
+    stop = true;
 }
 

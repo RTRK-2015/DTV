@@ -128,6 +128,22 @@ static int32_t sdt_callback(uint8_t *buffer)
 }
 
 
+static uint16_t *channels = NULL;
+const void dtv_get_channels()
+{
+    if (channels == NULL)
+    {
+        channels = (uint16_t *)malloc((my_pat.pmt_len + 1) * sizeof(uint16_t));
+        if (channels == NULL)
+            FAIL_STD("%s\n", nameof(malloc));
+
+        for (size_t i = 0; i < my_pat.pmt_len; ++i)
+            channels[i] = my_pat.pmts[i].ch_num;
+        channels[my_pat.pmt_len] = END_OF_CHANNELS;
+    }
+}
+
+
 void dtv_init(struct config_init_ch_info init_info)
 {
     // Tuner
@@ -208,24 +224,8 @@ void dtv_init(struct config_init_ch_info init_info)
     	, &audio_handle
     	) == ERROR)
     	FAIL("%s\n", nameof(Player_Stream_Create));
-}
 
-
-static uint16_t *channels = NULL;
-const uint16_t* dtv_get_channels()
-{
-    if (channels == NULL)
-    {
-        channels = (uint16_t *)malloc((my_pat.pmt_len + 1) * sizeof(uint16_t));
-        if (channels == NULL)
-            FAIL_STD("%s\n", nameof(malloc));
-
-        for (size_t i = 0; i < my_pat.pmt_len; ++i)
-            channels[i] = my_pat.pmts[i].ch_num;
-        channels[my_pat.pmt_len] = END_OF_CHANNELS;
-    }
-
-    return channels;
+    dtv_get_channels();
 }
 
 

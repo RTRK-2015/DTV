@@ -25,8 +25,6 @@ struct dtv_channel_info
 
 /// \brief Function that initializes internal DTV state.
 void dtv_init(struct config_init_ch_info init_info);
-/// \brief Returns a pointer to the array of program (channel) numbers.
-const uint16_t* dtv_get_channels();
 /// \brief Tries to switch to the desired channel.
 struct dtv_channel_info dtv_switch_channel(uint16_t ch_num);
 /// \brief Tries to set the volume to the desired value.

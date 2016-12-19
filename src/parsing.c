@@ -126,7 +126,7 @@ struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
     while (current_ptr < end_ptr)
     {
         struct sdt_body sdt_b = get_sdt_body(current_ptr);
-
+        printf("sid: %d\n", sdt_b.sid);
         if (sdt_b.sid == ch_num)
         {
             printf("Found appropriate sdt\n");
@@ -136,21 +136,21 @@ struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
             printf("Service type: %d\n", sdt_d1.type);
             my_sdt.st = sdt_d1.type;
 
-            current_ptr += sizeof(sdt_d1) - 1 + sdt_d1.spnlen;
+            current_ptr += sizeof(sdt_d1) + sdt_d1.spnlen;
             struct sdt_descriptor2 sdt_d2 = get_sdt_descriptor2(current_ptr);
             current_ptr += sizeof(sdt_d2);
-            for (int i = 1; ; ++i)
-            {
-                if (current_ptr[i] == 1)
-                    break;
-                else
-                    my_sdt.name[i - 1] = current_ptr[i];
-            }
+            
+            printf("snlen: %d\n", sdt_d2.snlen);
+            strncpy(my_sdt.name, current_ptr, sdt_d2.snlen);
+            my_sdt.name[sdt_d2.snlen] = '\0';
+            printf("Name: %s\n", my_sdt.name);
+
+            current_ptr += sdt_d2.snlen;
             break;
         }
         else
         {
-            current_ptr += sizeof(sdt_b) + sdt_b.b2u.b2s.dlen - 2;
+            current_ptr += sizeof(sdt_b) + sdt_b.b2u.b2s.dlen;
         }
     }
 
