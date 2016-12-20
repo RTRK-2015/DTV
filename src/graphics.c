@@ -212,6 +212,8 @@ t_Error graphics_render(int *argc, char ***argv)
 
     } while (!end);
 
+    printf("Finish render loop\n");
+
     release();
 
     return NO_ERROR;
@@ -254,6 +256,7 @@ void graphics_start_render(int *argc, char ***argv)
 
 void graphics_stop()
 {
+    printf("Stopping graphics\n");
     end = true;
     pthread_join(th, NULL);
 }
