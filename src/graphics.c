@@ -45,17 +45,16 @@ void graphics_show_channel_info(struct graphics_channel_info info)
     if (to_draw_info.vpid == (uint16_t)-1 && to_draw_info.apid == (uint16_t)-1)
     {
         printf("No channel\n");
-        gf.audio_only = false;
         gf.no_channel = true;
     }
     else if (to_draw_info.vpid == (uint16_t)-1)
     {
         printf("Audio only\n");
-        gf.no_channel = false;
         gf.audio_only = true;
     }
     else
     {
+        printf("Normal\n");
         gf.no_channel = false;
         gf.audio_only = false;
     }
@@ -205,7 +204,7 @@ t_Error graphics_render(int *argc, char ***argv)
             struct timespec tr;
             tr.tv_sec = ts.tv_sec;
             tr.tv_nsec = 160000000 - (ts.tv_nsec - tp.tv_nsec);
-            nanosleep(&tr, NULL);
+            //nanosleep(&tr, NULL);
         }
 
     } while (!end);
