@@ -29,6 +29,9 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv);
 /// \brief Draw channel_info graphics element
 int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info);
 
+/// \brief Display time
+int32_t draw_time(struct draw_interface *draw_i, struct tm tm);
+
 /// \brief Draw volume graphics element
 int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol);
 

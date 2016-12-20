@@ -14,6 +14,37 @@ if (err != DFB_OK)                                           \
     }                                                        \
 }                                                           
 
+
+struct color
+{
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+    uint8_t a;
+};
+
+struct color frame_color =
+{
+    .r = 45,
+    .g = 45,
+    .b = 45,
+    .a = 0xAA
+};
+struct color back_color =
+{
+    .r = 88,
+    .g = 88,
+    .b = 88,
+    .a = 0xAA
+};
+struct color text_color =
+{
+    .r = 0x13,
+    .g = 0x96,
+    .b = 0x14,
+    .a = 0xAA
+};
+
 int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 {
     printf("Try DFBInit with args: %d, %s\n", *argc, *argv[0]);
@@ -87,22 +118,31 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 
 int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info)
 {
-    const int16_t frame_width = 814;
-    const int16_t frame_height = 314;
     const int16_t window_width = 800;
-    const int16_t window_height = 200;
+    const int16_t window_height = 225;
+    const int16_t border = 7;
+    const int16_t frame_width = window_width + 2 * border;
+    const int16_t frame_height = window_height + 2 * border;
     const int16_t font_height = draw_i->font_height;
     
     const int16_t window_x = draw_i->screen_width - window_width - 20;
     const int16_t window_y = draw_i->screen_height - window_height - 20;
 
-    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 45, 45, 45, 0x88));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface,
+                                       frame_color.r,
+                                       frame_color.g,
+                                       frame_color.b,
+                                       frame_color.a));
     DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
-                                            window_x - 7,
-                                            window_y - 7,
+                                            window_x - border,
+                                            window_y - border,
                                             frame_width,
                                             frame_height));
-    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 88, 88, 88, 0x88));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 
+                                       back_color.r,
+                                       back_color.g,
+                                       back_color.b,
+                                       back_color.a));
     DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
                                             window_x,
                                             window_y,
@@ -116,8 +156,12 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
 
     const int16_t offset = 20;
     const int16_t str_x = window_x + offset;
-    const int16_t str1_y = window_y + font_height + offset;
-    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0x13, 0x96, 0x14, 0xAA));
+    const int16_t str1_y = window_y + font_height;
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 
+                                       text_color.r,
+                                       text_color.g,
+                                       text_color.b,
+                                       text_color.a));
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                         ch_num_tel,
                                         -1, 
@@ -136,9 +180,9 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                          str2_y,
                                          DSTF_LEFT));
 
-    const char fmt4[] = "S_type: %d, Ch_name: %s";
-    char sdt_str[sizeof(fmt4) + 20];
-    sprintf(sdt_str, fmt4, info.sdt.st, info.sdt.name);
+    const char fmt3[] = "S_type: %d, Ch_name: %s";
+    char sdt_str[sizeof(fmt3) + 20];
+    sprintf(sdt_str, fmt3, info.sdt.st, info.sdt.name);
     const int16_t str3_y = str2_y + font_height + offset;
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                          sdt_str,
@@ -146,6 +190,61 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                          str_x,
                                          str3_y,
                                          DSTF_LEFT));
+    return EXIT_SUCCESS;
+}
+
+int32_t draw_time(struct draw_interface *draw_i, struct tm tm)
+{
+    const int16_t window_width = 600;
+    const int16_t window_height = 70;
+    const int16_t offset = 20;
+    const int16_t window_x = offset;
+    const int16_t window_y = draw_i->screen_height - window_height - offset;
+    const int16_t border = 7;
+    const int16_t frame_width = window_width + 2 * border;
+    const int16_t frame_height = window_height + 2 * border;
+
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface,
+                                       frame_color.r,
+                                       frame_color.g,
+                                       frame_color.b,
+                                       frame_color.a));
+    DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
+                                            window_x - border,
+                                            window_y - border,
+                                            frame_width,
+                                            frame_height));
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 
+                                       back_color.r,
+                                       back_color.g,
+                                       back_color.b,
+                                       back_color.a));
+    DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
+                                            window_x,
+                                            window_y,
+                                            window_width,
+                                            window_height));
+
+    const char fmt[]= "%FT%T";
+#define TIME_SIZE 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 +1
+    char time_str[TIME_SIZE];
+    strftime(time_str, TIME_SIZE, fmt, &tm);
+    const int16_t font_height = draw_i->font_height;
+    const int16_t str_x = window_x + offset;
+    const int16_t str_y = window_y + font_height;
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface,
+                                       text_color.r,
+                                       text_color.g,
+                                       text_color.b,
+                                       text_color.a));
+    DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
+                                         time_str,
+                                         -1,
+                                         str_x,
+                                         str_y,
+                                         DSTF_LEFT));
+#undef TIME_SIZE
+
     return EXIT_SUCCESS;
 }
 
@@ -170,6 +269,15 @@ int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
 
 int32_t draw_blackscreen(struct draw_interface *draw_i)
 {
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0, 0, 0, 0xff));
+    DFBCHECK(draw_i->surface->FillRectangle(draw_i->surface,
+                                            0,
+                                            0,
+                                            draw_i->screen_width,
+                                            draw_i->screen_height));
+
+    return EXIT_SUCCESS;
+                                            
 }
 
 int32_t draw_clear(struct draw_interface *draw_i)

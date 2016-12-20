@@ -134,6 +134,15 @@ t_Error graphics_render(int *argc, char ***argv)
             }
         }
 
+        if (gf.time)
+        {
+            if (draw_time(&draw_interface, to_draw_tm) < 0)
+            {
+                release();
+                return ERROR;
+            }
+        }
+
         if (draw_refresh(&draw_interface) < 0)
         {
             release();
