@@ -410,10 +410,8 @@ int32_t draw_refresh(struct draw_interface *draw_i)
 
 int32_t draw_deinit(struct draw_interface *draw_i)
 {
-    printf("Releasing surface\n");
-    draw_i->surface->Release(draw_i->surface);
-    printf("Releasing DFB interface\n");
-    draw_i->dfb_interface->Release(draw_i->dfb_interface);
+    printf("Releasing font interface\n");
+    draw_i->font_interface->Release(draw_i->font_interface);
 
     for (uint8_t i = 0; i < 11; ++i)
     {
@@ -421,9 +419,12 @@ int32_t draw_deinit(struct draw_interface *draw_i)
         draw_i->vol_surfaces[i]->Release(draw_i->vol_surfaces[i]);
     }
     
-    printf("Releasing font interface\n");
-    draw_i->font_interface->Release(draw_i->font_interface);
+    printf("Releasing surface\n");
+    draw_i->surface->Release(draw_i->surface);
 
+    printf("Releasing DFB interface\n");
+    draw_i->dfb_interface->Release(draw_i->dfb_interface);
+    
     return EXIT_SUCCESS;
 }
 
