@@ -80,6 +80,7 @@ struct pmt parse_pmt(const uint8_t *buffer)
     struct pmt my_pmt = 
     { .video_pid = UINT16_C(0xFFFF)
     , .audio_pid = UINT16_C(0xFFFF)
+    , .teletext = false
     };
 
 
@@ -99,9 +100,21 @@ struct pmt parse_pmt(const uint8_t *buffer)
 		printf("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
 		
         if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
+        {
             my_pmt.video_pid = pmt_b.b1u.b1s.pid;
+        }
         else if (pmt_b.type == 0x03 && my_pmt.audio_pid == UINT16_C(0xFFFF))
+        {
             my_pmt.audio_pid = pmt_b.b1u.b1s.pid;
+        }
+        else if (pmt_b.type == 0x06 && !my_pmt.teletext)
+        {
+            if (current_ptr[sizeof(struct pmt_body)] == 0x56)
+            {
+                printf("FOUND TELETEXT!\n");
+                my_pmt.teletext = true;
+            }
+        }
 
         // Advance the current_ptr by the size of the body section
         // and the size of the descriptors section that belongs to every
@@ -141,7 +154,7 @@ struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
             current_ptr += sizeof(sdt_d2);
             
             printf("snlen: %d\n", sdt_d2.snlen);
-            strncpy(my_sdt.name, current_ptr, sdt_d2.snlen);
+            strncpy(my_sdt.name, (const char*)current_ptr, sdt_d2.snlen);
             my_sdt.name[sdt_d2.snlen] = '\0';
             printf("Name: %s\n", my_sdt.name);
 

@@ -29,4 +29,4 @@ TARGET_LINK_LIBRARIES("${PROJECT_NAME}" PUBLIC
     "OSAL"
     "shm"
     "PEAgent")
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $ENV{CFLAGS} -std=c99 --sysroot=$ENV{SDK_ROOTFS} -D__LINUX__ -O0 -Wno-psabi")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $ENV{CFLAGS} -Wall -Wextra -Wno-missing-field-initializers -std=c99 --sysroot=$ENV{SDK_ROOTFS} -D__LINUX__ -O0 -Wno-psabi")

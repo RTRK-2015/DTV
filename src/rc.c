@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L
 // Matching include
 #include "rc.h"
 // C includes
@@ -6,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 // Unix includes
 #include <fcntl.h>
 #include <pthread.h>
@@ -14,6 +16,13 @@
 #include <linux/input.h>
 // Local includes
 #include "common.h"
+
+
+#define EVENT_KEY_PRESS 1
+#define EVENT_KEY_AUTOREPEAT 2
+
+
+static pthread_t event_th;
 
 
 static ssize_t get_keys(int fd, size_t count, char *buf)
@@ -39,25 +48,28 @@ static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
 bool stop = false;
 static void* event_loop(void *args)
 {
-    static const size_t NUM_EVENTS = 5;
     struct args a = *(struct args *)args;
     pthread_cond_signal(&args_cond);
 
-    struct input_event *event_buffer =
-        malloc(NUM_EVENTS * sizeof(struct input_event));
+    struct input_event *event_buffer = malloc(sizeof(struct input_event));
     if (event_buffer == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
-    while (!stop)
+    while (true)
     {
-        ssize_t event_count = get_keys(a.fd, NUM_EVENTS, (char *)event_buffer);
+        ssize_t event_count = get_keys(a.fd, 1, (char *)event_buffer);
 
-        for (size_t i = 0; i < event_count; ++i)
+        if (event_count > 0)
         {
-        	if (event_buffer[i].value == 1)
-            	a.kc(event_buffer[i].code);
+            if (event_buffer->value == EVENT_KEY_PRESS
+                || event_buffer->value == EVENT_KEY_AUTOREPEAT)
+            {
+            	    a.kc(event_buffer->code);
+            }
         }
     }
+
+    return NULL;
 }
 
 
@@ -73,8 +85,7 @@ void rc_start_loop(const char *dev, rc_key_callback kc)
 
     struct args a = { .fd = fd, .kc = kc };
 
-    pthread_t loop_thread;
-    if (pthread_create(&loop_thread, NULL, event_loop, (void *)&a) < 0)
+    if (pthread_create(&event_th, NULL, event_loop, (void *)&a) > 0)
         FAIL_STD("%s\n", nameof(pthread_create));
 
     pthread_cond_wait(&args_cond, &args_mutex);
@@ -83,6 +94,7 @@ void rc_start_loop(const char *dev, rc_key_callback kc)
 
 void rc_stop_loop()
 {
-    stop = true;
+    printf("Stopping event loop\n");
+    pthread_cancel(event_th);
 }
 

@@ -5,6 +5,7 @@
 #define DTV_H
 
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <time.h>
 #include <inttypes.h>
@@ -21,6 +22,7 @@ struct dtv_channel_info
     uint16_t ch_num;
     uint16_t vpid;
     uint16_t apid;
+    bool teletext;
 };
 
 /// \brief Function that initializes internal DTV state.

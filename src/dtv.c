@@ -34,20 +34,18 @@ static pthread_mutex_t tot_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t sdt_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t sdt_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static Demux_Section_Filter_Callback current_callback = NULL;
-
-
 static uint16_t sdt_ch_num;
 
 static uint32_t
     player_handle,
     source_handle,
     filter_handle,
+    tot_handle,
     video_handle,
     audio_handle;
 
 
-struct
+static struct
 {
     uint32_t tuner : 1;
     uint32_t tuner_callback : 1;
@@ -59,77 +57,79 @@ struct
 
     uint32_t video : 1;
     uint32_t audio : 1;
-} static exit_flags;
+} exit_flags;
 
 
 
 static int32_t status_callback(t_LockStatus status)
 {
     static size_t tries = 0;
-    const static size_t max_tries = 2;
+    static const size_t max_tries = 2;
 
-    printf("Locking: %zu. try (of %zu)\n", tries + 1, max_tries) + 1;
+    printf("Locking: %zu. try (of %zu)\n", tries + 1, max_tries + 1);
 
     if (status == STATUS_LOCKED)
         pthread_cond_signal(&status_cond);
     else if (tries++ == max_tries)
         FAIL("%s\n", nameof(status_callback));
+
+    return 0;
 }
 
 
 static struct pat my_pat;
-static int32_t pat_callback(uint8_t *buffer)
-{
-    printf("Parsing pat...\n");
-    my_pat = parse_pat(buffer);
-    Demux_Free_Filter(player_handle, filter_handle);
-
-    printf("Found pat\n");
-    for (size_t i = 0; i < my_pat.pmt_len; ++i)
-	printf("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
-
-    pthread_cond_signal(&pat_cond);
-}
-
 static struct pmt my_pmt;
-static int32_t pmt_callback(uint8_t *buffer)
-{
-    printf("Parsing pmt...\n");
-    my_pmt = parse_pmt(buffer);
-    Demux_Free_Filter(player_handle, filter_handle);
-	
-    printf("Found pmt\n");
-    printf("audio_pid: %d\n", my_pmt.audio_pid);
-    printf("video_pid: %d\n", my_pmt.video_pid);
-
-    pthread_cond_signal(&pmt_cond);
-}
-
-
 static struct tm my_tm;
-static int32_t tot_callback(uint8_t *buffer)
-{
-    printf("Parsing tot...\n");
-    my_tm = parse_tot(buffer);
-    Demux_Free_Filter(player_handle, filter_handle);
-
-    pthread_cond_signal(&tot_cond);
-}
-
-
 static struct sdt my_sdt;
-static int32_t sdt_callback(uint8_t *buffer)
+static int32_t filter_callback(uint8_t *buffer)
 {
-    printf("Parsing sdt...\n");
-    my_sdt = parse_sdt(buffer, sdt_ch_num);
-    Demux_Free_Filter(player_handle, filter_handle);
+    if (buffer[0] == 0x00)
+    {
+        printf("Parsing pat...\n");
+        my_pat = parse_pat(buffer);
+        Demux_Free_Filter(player_handle, filter_handle);
 
-    pthread_cond_signal(&sdt_cond);
+        printf("Found pat\n");
+        for (size_t i = 0; i < my_pat.pmt_len; ++i)
+	    printf("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
+
+        pthread_cond_signal(&pat_cond);
+    }
+    else if (buffer[0] == 0x02)
+    {
+        printf("Parsing pmt...\n");
+        my_pmt = parse_pmt(buffer);
+        Demux_Free_Filter(player_handle, filter_handle);
+	
+        printf("Found pmt\n");
+        printf("audio_pid: %d\n", my_pmt.audio_pid);
+        printf("video_pid: %d\n", my_pmt.video_pid);
+
+        pthread_cond_signal(&pmt_cond);
+    }
+    else if (buffer[0] == 0x73)
+    {
+        printf("Parsing tot...\n");
+        my_tm = parse_tot(buffer);
+        Demux_Free_Filter(player_handle, tot_handle);
+
+        pthread_cond_signal(&tot_cond);
+    }
+    else if (buffer[0] == 0x42)
+    {
+        printf("Parsing sdt...\n");
+        my_sdt = parse_sdt(buffer, sdt_ch_num);
+        Demux_Free_Filter(player_handle, filter_handle);
+
+        pthread_cond_signal(&sdt_cond);
+    }
+
+    return 0;
 }
 
 
 static uint16_t *channels = NULL;
-const void dtv_get_channels()
+void dtv_get_channels()
 {
     if (channels == NULL)
     {
@@ -169,7 +169,7 @@ void dtv_init(struct config_init_ch_info init_info)
     clock_gettime(CLOCK_REALTIME, &ts_status);
     ts_status.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&status_cond, &status_mutex, &ts_status) < 0)
+    if (pthread_cond_timedwait(&status_cond, &status_mutex, &ts_status) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 
     printf("Initializing player...\n");
@@ -189,22 +189,16 @@ void dtv_init(struct config_init_ch_info init_info)
         FAIL("%s\n", nameof(Demux_Set_Filter));
 
     printf("Registering PAT callback...\n");
-    if (Demux_Register_Section_Filter_Callback(pat_callback) == ERROR)
+    if (Demux_Register_Section_Filter_Callback(filter_callback) == ERROR)
         FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
-    current_callback = pat_callback;
     exit_flags.demux_callback = 1;
 
     struct timespec ts_pat;
     clock_gettime(CLOCK_REALTIME, &ts_pat);
     ts_pat.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) < 0)
+    if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) > 0)
         FAIL("%s\n", nameof(pthread_cond_timedwait));
-
-    if (Demux_Unregister_Section_Filter_Callback(pat_callback) == ERROR)
-    	FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
-    current_callback = NULL;
-    exit_flags.demux_callback = 0;
     
     if (Player_Stream_Create
     	( player_handle
@@ -235,11 +229,11 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 	
 	for (size_t i = 0; i < my_pat.pmt_len; ++i)
 	{
-		if (my_pat.pmts[i].ch_num == ch_num)
-		{
-			pid = my_pat.pmts[i].pid;
-			break;
-		}
+	    if (my_pat.pmts[i].ch_num == ch_num)
+	    {
+		pid = my_pat.pmts[i].pid;
+		break;
+	    }
 	}
 	
 	printf("pmt pid: %d\n", pid);
@@ -249,6 +243,7 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
             { .ch_num = ch_num
             , .vpid = -1
             , .apid = -1
+            , .teletext = false
             };
 
             return channel_info;
@@ -257,32 +252,28 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 	if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
 		FAIL("%s\n", nameof(Demux_Set_Filter));
 		
-	if (Demux_Register_Section_Filter_Callback(pmt_callback) == ERROR)
-		FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
-	current_callback = pmt_callback;
-	exit_flags.demux_callback = 1;
-	
 	struct timespec ts;
 	clock_gettime(CLOCK_REALTIME, &ts);
 	ts.tv_sec += 5;
 	
-	if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) < 0)
+	if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) > 0)
 		FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 	printf("Got pmt\n");
 	
-	if (Demux_Unregister_Section_Filter_Callback(pmt_callback) == ERROR)
-		FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
-	exit_flags.demux_callback = 0;
-
-	if (video_handle != -1 &&
-		Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
+        printf("Video handle: %d\n", video_handle);
+	if (video_handle != (uint32_t)-1)
+        {
+            printf("%d != %d\n", video_handle, (uint32_t)-1);
+	    if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
 		FAIL("%s\n", nameof(Player_Stream_Remove));
+        }
 	exit_flags.video = 0;
 	video_handle = -1;
 	printf("Removed video\n");
 	
-	if (audio_handle != - 1 &&
-		Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
+        printf("Audio handle: %d\n", audio_handle);
+	if (audio_handle != (uint32_t)-1)
+	    if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
 		FAIL("%s\n", nameof(Player_Stream_Remove));
 	exit_flags.audio = 0;
 	audio_handle = -1;
@@ -320,6 +311,7 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
         { .ch_num = ch_num
         , .vpid = my_pmt.video_pid
         , .apid = my_pmt.audio_pid
+        , .teletext = my_pmt.teletext
         };
 
         return channel_info;
@@ -339,25 +331,15 @@ t_Error dtv_set_volume(uint8_t vol)
 
 struct tm dtv_get_time()
 {
-    if (Demux_Set_Filter(player_handle, 0x0014, 0x73, &filter_handle) == ERROR)
+    if (Demux_Set_Filter(player_handle, 0x0014, 0x73, &tot_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_Filter));
-
-    if (Demux_Register_Section_Filter_Callback(tot_callback) == ERROR)
-        FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
-    current_callback = tot_callback;
-    exit_flags.demux_callback = 1;
 
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
-    ts.tv_sec += 5;
+    ts.tv_sec += 30;
 
-    if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) < 0)
+    if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
-
-    if (Demux_Unregister_Section_Filter_Callback(tot_callback) == ERROR)
-        FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
-    current_callback = NULL;
-    exit_flags.demux_callback = 0;
 
     return my_tm;
 }
@@ -370,50 +352,66 @@ struct sdt dtv_get_info(uint16_t ch_num)
     if (Demux_Set_Filter(player_handle, 0x0011, 0x42, &filter_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_FilteR));
 
-    if (Demux_Register_Section_Filter_Callback(sdt_callback) == ERROR)
-        FAIL("%s\n", nameof(Demux_Register_Section_Filter_Callback));
-    current_callback = sdt_callback;
-    exit_flags.demux_callback = 1;
-
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&sdt_cond, &sdt_mutex, &ts) < 0)
+    if (pthread_cond_timedwait(&sdt_cond, &sdt_mutex, &ts) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
 
-    if (Demux_Unregister_Section_Filter_Callback(sdt_callback) == ERROR)
-        FAIL("%s\n", nameof(Demux_Unregister_Section_Filter_Callback));
-    current_callback = NULL;
-    exit_flags.demux_callback = 0;
-    
     return my_sdt;
 }
 
 
 void dtv_deinit()
 {
-	if (channels != NULL)
-		free(channels);
+    printf("DTV Deinit\n");
+
+    if (channels != NULL)
+    {
+        printf("Freeing channels\n");
+	free(channels);
+    }
 
     if (exit_flags.video)
+    {
+        printf("Removing video\n");
         Player_Stream_Remove(player_handle, source_handle, video_handle);
+    }
     if (exit_flags.audio)
+    {
+        printf("Removing audio\n");
         Player_Stream_Remove(player_handle, source_handle, audio_handle);
+    }
 
-    if (exit_flags.demux_callback && current_callback != NULL)
-        Demux_Unregister_Section_Filter_Callback(current_callback);
+    if (exit_flags.demux_callback)
+    {
+        printf("Unregistering filter callback\n");
+        Demux_Unregister_Section_Filter_Callback(filter_callback);
+    }
 
     if (exit_flags.source)
+    {
+        printf("Closing source\n");
         Player_Source_Close(player_handle, source_handle);
+    }
 
     if (exit_flags.player)
+    {
+        printf("Deinitializing player\n");
         Player_Deinit(player_handle);
+    }
 
     if (exit_flags.tuner_callback)
+    {
+        printf("Unregistering tuner callback\n");
         Tuner_Unregister_Status_Callback(status_callback);
+    }
     if (exit_flags.tuner)
+    {
+        printf("Deinitializing tuner\n");
         Tuner_Deinit();
+    }
 }
 
 

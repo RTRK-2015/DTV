@@ -4,7 +4,6 @@
 
 // C includes
 #include <stdint.h>
-// Local includes
 
 
 struct table_header
@@ -131,6 +130,13 @@ struct pmt_body
 } __attribute__((packed));
 
 
+struct teletext_descriptor_header
+{
+    uint8_t tag;
+    uint8_t len;
+};
+
+
 struct sdt_header
 {
     struct table_header hdr;
@@ -247,6 +253,7 @@ struct pat_body get_pat_body(const uint8_t *buffer);
 
 struct pmt_header get_pmt_header(const uint8_t *buffer);
 struct pmt_body get_pmt_body(const uint8_t *buffer);
+struct teletext_descriptor_header get_teletext_descriptor_header(const uint8_t *buffer);
 
 struct sdt_header get_sdt_header(const uint8_t *buffer);
 struct sdt_body get_sdt_body(const uint8_t *buffer);

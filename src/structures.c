@@ -63,6 +63,12 @@ struct pmt_body get_pmt_body(const uint8_t *buffer)
 }
 
 
+struct teletext_descriptor_header get_teletext_descriptor_header(const uint8_t *buffer)
+{
+    return *(const struct teletext_descriptor_header *)buffer;
+}
+
+
 struct sdt_header get_sdt_header(const uint8_t *buffer)
 {
 	struct sdt_header sdt_h =

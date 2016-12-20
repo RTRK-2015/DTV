@@ -3,6 +3,7 @@
 
 
 // C includes
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <time.h>
@@ -31,6 +32,8 @@ struct pmt
 
     uint16_t video_pid;
     uint16_t audio_pid;
+
+    bool teletext;
 };
 
 
