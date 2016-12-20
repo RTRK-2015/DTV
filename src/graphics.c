@@ -40,12 +40,20 @@ struct graphics_channel_info to_draw_info;
 void graphics_show_channel_info(struct graphics_channel_info info)
 {
     to_draw_info = info;
-    if (to_draw_info.vpid < 0 && to_draw_info.apid < 0)
+    printf("ch_num: %d, vpid: %d, apid: %d, st: %d, name: %s\n",
+            info.ch_num, info.vpid, info.apid, info.sdt.st, info.sdt.name);
+    if (to_draw_info.vpid == (uint16_t)-1 && to_draw_info.apid == (uint16_t)-1)
+    {
+        printf("No channel\n");
         gf.no_channel = true;
-    else if (to_draw_info.vpid < 0 && to_draw_info.apid > 0)
+    }
+    else if (to_draw_info.vpid == (uint16_t)-1)
+    {
+        printf("Audio only\n");
         gf.audio_only = true;
-    else
-        gf.info = true;
+    }
+
+    gf.info = true;
 }
 
 struct tm to_draw_tm;
@@ -85,13 +93,8 @@ void graphics_clear()
     gf.time = false;
 }
 
-void graphics_stop()
-{
-    end = true;
-}
 
-
-void release()
+static void release()
 {
     draw_deinit(&draw_interface);
 }
@@ -114,6 +117,43 @@ t_Error graphics_render(int *argc, char ***argv)
         {
             release();
             return ERROR;
+        }
+
+        if (gf.ch_num)
+        {
+            if (draw_channel_number(&draw_interface, to_draw_ch_num) < 0)
+            {
+                release();
+                return ERROR;
+            }
+        }
+        
+        if (gf.no_channel)
+        {
+            if (draw_blackscreen(&draw_interface) < 0)
+            {
+                release();
+                return ERROR;
+            }
+            if (draw_no_channel(&draw_interface) < 0)
+            {
+                release();
+                return ERROR;
+            }
+        }
+
+        if (gf.audio_only)
+        {
+            if (draw_blackscreen(&draw_interface) < 0)
+            {
+                release();
+                return ERROR;
+            }
+            if (draw_audio_only(&draw_interface) < 0)
+            {
+                release();
+                return ERROR;
+            }
         }
 
         if (gf.info)
@@ -185,9 +225,10 @@ static void* graphics_render_loop(void *args)
     graphics_render(a.argcx, a.argvx);
 }
 
+static pthread_t th;
+
 void graphics_start_render(int *argc, char ***argv)
 {
-    pthread_t th;
     struct args a =
     {
         .argcx = argc,
@@ -199,5 +240,11 @@ void graphics_start_render(int *argc, char ***argv)
 
     pthread_cond_wait(&args_cond, &args_mutex);
 
+}
+
+void graphics_stop()
+{
+    end = true;
+    pthread_join(th, NULL);
 }
 
