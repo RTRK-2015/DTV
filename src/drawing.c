@@ -90,7 +90,7 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
     const int16_t frame_width = 814;
     const int16_t frame_height = 314;
     const int16_t window_width = 800;
-    const int16_t window_height = 300;
+    const int16_t window_height = 200;
     const int16_t font_height = draw_i->font_height;
     
     const int16_t window_x = draw_i->screen_width - window_width - 20;
@@ -115,13 +115,13 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
     sprintf(ch_num_tel, fmt1, info.ch_num, info.teletext ? "Yes" : "No");
 
     const int16_t offset = 20;
-    const int16_t str1_x = window_x + offset;
+    const int16_t str_x = window_x + offset;
     const int16_t str1_y = window_y + font_height + offset;
     DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0x13, 0x96, 0x14, 0xAA));
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                         ch_num_tel,
                                         -1, 
-                                        str1_x,
+                                        str_x,
                                         str1_y,
                                         DSTF_LEFT));
 
@@ -132,32 +132,19 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                          pids,
                                          -1,
-                                         str1_x,
+                                         str_x,
                                          str2_y,
                                          DSTF_LEFT));
-
-    const char fmt3[] = "%FT%T";
-#define TIME_SIZE 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1
-    char time_str[TIME_SIZE];
-    strftime(time_str, TIME_SIZE, fmt3, &info.tm);
-    const int16_t str3_y = str2_y + font_height + offset;
-    DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
-                                         time_str,
-                                         -1,
-                                         str1_x,
-                                         str3_y,
-                                         DSTF_LEFT));
-#undef TIME_SIZE
 
     const char fmt4[] = "S_type: %d, Ch_name: %s";
     char sdt_str[sizeof(fmt4) + 20];
     sprintf(sdt_str, fmt4, info.sdt.st, info.sdt.name);
-    const int16_t str4_y = str3_y + font_height + offset;
+    const int16_t str3_y = str2_y + font_height + offset;
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                          sdt_str,
                                          -1,
-                                         str1_x,
-                                         str4_y,
+                                         str_x,
+                                         str3_y,
                                          DSTF_LEFT));
     return EXIT_SUCCESS;
 }

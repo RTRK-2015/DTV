@@ -19,6 +19,8 @@ struct graphics_flags
     bool blackscreen;
     bool no_channel;
     bool audio_only;
+    bool ch_num;
+    bool time;
 };
 
 bool end = false;
@@ -38,7 +40,19 @@ struct graphics_channel_info to_draw_info;
 void graphics_show_channel_info(struct graphics_channel_info info)
 {
     to_draw_info = info;
-    gf.info = true;
+    if (to_draw_info.vpid < 0 && to_draw_info.apid < 0)
+        gf.no_channel = true;
+    else if (to_draw_info.vpid < 0 && to_draw_info.apid > 0)
+        gf.audio_only = true;
+    else
+        gf.info = true;
+}
+
+struct tm to_draw_tm;
+void graphics_show_time(struct tm tm)
+{
+    to_draw_tm = tm;
+    gf.time = true;
 }
 
 uint8_t to_draw_vol;
@@ -48,10 +62,27 @@ void graphics_show_volume(uint8_t vol)
     gf.volume = true;
 }
 
+uint16_t to_draw_ch_num;
+void graphics_show_channel_number(uint16_t ch_num)
+{
+    to_draw_ch_num = ch_num;
+    gf.ch_num = true;
+}
+
+void graphics_blackscreen()
+{
+    gf.blackscreen = true;
+}
+
 void graphics_clear()
 {
     gf.info = false;
     gf.volume = false;
+    gf.blackscreen = false;
+    gf.no_channel = false;
+    gf.audio_only = false;
+    gf.ch_num = false;
+    gf.time = false;
 }
 
 void graphics_stop()

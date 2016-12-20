@@ -32,6 +32,15 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
 /// \brief Draw volume graphics element
 int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol);
 
+/// \brief Draw no channel display
+int32_t draw_no_channel(struct draw_interface *draw_i);
+
+/// \brief Draw radio graphics
+int32_t draw_audio_only(struct draw_interface *draw_i);
+
+/// \brief Draw channel number
+int32_t draw_channel_number(struct draw_interface *draw_i, uint16_t ch_num);
+
 /// \brief Draw a black rectangle
 int32_t draw_blackscreen(struct draw_interface *draw_i);
 
