@@ -50,9 +50,14 @@ void graphics_show_channel_info(struct graphics_channel_info info)
     else if (to_draw_info.vpid == (uint16_t)-1)
     {
         printf("Audio only\n");
+        gf.no_channel = false;
         gf.audio_only = true;
     }
-
+    else
+    {
+        gf.no_channel = false;
+        gf.audio_only = false;
+    }
     gf.info = true;
 }
 
