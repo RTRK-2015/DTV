@@ -35,7 +35,9 @@ struct draw_interface draw_interface =
     .vol_surfaces = { NULL },
     .font_interface = NULL
 };
+
 timer_t timer_info, timer_time, timer_num, timer_vol;
+static const struct timespec reset = { 0 };
 
 struct graphics_channel_info to_draw_info;
 void graphics_show_channel_info(struct graphics_channel_info info)
@@ -207,7 +209,7 @@ t_Error graphics_render(int *argc, char ***argv)
             struct timespec tr;
             tr.tv_sec = ts.tv_sec;
             tr.tv_nsec = 160000000 - (ts.tv_nsec - tp.tv_nsec);
-            //nanosleep(&tr, NULL);
+            nanosleep(&tr, NULL);
         }
 
     } while (!end);
