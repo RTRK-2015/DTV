@@ -49,7 +49,8 @@ static const struct itimerspec sec1 =
 
 void reset_info(union sigval s)
 {
-    timer_settime(timer_info, 0, &reset, NULL);
+    struct itimerspec spec;
+    timer_settime(timer_info, 0, &reset, &spec);
     gf.info = false;
 }
 struct graphics_channel_info to_draw_info;
@@ -76,7 +77,8 @@ void graphics_show_channel_info(struct graphics_channel_info info)
         gf.no_channel = false;
         gf.audio_only = false;
     }
-    timer_settime(timer_info, 0, &sec3, NULL);
+    struct itimerspec spec;
+    timer_settime(timer_info, 0, &sec3, &spec);
     gf.info = true;
 }
 
