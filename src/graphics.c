@@ -12,7 +12,7 @@
 #include "drawing.h"
 #include "graphics.h"
 
-struct graphics_flags
+static struct graphics_flags
 {
     bool info;
     bool volume;
@@ -21,10 +21,9 @@ struct graphics_flags
     bool audio_only;
     bool ch_num;
     bool time;
-};
+} gf = { 0 };
 
 bool end = false;
-static struct graphics_flags gf = { .info = false, .volume = false };
 
 struct draw_interface draw_interface =
 {
@@ -40,17 +39,17 @@ timer_t timer_info, timer_time, timer_num, timer_vol;
 static const struct itimerspec reset = { 0 };
 static const struct itimerspec sec3 =
 {
-    .it_value.tv_nsec = 3000000000L
+    .it_value.tv_sec = 3
 };
 static const struct itimerspec sec1 =
 {
-    .it_value.tv_nsec = 1000000000L
+    .it_value.tv_sec = 1
 };
 
 void reset_info(union sigval s)
 {
-    struct itimerspec spec;
-    timer_settime(timer_info, 0, &reset, &spec);
+    printf("Reset info\n");
+    timer_settime(timer_info, 0, &reset, NULL);
     gf.info = false;
 }
 struct graphics_channel_info to_draw_info;
@@ -77,13 +76,14 @@ void graphics_show_channel_info(struct graphics_channel_info info)
         gf.no_channel = false;
         gf.audio_only = false;
     }
-    struct itimerspec spec;
-    timer_settime(timer_info, 0, &sec3, &spec);
+    printf("Set info timer\n");
+    timer_settime(timer_info, 0, &sec3, NULL);
     gf.info = true;
 }
 
 void reset_time(union sigval s)
 {
+    printf("Reset time\n");
     timer_settime(timer_time, 0, &reset, NULL);
     gf.time = false;
 }
@@ -97,6 +97,7 @@ void graphics_show_time(struct tm tm)
 
 void reset_vol(union sigval s)
 {
+    printf("Reset vol\n");
     timer_settime(timer_vol, 0, &reset, NULL);
     gf.volume = false;
 }
@@ -110,6 +111,7 @@ void graphics_show_volume(uint8_t vol)
 
 void reset_ch_num(union sigval s)
 {
+    printf("Reset ch_num\n");
     timer_settime(timer_num, 0, &reset, NULL);
     gf.ch_num = false;
 }
@@ -271,6 +273,35 @@ static pthread_t th;
 
 void graphics_start_render(int *argc, char ***argv)
 {
+    struct sigevent se_info =
+    {
+        .sigev_notify_function = reset_info,
+        .sigev_notify = SIGEV_THREAD
+    };
+    timer_create(CLOCK_REALTIME, &se_info, &timer_info);
+
+    struct sigevent se_time =
+    {
+        .sigev_notify_function = reset_time,
+        .sigev_notify = SIGEV_THREAD
+    };
+    timer_create(CLOCK_REALTIME, &se_time, &timer_time);
+
+    struct sigevent se_vol =
+    {
+        .sigev_notify_function = reset_vol,
+        .sigev_notify = SIGEV_THREAD
+    };
+    timer_create(CLOCK_REALTIME, &se_vol, &timer_vol);
+
+    struct sigevent se_num =
+    {
+        .sigev_notify_function = reset_ch_num,
+        .sigev_notify = SIGEV_THREAD
+    };
+    timer_create(CLOCK_REALTIME, &se_num, &timer_num);
+    
+        
     struct args a =
     {
         .argcx = argc,
