@@ -122,7 +122,7 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info)
 {
     const int16_t window_width = 800;
-    const int16_t window_height = 225;
+    const int16_t window_height = 300;
     const int16_t frame_width = window_width + 2 * border;
     const int16_t frame_height = window_height + 2 * border;
     const int16_t window_x = draw_i->screen_width - window_width - offset;
@@ -189,6 +189,25 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                          str_x,
                                          str3_y,
                                          DSTF_LEFT));
+
+    const char fmt[]= "%FT%H:%M";
+#define TIME_SIZE 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 +1
+    char time_str[TIME_SIZE];
+    strftime(time_str, TIME_SIZE, fmt, &info.tm);
+    const int16_t str4_y = str3_y + font_height + offset;
+    DFBCHECK(draw_i->surface->SetColor(draw_i->surface,
+                                       text_color.r,
+                                       text_color.g,
+                                       text_color.b,
+                                       text_color.a));
+    DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
+                                         time_str,
+                                         -1,
+                                         str_x,
+                                         str4_y,
+                                         DSTF_LEFT));
+#undef TIME_SIZE
+
     return EXIT_SUCCESS;
 }
 

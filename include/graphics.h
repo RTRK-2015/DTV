@@ -19,6 +19,7 @@ struct graphics_channel_info
 	uint16_t vpid; ///< The video PID of the channel.
 	uint16_t apid; ///< The audio PID of the channel.
         struct sdt sdt;
+        struct tm tm;
 };
 
 
