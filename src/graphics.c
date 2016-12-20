@@ -45,6 +45,7 @@ void graphics_show_channel_info(struct graphics_channel_info info)
     if (to_draw_info.vpid == (uint16_t)-1 && to_draw_info.apid == (uint16_t)-1)
     {
         printf("No channel\n");
+        gf.audio_only = false;
         gf.no_channel = true;
     }
     else if (to_draw_info.vpid == (uint16_t)-1)
@@ -124,15 +125,7 @@ t_Error graphics_render(int *argc, char ***argv)
             return ERROR;
         }
 
-        if (gf.ch_num)
-        {
-            if (draw_channel_number(&draw_interface, to_draw_ch_num) < 0)
-            {
-                release();
-                return ERROR;
-            }
-        }
-        
+                
         if (gf.no_channel)
         {
             if (draw_blackscreen(&draw_interface) < 0)
@@ -187,6 +180,16 @@ t_Error graphics_render(int *argc, char ***argv)
                 return ERROR;
             }
         }
+
+        if (gf.ch_num)
+        {
+            if (draw_channel_number(&draw_interface, to_draw_ch_num) < 0)
+            {
+                release();
+                return ERROR;
+            }
+        }
+
 
         if (draw_refresh(&draw_interface) < 0)
         {
