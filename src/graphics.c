@@ -37,8 +37,21 @@ struct draw_interface draw_interface =
 };
 
 timer_t timer_info, timer_time, timer_num, timer_vol;
-static const struct timespec reset = { 0 };
+static const struct itimerspec reset = { 0 };
+static const struct itimerspec sec3 =
+{
+    .it_value.tv_nsec = 3000000000L
+};
+static const struct itimerspec sec1 =
+{
+    .it_value.tv_nsec = 1000000000L
+};
 
+void reset_info(union sigval s)
+{
+    timer_settime(&timer_info, 0, &reset, NULL);
+    gf.info = false;
+}
 struct graphics_channel_info to_draw_info;
 void graphics_show_channel_info(struct graphics_channel_info info)
 {
@@ -63,26 +76,45 @@ void graphics_show_channel_info(struct graphics_channel_info info)
         gf.no_channel = false;
         gf.audio_only = false;
     }
+    timer_settime(&timer_info, 0, &sec3, NULL);
     gf.info = true;
 }
 
+void reset_time(union sigval s)
+{
+    timer_settime(timer_time, 0, &reset, NULL);
+    gf.time = false;
+}
 struct tm to_draw_tm;
 void graphics_show_time(struct tm tm)
 {
+    timer_settime(timer_time, 0, &sec3, NULL);
     to_draw_tm = tm;
     gf.time = true;
 }
 
+void reset_vol(union sigval s)
+{
+    timer_settime(timer_vol, 0, &reset, NULL);
+    gf.volume = false;
+}
 uint8_t to_draw_vol;
 void graphics_show_volume(uint8_t vol)
 {
+    timer_settime(timer_vol, 0, &sec3, NULL);
     to_draw_vol = vol;
     gf.volume = true;
 }
 
+void reset_ch_num(union sigval s)
+{
+    timer_settime(timer_num, 0, &reset, NULL);
+    gf.ch_num = false;
+}
 uint16_t to_draw_ch_num;
 void graphics_show_channel_number(uint16_t ch_num)
 {
+    timer_settime(timer_num, 0, &sec1, NULL);
     to_draw_ch_num = ch_num;
     gf.ch_num = true;
 }
@@ -94,13 +126,7 @@ void graphics_blackscreen()
 
 void graphics_clear()
 {
-    gf.info = false;
-    gf.volume = false;
-    gf.blackscreen = false;
-    gf.no_channel = false;
-    gf.audio_only = false;
-    gf.ch_num = false;
-    gf.time = false;
+    memset(&gf, 0, sizeof(gf));
 }
 
 
