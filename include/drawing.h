@@ -25,7 +25,7 @@ struct draw_interface
     IDirectFB *dfb_interface; ///< Main DFB interface.
     int32_t screen_width; ///< The width of the screen.
     int32_t screen_height; ///< The height of the screen.
-    IDirectFBSurface *vol_surfaces[11]; ///< Preloaded volume images.
+    IDirectFBSurface *vol_surfaces[12]; ///< Preloaded volume images.
     IDirectFBFont *font_interface; ///< Preloaded font.
 };
 

@@ -89,8 +89,20 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
         provider->Release(provider);
         
         LOG_DRAWING("Loaded vol_%d\n", i);
-
     }
+
+    IDirectFBImageProvider *provider;
+    const char *image_name = "assets/volume_-1.png";
+    DFBCHECK(draw_i->dfb_interface->CreateImageProvider(draw_i->dfb_interface,
+                image_name,
+                &provider));
+    DFBCHECK(provider->GetSurfaceDescription(provider, &surface_desc));
+    DFBCHECK(draw_i->dfb_interface->CreateSurface(draw_i->dfb_interface,
+                &surface_desc,
+                &draw_i->vol_surfaces[11]));
+    DFBCHECK(provider->RenderTo(provider, draw_i->vol_surfaces[11], NULL));
+    provider->Release(provider);
+    LOG_DRAWING("Loaded mute\n");
 
     LOG_DRAWING("Try set font\n");
     DFBFontDescription font_desc = 
@@ -265,8 +277,9 @@ int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
     const int16_t x_pos = draw_i->screen_width - image_width - offset;
     const int16_t y_pos = offset;
 
+    uint8_t idx = (vol == (uint8_t)-1)? 11 : vol;
     DFBCHECK(draw_i->surface->Blit(draw_i->surface,
-                                   draw_i->vol_surfaces[vol],
+                                   draw_i->vol_surfaces[idx],
                                    NULL,
                                    x_pos,
                                    y_pos));
@@ -424,7 +437,7 @@ int32_t draw_deinit(struct draw_interface *draw_i)
     LOG_DRAWING("Releasing font interface\n");
     draw_i->font_interface->Release(draw_i->font_interface);
 
-    for (uint8_t i = 0; i < 11; ++i)
+    for (uint8_t i = 0; i < 12; ++i)
     {
         LOG_DRAWING("Releasing volume surface %d\n", i);
         draw_i->vol_surfaces[i]->Release(draw_i->vol_surfaces[i]);

@@ -162,12 +162,13 @@ void react_to_keypress(int key_code)
         {
             muted = true;
             dtv_set_volume(0);
-            graphics_show_volume(0);
+            graphics_show_mute();
         }
         else
         {
             muted = false;
             dtv_set_volume(volume);
+            graphics_hide_mute();
             graphics_show_volume(volume);
         }
         break;

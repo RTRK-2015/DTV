@@ -23,6 +23,7 @@ static struct graphics_flags
     bool audio_only;
     bool ch_num;
     bool time;
+    bool mute;
 } gf = { 0 };
 
 static bool end = false;
@@ -110,6 +111,18 @@ void graphics_show_volume(uint8_t vol)
     to_draw_vol = vol;
     gf.volume = true;
 }
+
+
+void graphics_show_mute()
+{
+    gf.mute = true;
+}
+
+void graphics_hide_mute()
+{
+    gf.mute = false;
+}
+
 
 static void reset_ch_num(union sigval s)
 {
@@ -199,7 +212,15 @@ t_Error graphics_render(int *argc, char ***argv)
             }
         }
 
-        if (gf.volume)
+        if (gf.mute)
+        {
+            if (draw_volume(&draw_interface, -1) < 0)
+            {
+                release();
+                return ERROR;
+            }
+        }
+        else if (gf.volume)
         {
             if (draw_volume(&draw_interface, to_draw_vol) < 0)
             {

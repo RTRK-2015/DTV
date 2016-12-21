@@ -37,6 +37,10 @@ void graphics_show_time(struct tm tm);
 /// \brief Displays volume information on the screen.
 /// \param vol Must be [0-10].
 void graphics_show_volume(uint8_t vol);
+/// \brief Displays mute symbol.
+void graphics_show_mute();
+/// \brief Removes mute symbol.
+void graphics_hide_mute();
 /// \brief Displays selected channel number.
 void graphics_show_channel_number(uint16_t ch_num);
 /// \brief Puts a black screen on the screen.
