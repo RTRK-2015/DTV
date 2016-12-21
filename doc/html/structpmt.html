@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -85,32 +86,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">pmt Struct Reference</div>  </div>
+<div class="title">pmt Struct Reference<div class="ingroups"><a class="el" href="group__parsing.html">Table parsing interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Contains important info from the PMT table.  
+ <a href="structpmt.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="parsing_8h_source.html">parsing.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a94da4c86fc671f2e2ca0b3197291c999"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94da4c86fc671f2e2ca0b3197291c999"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>pid</b></td></tr>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt.html#a94da4c86fc671f2e2ca0b3197291c999">pid</a></td></tr>
+<tr class="memdesc:a94da4c86fc671f2e2ca0b3197291c999"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pid of the PMT table. <br /></td></tr>
 <tr class="separator:a94da4c86fc671f2e2ca0b3197291c999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32019497634c4f6e6b842d79f3417187"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32019497634c4f6e6b842d79f3417187"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>ch_num</b></td></tr>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt.html#a32019497634c4f6e6b842d79f3417187">ch_num</a></td></tr>
+<tr class="memdesc:a32019497634c4f6e6b842d79f3417187"><td class="mdescLeft">&#160;</td><td class="mdescRight">The channel number of the PMT table. <br /></td></tr>
 <tr class="separator:a32019497634c4f6e6b842d79f3417187"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88c0dbd4e03a1942becad68eb1036fbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88c0dbd4e03a1942becad68eb1036fbf"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>video_len</b></td></tr>
-<tr class="separator:a88c0dbd4e03a1942becad68eb1036fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4a9086cbedd02eacc2d5292731ae07a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4a9086cbedd02eacc2d5292731ae07a"></a>
-uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><b>video_pids</b></td></tr>
-<tr class="separator:af4a9086cbedd02eacc2d5292731ae07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ccae4357872536d82ccc2a98ca2a742"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ccae4357872536d82ccc2a98ca2a742"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>audio_len</b></td></tr>
-<tr class="separator:a2ccae4357872536d82ccc2a98ca2a742"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad35b04206e1c6aa142e60e5fc8d16a2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad35b04206e1c6aa142e60e5fc8d16a2a"></a>
-uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><b>audio_pids</b></td></tr>
-<tr class="separator:ad35b04206e1c6aa142e60e5fc8d16a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49cc267d734db2def0cd6af31fdc60a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49cc267d734db2def0cd6af31fdc60a8"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt.html#a49cc267d734db2def0cd6af31fdc60a8">video_pid</a></td></tr>
+<tr class="memdesc:a49cc267d734db2def0cd6af31fdc60a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">PID of the video stream. It is -1 if it doesn't exist. <br /></td></tr>
+<tr class="separator:a49cc267d734db2def0cd6af31fdc60a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68081a602490e42492431056f72efbd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68081a602490e42492431056f72efbd7"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt.html#a68081a602490e42492431056f72efbd7">audio_pid</a></td></tr>
+<tr class="memdesc:a68081a602490e42492431056f72efbd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">PID of the audio stream. It is -1 if it doesn't exist. <br /></td></tr>
+<tr class="separator:a68081a602490e42492431056f72efbd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1ddfb7a259bcc79f882418f46225e2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1ddfb7a259bcc79f882418f46225e2e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt.html#ad1ddfb7a259bcc79f882418f46225e2e">teletext</a></td></tr>
+<tr class="memdesc:ad1ddfb7a259bcc79f882418f46225e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies whether the channel has teletext. <br /></td></tr>
+<tr class="separator:ad1ddfb7a259bcc79f882418f46225e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contains important info from the PMT table. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="parsing_8h_source.html">parsing.h</a></li>
 </ul>
 </div><!-- contents -->

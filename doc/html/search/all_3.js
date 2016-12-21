@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['end_5fof_5fchannels',['END_OF_CHANNELS',['../dtv_8h.html#a3ee0c44c99364c6f9b856399a06df06e',1,'dtv.h']]]
+  ['dfb_5finterface',['dfb_interface',['../structdraw__interface.html#a8eaf314b98d7198fdf4a46f114f87170',1,'draw_interface']]],
+  ['dlen',['dlen',['../structsdt__body.html#a228e2b0e07a2989524f454aec4f005a6',1,'sdt_body::dlen()'],['../structtot__header.html#acbbfb5cc5320d11a1f02ed41ba726540',1,'tot_header::dlen()'],['../structures_8h.html#a543807188d00dde6147b772378b70c6e',1,'dlen():&#160;structures.h']]],
+  ['draw_5faudio_5fonly',['draw_audio_only',['../group__drawing.html#ga4136711e3d32c79bf3261c2afb901b6f',1,'draw_audio_only(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#ga4136711e3d32c79bf3261c2afb901b6f',1,'draw_audio_only(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5fblackscreen',['draw_blackscreen',['../group__drawing.html#ga07cd1d9f76609e912c17aa865cffa403',1,'draw_blackscreen(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#ga07cd1d9f76609e912c17aa865cffa403',1,'draw_blackscreen(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5fchannel_5finfo',['draw_channel_info',['../group__drawing.html#ga71818ed76471623e9aeffe07a0ba26d2',1,'draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info):&#160;drawing.c'],['../group__drawing.html#ga71818ed76471623e9aeffe07a0ba26d2',1,'draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info):&#160;drawing.c']]],
+  ['draw_5fchannel_5fnumber',['draw_channel_number',['../group__drawing.html#gab0f56761fdebd9a7bc3584a43777df94',1,'draw_channel_number(struct draw_interface *draw_i, uint16_t ch_num):&#160;drawing.c'],['../group__drawing.html#gab0f56761fdebd9a7bc3584a43777df94',1,'draw_channel_number(struct draw_interface *draw_i, uint16_t ch_num):&#160;drawing.c']]],
+  ['draw_5fclear',['draw_clear',['../group__drawing.html#ga7e0866c8dbb4ef95d3708b7fa1a0393d',1,'draw_clear(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#ga7e0866c8dbb4ef95d3708b7fa1a0393d',1,'draw_clear(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5fdeinit',['draw_deinit',['../group__drawing.html#gae59904fcfa6a1ad70e82854e02e7833a',1,'draw_deinit(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#gae59904fcfa6a1ad70e82854e02e7833a',1,'draw_deinit(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5finit',['draw_init',['../group__drawing.html#ga50526d5e4e244599996608371f410bf2',1,'draw_init(struct draw_interface *draw_i, int *argc, char ***argv):&#160;drawing.c'],['../group__drawing.html#ga50526d5e4e244599996608371f410bf2',1,'draw_init(struct draw_interface *draw_i, int *argc, char ***argv):&#160;drawing.c']]],
+  ['draw_5finterface',['draw_interface',['../structdraw__interface.html',1,'']]],
+  ['draw_5fno_5fchannel',['draw_no_channel',['../group__drawing.html#ga9e57d07e991e2d951ad273cde5d5518a',1,'draw_no_channel(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#ga9e57d07e991e2d951ad273cde5d5518a',1,'draw_no_channel(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5frefresh',['draw_refresh',['../group__drawing.html#ga485befc089e203ec54c8b06c8e72c9f3',1,'draw_refresh(struct draw_interface *draw_i):&#160;drawing.c'],['../group__drawing.html#ga485befc089e203ec54c8b06c8e72c9f3',1,'draw_refresh(struct draw_interface *draw_i):&#160;drawing.c']]],
+  ['draw_5ftime',['draw_time',['../group__drawing.html#gaa19821a33379a186117efe18a67bfea7',1,'draw_time(struct draw_interface *draw_i, struct tm tm):&#160;drawing.c'],['../group__drawing.html#gaa19821a33379a186117efe18a67bfea7',1,'draw_time(struct draw_interface *draw_i, struct tm tm):&#160;drawing.c']]],
+  ['draw_5fvolume',['draw_volume',['../group__drawing.html#gae31d79c9ff070efa64603736bee4d252',1,'draw_volume(struct draw_interface *draw_i, uint8_t vol):&#160;drawing.c'],['../group__drawing.html#gae31d79c9ff070efa64603736bee4d252',1,'draw_volume(struct draw_interface *draw_i, uint8_t vol):&#160;drawing.c']]],
+  ['drawing_20interface',['Drawing interface',['../group__drawing.html',1,'']]],
+  ['drawing_2eh',['drawing.h',['../drawing_8h.html',1,'']]],
+  ['dtv_20interface',['DTV interface',['../group__dtv.html',1,'']]],
+  ['dtv_2eh',['dtv.h',['../dtv_8h.html',1,'']]],
+  ['dtv_5fchannel_5finfo',['dtv_channel_info',['../structdtv__channel__info.html',1,'']]],
+  ['dtv_5fdeinit',['dtv_deinit',['../group__dtv.html#ga9d48e779ec2fdad4693156fe8923fe7b',1,'dtv_deinit():&#160;dtv.c'],['../group__dtv.html#ga9d48e779ec2fdad4693156fe8923fe7b',1,'dtv_deinit():&#160;dtv.c']]],
+  ['dtv_5fget_5finfo',['dtv_get_info',['../group__dtv.html#ga3b7df96e66fac38b64c96e703d65e710',1,'dtv_get_info(uint16_t ch_num):&#160;dtv.c'],['../group__dtv.html#ga3b7df96e66fac38b64c96e703d65e710',1,'dtv_get_info(uint16_t ch_num):&#160;dtv.c']]],
+  ['dtv_5fget_5ftime',['dtv_get_time',['../group__dtv.html#ga999f0d08fc5ddc8d4d781ccbfe10218e',1,'dtv_get_time():&#160;dtv.c'],['../group__dtv.html#ga999f0d08fc5ddc8d4d781ccbfe10218e',1,'dtv_get_time():&#160;dtv.c']]],
+  ['dtv_5finit',['dtv_init',['../group__dtv.html#ga7da3a709e8d58fa00ee48687c5bf26a7',1,'dtv_init(struct config_init_ch_info init_info):&#160;dtv.c'],['../group__dtv.html#ga7da3a709e8d58fa00ee48687c5bf26a7',1,'dtv_init(struct config_init_ch_info init_info):&#160;dtv.c']]],
+  ['dtv_5fset_5fvolume',['dtv_set_volume',['../group__dtv.html#gaa7f54804b10abbefca93d03afdc5aaab',1,'dtv_set_volume(uint8_t vol):&#160;dtv.c'],['../group__dtv.html#gaa7f54804b10abbefca93d03afdc5aaab',1,'dtv_set_volume(uint8_t vol):&#160;dtv.c']]],
+  ['dtv_5fswitch_5fchannel',['dtv_switch_channel',['../group__dtv.html#gaadc265544bf474e6847f614d8a6d438e',1,'dtv_switch_channel(uint16_t ch_num):&#160;dtv.c'],['../group__dtv.html#gaadc265544bf474e6847f614d8a6d438e',1,'dtv_switch_channel(uint16_t ch_num):&#160;dtv.c']]],
+  ['dvb_20table_20retrieval_20interface',['DVB table retrieval interface',['../group__structure.html',1,'']]]
 ];

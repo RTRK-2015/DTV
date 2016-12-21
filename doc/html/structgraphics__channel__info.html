@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -85,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">graphics_channel_info Struct Reference</div>  </div>
+<div class="title">graphics_channel_info Struct Reference<div class="ingroups"><a class="el" href="group__graphics.html">Graphics interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -93,6 +94,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <a href="structgraphics__channel__info.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="graphics_8h_source.html">graphics.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for graphics_channel_info:</div>
+<div class="dyncontent">
+<div class="center"><img src="structgraphics__channel__info__coll__graph.png" border="0" usemap="#graphics__channel__info_coll__map" alt="Collaboration graph"/></div>
+<map name="graphics__channel__info_coll__map" id="graphics__channel__info_coll__map">
+<area shape="rect" id="node2" href="structsdt.html" title="Contains important info from the SDT table. " alt="" coords="61,5,101,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -100,10 +109,10 @@ Data Fields</h2></td></tr>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#afb009f98970631fb6229fb4264438956">ch_num</a></td></tr>
 <tr class="memdesc:afb009f98970631fb6229fb4264438956"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of the channel. <br /></td></tr>
 <tr class="separator:afb009f98970631fb6229fb4264438956"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6e64258d3800827b4122d913329f3da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6e64258d3800827b4122d913329f3da"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#aa6e64258d3800827b4122d913329f3da">teletex</a></td></tr>
-<tr class="memdesc:aa6e64258d3800827b4122d913329f3da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the channel has teletext. <br /></td></tr>
-<tr class="separator:aa6e64258d3800827b4122d913329f3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac899174418a5cd8b4f7fd4948d5f590c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac899174418a5cd8b4f7fd4948d5f590c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#ac899174418a5cd8b4f7fd4948d5f590c">teletext</a></td></tr>
+<tr class="memdesc:ac899174418a5cd8b4f7fd4948d5f590c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the channel has teletext. <br /></td></tr>
+<tr class="separator:ac899174418a5cd8b4f7fd4948d5f590c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cf334be574a33699fef2f2ee28aa6a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cf334be574a33699fef2f2ee28aa6a8"></a>
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#a3cf334be574a33699fef2f2ee28aa6a8">vpid</a></td></tr>
 <tr class="memdesc:a3cf334be574a33699fef2f2ee28aa6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The video PID of the channel. <br /></td></tr>
@@ -112,6 +121,14 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#a4518e8c7dccf92ed956ff9a517520ee1">apid</a></td></tr>
 <tr class="memdesc:a4518e8c7dccf92ed956ff9a517520ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio PID of the channel. <br /></td></tr>
 <tr class="separator:a4518e8c7dccf92ed956ff9a517520ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a290b1f3b5219b69165e6b7bde53d9c37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a290b1f3b5219b69165e6b7bde53d9c37"></a>
+struct <a class="el" href="structsdt.html">sdt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#a290b1f3b5219b69165e6b7bde53d9c37">sdt</a></td></tr>
+<tr class="memdesc:a290b1f3b5219b69165e6b7bde53d9c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel type and name. <br /></td></tr>
+<tr class="separator:a290b1f3b5219b69165e6b7bde53d9c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6acd02cb8ba22b89c8f39caca2b69620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6acd02cb8ba22b89c8f39caca2b69620"></a>
+struct tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraphics__channel__info.html#a6acd02cb8ba22b89c8f39caca2b69620">tm</a></td></tr>
+<tr class="memdesc:a6acd02cb8ba22b89c8f39caca2b69620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time information. <br /></td></tr>
+<tr class="separator:a6acd02cb8ba22b89c8f39caca2b69620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A struct that contains some basic channel info. </p>

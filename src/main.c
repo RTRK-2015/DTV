@@ -16,6 +16,8 @@
 #include "rc.h"
 
 
+#define LOG_MAIN(fmt, ...) LOG("Main", fmt, ##__VA_ARGS__)
+
 static pthread_mutex_t channel_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static uint8_t volume = 5;
@@ -38,12 +40,19 @@ static time_t t_tot = 0, t_start;
 #define KEY_CHANNEL_UP 62
 #define KEY_VOLUME_UP 63
 #define KEY_VOLUME_DOWN 64
+#define KEY_POWEROFF 116
 #define KEY_INFO 358
 
 
 void handle_signal(int signum)
 {
-    printf("Caught signal: %d\n", signum);
+    if (signum == SIGINT)
+        LOG_MAIN("Caught SIGINT\n");
+    else if (signum == SIGTERM)
+        LOG_MAIN("Caught SIGTERM\n");
+    else
+        LOG_MAIN("Caught signal %d\n", signum);
+
     timer_delete(ch_timer);
     timer_delete(updown_timer);
     exit(EXIT_SUCCESS);
@@ -52,9 +61,9 @@ void handle_signal(int signum)
 void calculate_time()
 {
     time_t t_current = time(NULL);
-    printf("t_tot was: %d\n", t_tot);
+    LOG_MAIN("t_tot was: %d\n", t_tot);
     t_tot += (t_current - t_start);
-    printf("is now: %d\n", t_tot);
+    LOG_MAIN("is now: %d\n", t_tot);
     t_start = t_current;
     gci.tm = *gmtime(&t_tot);
 }
@@ -67,7 +76,7 @@ void confirm_channel(union sigval s)
     timer_settime(updown_timer, 0, &reset, NULL);
     started_selecting = false; 
 
-    printf("Confirmed channel: %d\n", selected_channel);
+    LOG_MAIN("Confirmed channel: %d\n", selected_channel);
     struct dtv_channel_info dci = dtv_switch_channel(selected_channel);
     struct sdt sdt = dtv_get_info(selected_channel);
 
@@ -85,7 +94,7 @@ void confirm_channel(union sigval s)
 
 void react_to_keypress(int key_code)
 {	
-	printf("received code: %d\n", key_code);
+	LOG_MAIN("received code: %d\n", key_code);
 		
 	static const struct itimerspec confirm_ts =
         { .it_value.tv_sec = 1
@@ -93,10 +102,7 @@ void react_to_keypress(int key_code)
         };
         static const struct itimerspec updown_ts =
         { .it_value.tv_sec = 0
-        , .it_value.tv_nsec = 150000000L
-        };
-        static const struct timespec ts =
-        { .tv_nsec = 250000000L
+        , .it_value.tv_nsec = 400000000L
         };
         int adjusted_key_code = (key_code == KEY_0)? 0 : key_code - 1;
 
@@ -112,7 +118,7 @@ void react_to_keypress(int key_code)
 	    {
 		selected_channel = 10 * selected_channel + adjusted_key_code;
 	    }
-	    printf("selected_channel: %d\n", selected_channel);
+	    LOG_MAIN("selected_channel: %d\n", selected_channel);
             graphics_show_channel_number(selected_channel);
 	    timer_settime(ch_timer, 0, &confirm_ts, NULL);	
 	    break;
@@ -122,7 +128,6 @@ void react_to_keypress(int key_code)
             ++selected_channel;
             graphics_show_channel_number(selected_channel);
             timer_settime(updown_timer, 0, &updown_ts, NULL);
-            nanosleep(&ts, NULL);
             break;
 		
 	case KEY_CHANNEL_DOWN:
@@ -130,7 +135,6 @@ void react_to_keypress(int key_code)
             --selected_channel;
             graphics_show_channel_number(selected_channel);
             timer_settime(updown_timer, 0, &updown_ts, NULL);
-            nanosleep(&ts, NULL);
             break;
 
 	case KEY_VOLUME_UP:
@@ -168,6 +172,10 @@ void react_to_keypress(int key_code)
             }
             break;
 
+        case KEY_POWEROFF:
+            handle_signal(SIGTERM);
+            break;
+
         case KEY_BACK:
             graphics_clear();
             break;
@@ -182,10 +190,10 @@ void react_to_keypress(int key_code)
 
 void* update_time(void *args)
 {
-    printf("Got tm\n");
+    LOG_MAIN("Got tm\n");
     struct tm tm = dtv_get_time();
     t_tot = mktime(&tm);
-    printf("t_tot set to: %d\n", t_tot);
+    LOG_MAIN("t_tot set to: %d\n", t_tot);
 
     return NULL;
 }

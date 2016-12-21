@@ -18,6 +18,8 @@
 #include "common.h"
 
 
+#define LOG_RC(fmt, ...) LOG("RC", fmt, ##__VA_ARGS__)
+
 #define EVENT_KEY_PRESS 1
 #define EVENT_KEY_AUTOREPEAT 2
 
@@ -48,23 +50,24 @@ static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
 bool stop = false;
 static void* event_loop(void *args)
 {
+    static const size_t NUM_EVENTS = 5;
     struct args a = *(struct args *)args;
     pthread_cond_signal(&args_cond);
 
-    struct input_event *event_buffer = malloc(sizeof(struct input_event));
+    struct input_event *event_buffer = malloc(
+            NUM_EVENTS * sizeof(struct input_event));
     if (event_buffer == NULL)
         FAIL_STD("%s\n", nameof(malloc));
 
     while (true)
     {
-        ssize_t event_count = get_keys(a.fd, 1, (char *)event_buffer);
+        ssize_t event_count = get_keys(a.fd, NUM_EVENTS, (char *)event_buffer);
 
-        if (event_count > 0)
+        for (ssize_t i = 0; i < event_count; ++i)
         {
-            if (event_buffer->value == EVENT_KEY_PRESS
-                || event_buffer->value == EVENT_KEY_AUTOREPEAT)
+            if (event_buffer[i].value == EVENT_KEY_PRESS)
             {
-            	    a.kc(event_buffer->code);
+            	a.kc(event_buffer[i].code);
             }
         }
     }
@@ -94,7 +97,7 @@ void rc_start_loop(const char *dev, rc_key_callback kc)
 
 void rc_stop_loop()
 {
-    printf("Stopping event loop\n");
+    LOG_RC("Stopping event loop\n");
     pthread_cancel(event_th);
 }
 

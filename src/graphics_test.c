@@ -13,7 +13,7 @@ struct args
     char ***argvx;
 };
 
-void handle_signal(int no)
+/*void handle_signal(int no)
 {
     exit(0);
 }
@@ -64,4 +64,4 @@ int32_t main(int argc, char **argv)
     graphics_stop();
 
     return EXIT_SUCCESS;
-}
+}*/

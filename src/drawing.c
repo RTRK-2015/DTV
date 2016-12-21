@@ -3,6 +3,9 @@
 #include <string.h>
 
 #include "drawing.h"
+#include "common.h"
+
+#define LOG_DRAWING(fmt, ...) LOG("Drawing", fmt, ##__VA_ARGS__)
 
 #define DFBCHECK(x...)                                       \
 {                                                            \
@@ -15,65 +18,54 @@ if (err != DFB_OK)                                           \
 }                                                           
 
 
-struct color
+static struct
 {
     uint8_t r;
     uint8_t g;
     uint8_t b;
     uint8_t a;
-};
+} frame_color = { .r = 0x45, .g = 0x45, .b = 0x45, .a = 0xff }
+, back_color = { .r = 0x88, .g = 0x88, .b = 0x88, .a = 0xff }
+, text_color = { .r = 0x13, .g = 0x96, .b = 0x14, .a = 0xff };
 
-static struct color frame_color =
-{
-    .r = 45,
-    .g = 45,
-    .b = 45,
-    .a = 0xff
-};
-static struct color back_color =
-{
-    .r = 88,
-    .g = 88,
-    .b = 88,
-    .a = 0xff
-};
-static struct color text_color =
-{
-    .r = 0x13,
-    .g = 0x96,
-    .b = 0x14,
-    .a = 0xff
-};
+
 static const int16_t offset = 20;
 static const int16_t border = 7;
 static const int16_t font_height = 52;
 
 int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 {
-    printf("Try DFBInit with args: %d, %s\n", *argc, *argv[0]);
+    LOG_DRAWING("Try DFBInit with args: %d, %s\n", *argc, *argv[0]);
     DFBCHECK(DirectFBInit(argc, argv));
-    printf("Successfully init\n");
+    LOG_DRAWING("Successfully init\n");
 
     DFBCHECK(DirectFBCreate(&draw_i->dfb_interface));
-    printf("Created interface\n");
+    LOG_DRAWING("Created interface\n");
     
-    DFBCHECK(draw_i->dfb_interface->SetCooperativeLevel(draw_i->dfb_interface, DFSCL_FULLSCREEN));
-    printf("SetCoopLvl\n");
+    DFBCHECK(draw_i->dfb_interface->SetCooperativeLevel
+    ( draw_i->dfb_interface
+    , DFSCL_FULLSCREEN
+    ));
+    LOG_DRAWING("SetCoopLvl\n");
 
-    draw_i->surface_desc.flags = DSDESC_CAPS;
-    draw_i->surface_desc.caps = DSCAPS_PRIMARY | DSCAPS_FLIPPING;
-    DFBCHECK(draw_i->dfb_interface->CreateSurface(draw_i->dfb_interface,
-                                                &(draw_i->surface_desc),
-                                                &(draw_i->surface)));
-    printf("Created surface\n");
+    DFBSurfaceDescription surface_desc =
+    { .flags = DSDESC_CAPS
+    , .caps = DSCAPS_PRIMARY | DSCAPS_FLIPPING
+    };
+    DFBCHECK(draw_i->dfb_interface->CreateSurface
+    ( draw_i->dfb_interface
+    , &surface_desc
+    , &draw_i->surface
+    ));
+    LOG_DRAWING("Created surface\n");
 
     DFBCHECK(draw_i->surface->GetSize(draw_i->surface,
-                                    &(draw_i->screen_width),
-                                    &(draw_i->screen_height)));
+                                    &draw_i->screen_width,
+                                    &draw_i->screen_height));
 
-    printf("Screen_h: %d, Screen_w: %d\n", draw_i->screen_width, draw_i->screen_height);
+    LOG_DRAWING("Screen_h: %d, Screen_w: %d\n", draw_i->screen_width, draw_i->screen_height);
 
-    printf("Preload volume assets\n");
+    LOG_DRAWING("Preload volume assets\n");
 
     for (uint8_t i = 0; i < 11; ++i)
     {
@@ -86,26 +78,26 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
                                                             image_name,
                                                             &provider));
 
-        DFBCHECK(provider->GetSurfaceDescription(provider, &draw_i->surface_desc));
+        DFBCHECK(provider->GetSurfaceDescription(provider, &surface_desc));
 
         DFBCHECK(draw_i->dfb_interface->CreateSurface(draw_i->dfb_interface,
-                                                     &draw_i->surface_desc,
+                                                     &surface_desc,
                                                      &draw_i->vol_surfaces[i]));
 
         DFBCHECK(provider->RenderTo(provider, draw_i->vol_surfaces[i], NULL));
 
         provider->Release(provider);
         
-        printf("Loaded vol_%d\n", i);
+        LOG_DRAWING("Loaded vol_%d\n", i);
 
     }
 
-    printf("Try set font\n");
-    DFBFontDescription font_desc;
-    draw_i->font_height = font_height;
-    printf("Set font_height: %d\n", draw_i->font_height);
-    font_desc.flags = DFDESC_HEIGHT;
-    font_desc.height = draw_i->font_height;
+    LOG_DRAWING("Try set font\n");
+    DFBFontDescription font_desc = 
+    { .flags = DFDESC_HEIGHT
+    , .height = font_height
+    };
+    LOG_DRAWING("Set font_height: %d\n", font_height);
 
     DFBCHECK(draw_i->dfb_interface->CreateFont(draw_i->dfb_interface,
                                               "/home/galois/fonts/DejaVuSans.ttf",
@@ -114,7 +106,7 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 
     DFBCHECK(draw_i->surface->SetFont(draw_i->surface, draw_i->font_interface));
     
-    printf("Set font\n");
+    LOG_DRAWING("Set font\n");
 
     return EXIT_SUCCESS;
 }
@@ -168,9 +160,9 @@ int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel
                                         str1_y,
                                         DSTF_LEFT));
 
-    const char fmt2[] = "V_pid: %d, A_pid: %d";
+    const char fmt2[] = "V_pid: %hd, A_pid: %hd";
     char pids[sizeof(fmt2) + 6];
-    sprintf(pids, fmt2, info.vpid, info.apid);
+    sprintf(pids, fmt2, (int16_t)info.vpid, (int16_t)info.apid);
     const int16_t str2_y = str1_y + font_height + offset;
     DFBCHECK(draw_i->surface->DrawString(draw_i->surface,
                                          pids,
@@ -429,19 +421,19 @@ int32_t draw_refresh(struct draw_interface *draw_i)
 
 int32_t draw_deinit(struct draw_interface *draw_i)
 {
-    printf("Releasing font interface\n");
+    LOG_DRAWING("Releasing font interface\n");
     draw_i->font_interface->Release(draw_i->font_interface);
 
     for (uint8_t i = 0; i < 11; ++i)
     {
-        printf("Releasing volume surface %d\n", i);
+        LOG_DRAWING("Releasing volume surface %d\n", i);
         draw_i->vol_surfaces[i]->Release(draw_i->vol_surfaces[i]);
     }
     
-    printf("Releasing surface\n");
+    LOG_DRAWING("Releasing surface\n");
     draw_i->surface->Release(draw_i->surface);
 
-    printf("Releasing DFB interface\n");
+    LOG_DRAWING("Releasing DFB interface\n");
     draw_i->dfb_interface->Release(draw_i->dfb_interface);
     
     return EXIT_SUCCESS;

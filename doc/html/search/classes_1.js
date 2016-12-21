@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['graphics_5fchannel_5finfo',['graphics_channel_info',['../structgraphics__channel__info.html',1,'']]]
+  ['config_5finit_5fch_5finfo',['config_init_ch_info',['../structconfig__init__ch__info.html',1,'']]]
 ];

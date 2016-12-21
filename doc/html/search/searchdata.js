@@ -1,12 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "acdegmprtv",
-  1: "dgpt",
-  2: "dgr",
-  3: "dgr",
-  4: "acmtv",
+  0: "abcdefglmnprstv",
+  1: "acdgpst",
+  2: "cdgprs",
+  3: "cdgpr",
+  4: "abcdeflmnpstv",
   5: "r",
-  6: "e"
+  6: "fln",
+  7: "cdgrt"
 };
 
 var indexSectionNames =
@@ -17,7 +18,8 @@ var indexSectionNames =
   3: "functions",
   4: "variables",
   5: "typedefs",
-  6: "defines"
+  6: "defines",
+  7: "groups"
 };
 
 var indexSectionLabels =
@@ -28,6 +30,7 @@ var indexSectionLabels =
   3: "Functions",
   4: "Variables",
   5: "Typedefs",
-  6: "Macros"
+  6: "Macros",
+  7: "Modules"
 };
 

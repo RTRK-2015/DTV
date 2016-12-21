@@ -12,6 +12,8 @@
 #include "drawing.h"
 #include "graphics.h"
 
+#define LOG_GRAPHICS(fmt, ...) LOG("Graphics", fmt, ##__VA_ARGS__)
+
 static struct graphics_flags
 {
     bool info;
@@ -23,9 +25,9 @@ static struct graphics_flags
     bool time;
 } gf = { 0 };
 
-bool end = false;
+static bool end = false;
 
-struct draw_interface draw_interface =
+static struct draw_interface draw_interface =
 {
     .surface = NULL,
     .dfb_interface = NULL,
@@ -35,7 +37,7 @@ struct draw_interface draw_interface =
     .font_interface = NULL
 };
 
-timer_t timer_info, timer_time, timer_num, timer_vol;
+static timer_t timer_info, timer_time, timer_num, timer_vol;
 static const struct itimerspec reset = { 0 };
 static const struct itimerspec sec3 =
 {
@@ -46,48 +48,48 @@ static const struct itimerspec sec1 =
     .it_value.tv_sec = 1
 };
 
-void reset_info(union sigval s)
+static void reset_info(union sigval s)
 {
-    printf("Reset info\n");
+    LOG_GRAPHICS("Reset info\n");
     timer_settime(timer_info, 0, &reset, NULL);
     gf.info = false;
 }
-struct graphics_channel_info to_draw_info;
+static struct graphics_channel_info to_draw_info;
 void graphics_show_channel_info(struct graphics_channel_info info)
 {
     to_draw_info = info;
-    printf("ch_num: %d, vpid: %d, apid: %d, st: %d, name: %s\n",
+    LOG_GRAPHICS("ch_num: %d, vpid: %d, apid: %d, st: %d, name: %s\n",
             info.ch_num, info.vpid, info.apid, info.sdt.st, info.sdt.name);
     if (to_draw_info.vpid == (uint16_t)-1 && to_draw_info.apid == (uint16_t)-1)
     {
-        printf("No channel\n");
+        LOG_GRAPHICS("No channel\n");
         gf.audio_only = false;
         gf.no_channel = true;
     }
     else if (to_draw_info.vpid == (uint16_t)-1)
     {
-        printf("Audio only\n");
+        LOG_GRAPHICS("Audio only\n");
         gf.no_channel = false;
         gf.audio_only = true;
     }
     else
     {
-        printf("Normal\n");
+        LOG_GRAPHICS("Normal\n");
         gf.no_channel = false;
         gf.audio_only = false;
     }
-    printf("Set info timer\n");
+    LOG_GRAPHICS("Set info timer\n");
     timer_settime(timer_info, 0, &sec3, NULL);
     gf.info = true;
 }
 
-void reset_time(union sigval s)
+static void reset_time(union sigval s)
 {
-    printf("Reset time\n");
+    LOG_GRAPHICS("Reset time\n");
     timer_settime(timer_time, 0, &reset, NULL);
     gf.time = false;
 }
-struct tm to_draw_tm;
+static struct tm to_draw_tm;
 void graphics_show_time(struct tm tm)
 {
     timer_settime(timer_time, 0, &sec3, NULL);
@@ -95,13 +97,13 @@ void graphics_show_time(struct tm tm)
     gf.time = true;
 }
 
-void reset_vol(union sigval s)
+static void reset_vol(union sigval s)
 {
-    printf("Reset vol\n");
+    LOG_GRAPHICS("Reset vol\n");
     timer_settime(timer_vol, 0, &reset, NULL);
     gf.volume = false;
 }
-uint8_t to_draw_vol;
+static uint8_t to_draw_vol;
 void graphics_show_volume(uint8_t vol)
 {
     timer_settime(timer_vol, 0, &sec3, NULL);
@@ -109,13 +111,13 @@ void graphics_show_volume(uint8_t vol)
     gf.volume = true;
 }
 
-void reset_ch_num(union sigval s)
+static void reset_ch_num(union sigval s)
 {
-    printf("Reset ch_num\n");
+    LOG_GRAPHICS("Reset ch_num\n");
     timer_settime(timer_num, 0, &reset, NULL);
     gf.ch_num = false;
 }
-uint16_t to_draw_ch_num;
+static uint16_t to_draw_ch_num;
 void graphics_show_channel_number(uint16_t ch_num)
 {
     timer_settime(timer_num, 0, &sec1, NULL);
@@ -141,11 +143,11 @@ static void release()
 
 t_Error graphics_render(int *argc, char ***argv)
 {
-    printf("\nTry init draw_interface with arguements: %d, %s\n", *argc, *argv[0]);
+    LOG_GRAPHICS("Try init draw_interface with arguements: %d, %s\n", *argc, *argv[0]);
     if (draw_init(&draw_interface, argc, argv) < 0)
         FAIL("%s\n", nameof(draw_init));
 
-    printf("Successfully init draw_i, screen width: %d, screen height: %d\n", 
+    LOG_GRAPHICS("Successfully init draw_i, screen width: %d, screen height: %d\n", 
             draw_interface.screen_width, draw_interface.screen_height);
 
     do
@@ -244,8 +246,7 @@ t_Error graphics_render(int *argc, char ***argv)
 
     } while (!end);
 
-    printf("Finish render loop\n");
-
+    LOG_GRAPHICS("Finish render loop\n");
     release();
 
     return NO_ERROR;
@@ -267,6 +268,7 @@ static void* graphics_render_loop(void *args)
     pthread_cond_signal(&args_cond);
 
     graphics_render(a.argcx, a.argvx);
+    return NULL;
 }
 
 static pthread_t th;
@@ -308,7 +310,8 @@ void graphics_start_render(int *argc, char ***argv)
         .argvx = argv
     };
 
-    if (pthread_create(&th, NULL, graphics_render_loop, (void *)&a) < 0)
+    LOG_GRAPHICS("Creating render thread\n");
+    if (pthread_create(&th, NULL, graphics_render_loop, (void *)&a) != 0)
         FAIL_STD("%s\n", nameof(pthread_create));
 
     pthread_cond_wait(&args_cond, &args_mutex);
@@ -317,7 +320,7 @@ void graphics_start_render(int *argc, char ***argv)
 
 void graphics_stop()
 {
-    printf("Stopping graphics\n");
+    LOG_GRAPHICS("Stopping graphics\n");
     end = true;
     pthread_join(th, NULL);
 }

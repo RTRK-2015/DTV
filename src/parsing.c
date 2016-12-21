@@ -10,11 +10,13 @@
 #include "structures.h"
 
 
+#define LOG_PARSING(fmt, ...) LOG("Parsing", fmt, ##__VA_ARGS__)
+
 struct pat parse_pat(const uint8_t *buffer)
 {
     struct pat_header pat_h = get_pat_header(buffer);
 
-    printf("tid: %d, len: %d, tsi: %d\n",
+    LOG_PARSING("tid: %d, len: %d, tsi: %d\n",
         pat_h.hdr.tid, pat_h.hdr.b1u.b1s.len, pat_h.tsi);
 
     struct pat my_pat =
@@ -97,7 +99,7 @@ struct pmt parse_pmt(const uint8_t *buffer)
     {	
         struct pmt_body pmt_b = get_pmt_body(current_ptr);
 
-		printf("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
+		LOG_PARSING("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
 		
         if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
         {
@@ -111,7 +113,7 @@ struct pmt parse_pmt(const uint8_t *buffer)
         {
             if (current_ptr[sizeof(struct pmt_body)] == 0x56)
             {
-                printf("FOUND TELETEXT!\n");
+                LOG_PARSING("FOUND TELETEXT!\n");
                 my_pmt.teletext = true;
             }
         }
@@ -139,24 +141,24 @@ struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
     while (current_ptr < end_ptr)
     {
         struct sdt_body sdt_b = get_sdt_body(current_ptr);
-        printf("sid: %d\n", sdt_b.sid);
+        LOG_PARSING("sid: %d\n", sdt_b.sid);
         if (sdt_b.sid == ch_num)
         {
-            printf("Found appropriate sdt\n");
+            LOG_PARSING("Found appropriate sdt\n");
 
             current_ptr += sizeof(sdt_b);
             struct sdt_descriptor1 sdt_d1 = get_sdt_descriptor1(current_ptr);
-            printf("Service type: %d\n", sdt_d1.type);
+            LOG_PARSING("Service type: %d\n", sdt_d1.type);
             my_sdt.st = sdt_d1.type;
 
             current_ptr += sizeof(sdt_d1) + sdt_d1.spnlen;
             struct sdt_descriptor2 sdt_d2 = get_sdt_descriptor2(current_ptr);
             current_ptr += sizeof(sdt_d2);
             
-            printf("snlen: %d\n", sdt_d2.snlen);
+            LOG_PARSING("snlen: %d\n", sdt_d2.snlen);
             strncpy(my_sdt.name, (const char*)current_ptr, sdt_d2.snlen);
             my_sdt.name[sdt_d2.snlen] = '\0';
-            printf("Name: %s\n", my_sdt.name);
+            LOG_PARSING("Name: %s\n", my_sdt.name);
 
             current_ptr += sdt_d2.snlen;
             break;
@@ -185,7 +187,7 @@ struct tm parse_tot(const uint8_t *buffer)
     uint8_t second = (bcd_second / 16) * 10 + bcd_second % 16;
 
     uint16_t date = (tot_h.time[0] << 8) | tot_h.time[1];
-    printf("encoded date: %x\n", date);
+    LOG_PARSING("encoded date: %x\n", date);
 
     struct tot_descriptor_header tot_d_h = get_tot_descriptor_header(buffer);
     if (tot_d_h.tag == 0x58)
@@ -197,7 +199,7 @@ struct tm parse_tot(const uint8_t *buffer)
     int yprime = (date - 15078.2) / 365.25;
     int mprime = (date - 14956.1 - (int)(yprime * 365.25)) / 30.6001;
     int d = date - 14956 - (int)(yprime * 365.25) - (int)(mprime * 30.6001);
-    printf("y': %d, m': %d, d: %d\n", yprime, mprime, d);
+    LOG_PARSING("y': %d, m': %d, d: %d\n", yprime, mprime, d);
 
     int k = (mprime == 14 || mprime == 15);
     int y = yprime + k;

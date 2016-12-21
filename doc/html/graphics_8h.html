@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -96,11 +97,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Contains the graphics API.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
 <code>#include &quot;tdp_api.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="parsing_8h_source.html">parsing.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for graphics.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="graphics_8h__incl.png" border="0" usemap="#include_2graphics_8h" alt=""/></div>
+<map name="include_2graphics_8h" id="include_2graphics_8h">
+<area shape="rect" id="node5" href="parsing_8h.html" title="Contains streamlined internal representations of tables. " alt="" coords="160,80,235,107"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="graphics_8h__dep__incl.png" border="0" usemap="#include_2graphics_8hdep" alt=""/></div>
+<map name="include_2graphics_8hdep" id="include_2graphics_8hdep">
+<area shape="rect" id="node2" href="drawing_8h.html" title="Contains API for drawing graphics elements. " alt="" coords="7,80,130,107"/>
+</map>
 </div>
 </div>
 <p><a href="graphics_8h_source.html">Go to the source code of this file.</a></p>
@@ -113,22 +127,37 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a89d91c09c23aaa3bbfe3d25a9dea08cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89d91c09c23aaa3bbfe3d25a9dea08cb"></a>
-t_Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graphics_8h.html#a89d91c09c23aaa3bbfe3d25a9dea08cb">graphics_init</a> ()</td></tr>
-<tr class="memdesc:a89d91c09c23aaa3bbfe3d25a9dea08cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the internal graphics state. <br /></td></tr>
-<tr class="separator:a89d91c09c23aaa3bbfe3d25a9dea08cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5afaa4760bc08281657d32acd3a4e709"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5afaa4760bc08281657d32acd3a4e709"></a>
-t_Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graphics_8h.html#a5afaa4760bc08281657d32acd3a4e709">graphics_show_channel_info</a> (struct <a class="el" href="structgraphics__channel__info.html">graphics_channel_info</a> info)</td></tr>
-<tr class="memdesc:a5afaa4760bc08281657d32acd3a4e709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays some basic information about a channel on the screen. <br /></td></tr>
-<tr class="separator:a5afaa4760bc08281657d32acd3a4e709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab54a788e9dc45b7f412ee9bb00e4d453"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab54a788e9dc45b7f412ee9bb00e4d453"></a>
-t_Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graphics_8h.html#ab54a788e9dc45b7f412ee9bb00e4d453">graphics_show_volume</a> (uint8_t vol)</td></tr>
-<tr class="memdesc:ab54a788e9dc45b7f412ee9bb00e4d453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays volume information on the screen. <br /></td></tr>
-<tr class="separator:ab54a788e9dc45b7f412ee9bb00e4d453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafe33fae487a53797ab97e9f432bb092"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafe33fae487a53797ab97e9f432bb092"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graphics_8h.html#aafe33fae487a53797ab97e9f432bb092">graphics_deinit</a> ()</td></tr>
-<tr class="memdesc:aafe33fae487a53797ab97e9f432bb092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the internal graphics state. <br /></td></tr>
-<tr class="separator:aafe33fae487a53797ab97e9f432bb092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga741d634a2444a13cc83411c4bb98d948"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga741d634a2444a13cc83411c4bb98d948">graphics_show_channel_info</a> (struct <a class="el" href="structgraphics__channel__info.html">graphics_channel_info</a> info)</td></tr>
+<tr class="memdesc:ga741d634a2444a13cc83411c4bb98d948"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays some basic information about a channel on the screen. <br /></td></tr>
+<tr class="separator:ga741d634a2444a13cc83411c4bb98d948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda">graphics_show_time</a> (struct tm tm)</td></tr>
+<tr class="memdesc:ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays current time. <br /></td></tr>
+<tr class="separator:ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1c74824677854f7abe3e6590343580f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#gaf1c74824677854f7abe3e6590343580f">graphics_show_volume</a> (uint8_t vol)</td></tr>
+<tr class="memdesc:gaf1c74824677854f7abe3e6590343580f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays volume information on the screen.  <a href="group__graphics.html#gaf1c74824677854f7abe3e6590343580f">More...</a><br /></td></tr>
+<tr class="separator:gaf1c74824677854f7abe3e6590343580f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6832a9b03441e5a9d47d3c8e3e01a591"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga6832a9b03441e5a9d47d3c8e3e01a591">graphics_show_channel_number</a> (uint16_t <a class="el" href="structures_8h.html#abcdde739cb26f5c6c2c0b87e83d1f421">ch_num</a>)</td></tr>
+<tr class="memdesc:ga6832a9b03441e5a9d47d3c8e3e01a591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays selected channel number. <br /></td></tr>
+<tr class="separator:ga6832a9b03441e5a9d47d3c8e3e01a591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac220b5d62d022399bb1e3a9cf6b1dce2"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#gac220b5d62d022399bb1e3a9cf6b1dce2">graphics_blackscreen</a> ()</td></tr>
+<tr class="memdesc:gac220b5d62d022399bb1e3a9cf6b1dce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puts a black screen on the screen. <br /></td></tr>
+<tr class="separator:gac220b5d62d022399bb1e3a9cf6b1dce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46d440f27511750ed679ec47c7491579"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga46d440f27511750ed679ec47c7491579">graphics_clear</a> ()</td></tr>
+<tr class="memdesc:ga46d440f27511750ed679ec47c7491579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all graphics elements from screen. <br /></td></tr>
+<tr class="separator:ga46d440f27511750ed679ec47c7491579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96cea86bf40f2181cadf6686b82f28a3"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga96cea86bf40f2181cadf6686b82f28a3">graphics_start_render</a> (int *argc, char ***argv)</td></tr>
+<tr class="memdesc:ga96cea86bf40f2181cadf6686b82f28a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts rendering graphic elements on screen. <br /></td></tr>
+<tr class="separator:ga96cea86bf40f2181cadf6686b82f28a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0807641f1877b4586e9537144b80f6b6"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__graphics.html#ga0807641f1877b4586e9537144b80f6b6">graphics_stop</a> ()</td></tr>
+<tr class="memdesc:ga0807641f1877b4586e9537144b80f6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops graphics rendering loop. <br /></td></tr>
+<tr class="separator:ga0807641f1877b4586e9537144b80f6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains the graphics API. </p>

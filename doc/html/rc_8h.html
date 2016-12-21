@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -106,17 +107,20 @@ Include dependency graph for rc.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:aa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7ca8d3e24ef0c270366ce6fd9bcd258"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rc_8h.html#aa7ca8d3e24ef0c270366ce6fd9bcd258">rc_key_callback</a>) (int key_no)</td></tr>
-<tr class="memdesc:aa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback that should take action on key press. <br /></td></tr>
-<tr class="separator:aa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="memItemLeft" align="right" valign="top">
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rc.html#gaa7ca8d3e24ef0c270366ce6fd9bcd258">rc_key_callback</a>) (int key_no)</td></tr>
+<tr class="memdesc:gaa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback that should take action on key press. <br /></td></tr>
+<tr class="separator:gaa7ca8d3e24ef0c270366ce6fd9bcd258"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a43ed00c4ee453d03068962e0b74117c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43ed00c4ee453d03068962e0b74117c3"></a>
-t_Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rc_8h.html#a43ed00c4ee453d03068962e0b74117c3">rc_start_loop</a> (const char *dev, key_callback callback)</td></tr>
-<tr class="memdesc:a43ed00c4ee453d03068962e0b74117c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that starts the loop that waits for input events from the remote control. <br /></td></tr>
-<tr class="separator:a43ed00c4ee453d03068962e0b74117c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16d20af699334f6207d806701067ac96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rc.html#ga16d20af699334f6207d806701067ac96">rc_start_loop</a> (const char *dev, <a class="el" href="group__rc.html#gaa7ca8d3e24ef0c270366ce6fd9bcd258">rc_key_callback</a> callback)</td></tr>
+<tr class="memdesc:ga16d20af699334f6207d806701067ac96"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that starts the loop that waits for input events from the remote control.  <a href="group__rc.html#ga16d20af699334f6207d806701067ac96">More...</a><br /></td></tr>
+<tr class="separator:ga16d20af699334f6207d806701067ac96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d6de982bd06432345e8164a4c453fcc"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rc.html#ga6d6de982bd06432345e8164a4c453fcc">rc_stop_loop</a> ()</td></tr>
+<tr class="memdesc:ga6d6de982bd06432345e8164a4c453fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the event loop. <br /></td></tr>
+<tr class="separator:ga6d6de982bd06432345e8164a4c453fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains Remote Control API. </p>

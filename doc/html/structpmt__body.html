@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -85,21 +86,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">pmt_body Struct Reference</div>  </div>
+<div class="title">pmt_body Struct Reference<div class="ingroups"><a class="el" href="group__structure.html">DVB table retrieval interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents PMT body.  
+ <a href="structpmt__body.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="structures_8h_source.html">structures.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:aeee07b891d89313dbe5c01b2d524bbfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeee07b891d89313dbe5c01b2d524bbfd"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpmt__body.html#aeee07b891d89313dbe5c01b2d524bbfd">type</a></td></tr>
+<tr class="memdesc:aeee07b891d89313dbe5c01b2d524bbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of stream. <br /></td></tr>
 <tr class="separator:aeee07b891d89313dbe5c01b2d524bbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0119098b67b48f3f69728abb2f019dd8"><td class="memItemLeft" ><a class="anchor" id="a0119098b67b48f3f69728abb2f019dd8"></a>
 union {</td></tr>
 <tr class="memitem:ac79f80f5091e74b937503794a51f6440"><td class="memItemLeft" >
 &#160;&#160;&#160;struct {</td></tr>
 <tr class="memitem:a94c1a8789568d624fe7692d115a405a1"><td class="memItemLeft" >
-&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<b>pid</b>: 13</td></tr>
+&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="structpmt__body.html#a2ef568b533b7dc10584970ee0cf79721">pid</a>: 13</td></tr>
+<tr class="memdesc:a94c1a8789568d624fe7692d115a405a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">PID of the PS. <br /></td></tr>
 <tr class="separator:a94c1a8789568d624fe7692d115a405a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d69f3d7ebeb11c2fd2b345c65588931"><td class="memItemLeft" >
 &#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<b>res</b>: 3</td></tr>
@@ -116,7 +124,8 @@ union {</td></tr>
 <tr class="memitem:a166765f27cd7b835cee2724ff8818db0"><td class="memItemLeft" >
 &#160;&#160;&#160;struct {</td></tr>
 <tr class="memitem:a4d31f9e63ec1f71f8dcc4bfa420c4847"><td class="memItemLeft" >
-&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<b>esilen</b>: 12</td></tr>
+&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="structpmt__body.html#a1aed7248ad83715d38b55de7c9834bf6">esilen</a>: 12</td></tr>
+<tr class="memdesc:a4d31f9e63ec1f71f8dcc4bfa420c4847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of the descriptor section. <br /></td></tr>
 <tr class="separator:a4d31f9e63ec1f71f8dcc4bfa420c4847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab2f7a92c0a8ee51f9045ee3dadfdf28"><td class="memItemLeft" >
 &#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<b>res2</b>: 4</td></tr>
@@ -129,7 +138,9 @@ union {</td></tr>
 <tr class="memitem:a1c7aac0682666c6af7df2622b5bcbb34"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>b2u</b></td></tr>
 <tr class="separator:a1c7aac0682666c6af7df2622b5bcbb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents PMT body. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="structures_8h_source.html">structures.h</a></li>
 </ul>
 </div><!-- contents -->
