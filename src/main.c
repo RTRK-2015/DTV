@@ -139,7 +139,7 @@ void react_to_keypress(int key_code)
 
     case KEY_VOLUME_UP:
         if (volume < 10)
-        ++volume;
+            ++volume;
         if (!muted)
         {
             dtv_set_volume(volume);
@@ -149,7 +149,7 @@ void react_to_keypress(int key_code)
         
     case KEY_VOLUME_DOWN:
         if (volume > 0)
-        --volume;
+            --volume;
         if (!muted)
         {
             dtv_set_volume(volume);

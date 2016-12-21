@@ -1,0 +1,9 @@
+frequency=754000000
+bandwidth=8
+video_pid=101
+audio_pid=103
+ch_num=490
+audio_type=10
+video_type=42
+module=0
+
