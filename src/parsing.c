@@ -76,7 +76,7 @@ struct pat parse_pat(const uint8_t *buffer)
 
 
 struct pmt parse_pmt(const uint8_t *buffer)
-{	
+{
     struct pmt_header pmt_h = get_pmt_header(buffer);
 
     struct pmt my_pmt = 
@@ -96,11 +96,11 @@ struct pmt parse_pmt(const uint8_t *buffer)
         *end_ptr = buffer + sizeof(struct table_header) + pmt_h.hdr.b1u.b1s.len - 4;
 
     while (current_ptr < end_ptr)
-    {	
+    {
         struct pmt_body pmt_b = get_pmt_body(current_ptr);
 
-		LOG_PARSING("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
-		
+        LOG_PARSING("type: %d, pid: %d\n", pmt_b.type, pmt_b.b1u.b1s.pid);
+        
         if (pmt_b.type == 0x02 && my_pmt.video_pid == UINT16_C(0xFFFF))
         {
             my_pmt.video_pid = pmt_b.b1u.b1s.pid;
@@ -154,7 +154,7 @@ struct sdt parse_sdt(const uint8_t *buffer, uint16_t ch_num)
             current_ptr += sizeof(sdt_d1) + sdt_d1.spnlen;
             struct sdt_descriptor2 sdt_d2 = get_sdt_descriptor2(current_ptr);
             current_ptr += sizeof(sdt_d2);
-            
+
             LOG_PARSING("snlen: %d\n", sdt_d2.snlen);
             strncpy(my_sdt.name, (const char*)current_ptr, sdt_d2.snlen);
             my_sdt.name[sdt_d2.snlen] = '\0';

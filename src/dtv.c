@@ -93,7 +93,7 @@ static int32_t filter_callback(uint8_t *buffer)
 
         LOG_DTV("Found pat\n");
         for (size_t i = 0; i < my_pat.pmt_len; ++i)
-	    LOG_DTV("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
+        LOG_DTV("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
 
         pthread_cond_signal(&pat_cond);
     }
@@ -102,7 +102,7 @@ static int32_t filter_callback(uint8_t *buffer)
         LOG_DTV("Parsing pmt...\n");
         my_pmt = parse_pmt(buffer);
         Demux_Free_Filter(player_handle, filter_handle);
-	
+    
         LOG_DTV("Found pmt\n");
         LOG_DTV("audio_pid: %d\n", my_pmt.audio_pid);
         LOG_DTV("video_pid: %d\n", my_pmt.video_pid);
@@ -202,23 +202,23 @@ void dtv_init(struct config_init_ch_info init_info)
         FAIL("%s\n", nameof(pthread_cond_timedwait));
     
     if (Player_Stream_Create
-    	( player_handle
-   		, source_handle
-    	, init_info.vpid
-    	, init_info.vtype
-    	, &video_handle
-    	) == ERROR)
-    	FAIL("%s\n", nameof(Player_Stream_Create));
+        ( player_handle
+           , source_handle
+        , init_info.vpid
+        , init_info.vtype
+        , &video_handle
+        ) == ERROR)
+        FAIL("%s\n", nameof(Player_Stream_Create));
     exit_flags.video = 1;
     
     if (Player_Stream_Create
-    	( player_handle
-    	, source_handle
-    	, init_info.apid
-    	, init_info.atype
-    	, &audio_handle
-    	) == ERROR)
-    	FAIL("%s\n", nameof(Player_Stream_Create));
+        ( player_handle
+        , source_handle
+        , init_info.apid
+        , init_info.atype
+        , &audio_handle
+        ) == ERROR)
+        FAIL("%s\n", nameof(Player_Stream_Create));
 
     dtv_get_channels();
 }
@@ -226,19 +226,19 @@ void dtv_init(struct config_init_ch_info init_info)
 
 struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 {
-	uint16_t pid = UINT16_C(0xFFFF);
-	
-	for (size_t i = 0; i < my_pat.pmt_len; ++i)
-	{
-	    if (my_pat.pmts[i].ch_num == ch_num)
-	    {
-		pid = my_pat.pmts[i].pid;
-		break;
-	    }
-	}
-	
-	LOG_DTV("pmt pid: %d\n", pid);
-	if (pid == UINT16_C(0xFFFF))
+    uint16_t pid = UINT16_C(0xFFFF);
+    
+    for (size_t i = 0; i < my_pat.pmt_len; ++i)
+    {
+        if (my_pat.pmts[i].ch_num == ch_num)
+        {
+        pid = my_pat.pmts[i].pid;
+        break;
+        }
+    }
+
+    LOG_DTV("pmt pid: %d\n", pid);
+    if (pid == UINT16_C(0xFFFF))
         {
             struct dtv_channel_info channel_info =
             { .ch_num = ch_num
@@ -249,64 +249,64 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 
             return channel_info;
         }
-		
-	if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
-		FAIL("%s\n", nameof(Demux_Set_Filter));
-		
-	struct timespec ts;
-	clock_gettime(CLOCK_REALTIME, &ts);
-	ts.tv_sec += 5;
-	
-	if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) > 0)
-		FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
-	LOG_DTV("Got pmt\n");
-	
+
+    if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
+        FAIL("%s\n", nameof(Demux_Set_Filter));
+
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    ts.tv_sec += 5;
+
+    if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) > 0)
+        FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
+    LOG_DTV("Got pmt\n");
+
         LOG_DTV("Video handle: %d\n", video_handle);
-	if (video_handle != (uint32_t)-1)
+    if (video_handle != (uint32_t)-1)
         {
             LOG_DTV("%d != %d\n", video_handle, (uint32_t)-1);
-	    if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
-		FAIL("%s\n", nameof(Player_Stream_Remove));
+        if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
+        FAIL("%s\n", nameof(Player_Stream_Remove));
         }
-	exit_flags.video = 0;
-	video_handle = -1;
-	LOG_DTV("Removed video\n");
-	
+    exit_flags.video = 0;
+    video_handle = -1;
+    LOG_DTV("Removed video\n");
+
         LOG_DTV("Audio handle: %d\n", audio_handle);
-	if (audio_handle != (uint32_t)-1)
-	    if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
-		FAIL("%s\n", nameof(Player_Stream_Remove));
-	exit_flags.audio = 0;
-	audio_handle = -1;
-	LOG_DTV("Removed audio\n");
-	
-	if (my_pmt.video_pid != UINT16_C(0xFFFF))
-	{
-		if (Player_Stream_Create
-			( player_handle
-			, source_handle
-			, my_pmt.video_pid
-			, VIDEO_TYPE_MPEG2
-			, &video_handle
-			) == ERROR)
-			FAIL("%s\n", nameof(Player_Stream_Create));
-		LOG_DTV("Started video with pid: %d\n", my_pmt.video_pid);
-		exit_flags.video = 1;
-	}
-			
-	if (my_pmt.audio_pid != UINT16_C(0xFFFF))
-	{
-		if (Player_Stream_Create
-			( player_handle
-			, source_handle
-			, my_pmt.audio_pid
-			, AUDIO_TYPE_MPEG_AUDIO
-			, &audio_handle
-			) == ERROR)
-			FAIL("%s\n", nameof(Player_Stream_Create));
-		LOG_DTV("Started audio with pid: %d\n", my_pmt.audio_pid);
-		exit_flags.audio = 1;
-	}
+    if (audio_handle != (uint32_t)-1)
+        if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
+        FAIL("%s\n", nameof(Player_Stream_Remove));
+    exit_flags.audio = 0;
+    audio_handle = -1;
+    LOG_DTV("Removed audio\n");
+    
+    if (my_pmt.video_pid != UINT16_C(0xFFFF))
+    {
+        if (Player_Stream_Create
+            ( player_handle
+            , source_handle
+            , my_pmt.video_pid
+            , VIDEO_TYPE_MPEG2
+            , &video_handle
+            ) == ERROR)
+            FAIL("%s\n", nameof(Player_Stream_Create));
+        LOG_DTV("Started video with pid: %d\n", my_pmt.video_pid);
+        exit_flags.video = 1;
+    }
+
+    if (my_pmt.audio_pid != UINT16_C(0xFFFF))
+    {
+        if (Player_Stream_Create
+            ( player_handle
+            , source_handle
+            , my_pmt.audio_pid
+            , AUDIO_TYPE_MPEG_AUDIO
+            , &audio_handle
+            ) == ERROR)
+            FAIL("%s\n", nameof(Player_Stream_Create));
+        LOG_DTV("Started audio with pid: %d\n", my_pmt.audio_pid);
+        exit_flags.audio = 1;
+    }
 
         struct dtv_channel_info channel_info =
         { .ch_num = ch_num
@@ -321,12 +321,12 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 
 t_Error dtv_set_volume(uint8_t vol)
 {
-	LOG_DTV("Setting volume to %d\n", vol);
-	
-	if (vol > 10)
-		return ERROR;
+    LOG_DTV("Setting volume to %d\n", vol);
+    
+    if (vol > 10)
+        return ERROR;
 
-	return Player_Volume_Set(player_handle, vol);
+    return Player_Volume_Set(player_handle, vol);
 }
 
 
@@ -367,7 +367,7 @@ void dtv_deinit()
     if (channels != NULL)
     {
         LOG_DTV("Freeing channels\n");
-	free(channels);
+    free(channels);
     }
 
     if (exit_flags.video)

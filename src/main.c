@@ -93,98 +93,98 @@ void confirm_channel(union sigval s)
 
 
 void react_to_keypress(int key_code)
-{	
-	LOG_MAIN("received code: %d\n", key_code);
-		
-	static const struct itimerspec confirm_ts =
-        { .it_value.tv_sec = 1
-        , .it_value.tv_nsec = 250000000L
-        };
-        static const struct itimerspec updown_ts =
-        { .it_value.tv_sec = 0
-        , .it_value.tv_nsec = 400000000L
-        };
-        int adjusted_key_code = (key_code == KEY_0)? 0 : key_code - 1;
+{   
+    LOG_MAIN("received code: %d\n", key_code);
 
-	switch (key_code)
-	{
-	case KEY_1 ... KEY_0:
-	    if (!started_selecting)
-	    {
-		started_selecting = true;
-		selected_channel = adjusted_key_code;
-	    }
-	    else
-	    {
-		selected_channel = 10 * selected_channel + adjusted_key_code;
-	    }
-	    LOG_MAIN("selected_channel: %d\n", selected_channel);
-            graphics_show_channel_number(selected_channel);
-	    timer_settime(ch_timer, 0, &confirm_ts, NULL);	
-	    break;
+    static const struct itimerspec confirm_ts =
+    { .it_value.tv_sec = 1
+    , .it_value.tv_nsec = 250000000L
+    };
+    static const struct itimerspec updown_ts =
+    { .it_value.tv_sec = 0
+    , .it_value.tv_nsec = 550000000L
+    };
+    int adjusted_key_code = (key_code == KEY_0)? 0 : key_code - 1;
 
-	case KEY_CHANNEL_UP:
-            timer_settime(updown_timer, 0, &reset, NULL);
-            ++selected_channel;
-            graphics_show_channel_number(selected_channel);
-            timer_settime(updown_timer, 0, &updown_ts, NULL);
-            break;
-		
-	case KEY_CHANNEL_DOWN:
-            timer_settime(updown_timer, 0, &reset, NULL);
-            --selected_channel;
-            graphics_show_channel_number(selected_channel);
-            timer_settime(updown_timer, 0, &updown_ts, NULL);
-            break;
+    switch (key_code)
+    {
+    case KEY_1 ... KEY_0:
+        if (!started_selecting)
+        {
+            started_selecting = true;
+            selected_channel = adjusted_key_code;
+        }
+        else
+        {
+            selected_channel = 10 * selected_channel + adjusted_key_code;
+        }
+        LOG_MAIN("selected_channel: %d\n", selected_channel);
+        graphics_show_channel_number(selected_channel);
+        timer_settime(ch_timer, 0, &confirm_ts, NULL);    
+        break;
 
-	case KEY_VOLUME_UP:
-	    if (volume < 10)
-		++volume;
-	    if (!muted)
-            {
-                dtv_set_volume(volume);
-                graphics_show_volume(volume);
-            }
-	    break;
-		
-	case KEY_VOLUME_DOWN:
-	    if (volume > 0)
-		--volume;
-	    if (!muted)
-            {   
-                dtv_set_volume(volume);
-                graphics_show_volume(volume);
-            }
-	    break;
+    case KEY_CHANNEL_UP:
+        timer_settime(updown_timer, 0, &reset, NULL);
+        ++selected_channel;
+        graphics_show_channel_number(selected_channel);
+        timer_settime(updown_timer, 0, &updown_ts, NULL);
+        break;
+        
+    case KEY_CHANNEL_DOWN:
+        timer_settime(updown_timer, 0, &reset, NULL);
+        --selected_channel;
+        graphics_show_channel_number(selected_channel);
+        timer_settime(updown_timer, 0, &updown_ts, NULL);
+        break;
 
-        case KEY_MUTE:
-            if (!muted)
-            {
-                muted = true;
-                dtv_set_volume(0);
-                graphics_show_volume(0);
-            }
-            else
-            {
-                muted = false;
-                dtv_set_volume(volume);
-                graphics_show_volume(volume);
-            }
-            break;
+    case KEY_VOLUME_UP:
+        if (volume < 10)
+        ++volume;
+        if (!muted)
+        {
+            dtv_set_volume(volume);
+            graphics_show_volume(volume);
+        }
+        break;
+        
+    case KEY_VOLUME_DOWN:
+        if (volume > 0)
+        --volume;
+        if (!muted)
+        {
+            dtv_set_volume(volume);
+            graphics_show_volume(volume);
+        }
+        break;
 
-        case KEY_POWEROFF:
-            handle_signal(SIGTERM);
-            break;
+    case KEY_MUTE:
+        if (!muted)
+        {
+            muted = true;
+            dtv_set_volume(0);
+            graphics_show_volume(0);
+        }
+        else
+        {
+            muted = false;
+            dtv_set_volume(volume);
+            graphics_show_volume(volume);
+        }
+        break;
 
-        case KEY_BACK:
-            graphics_clear();
-            break;
+    case KEY_POWEROFF:
+        handle_signal(SIGTERM);
+        break;
 
-        case KEY_INFO:
-            calculate_time();
-            graphics_show_channel_info(gci);
-            break;
-	}
+    case KEY_BACK:
+        graphics_clear();
+        break;
+
+    case KEY_INFO:
+        calculate_time();
+        graphics_show_channel_info(gci);
+        break;
+    }
 }
 
 
@@ -200,7 +200,7 @@ void* update_time(void *args)
 
 
 int main(int argc, char **argv)
-{	
+{
     t_start = time(NULL);
 
     struct sigevent se =
@@ -209,16 +209,16 @@ int main(int argc, char **argv)
     };
     timer_create(CLOCK_REALTIME, &se, &ch_timer);
     timer_create(CLOCK_REALTIME, &se, &updown_timer);
-	
+
     FILE *f = fopen(argv[1], "r");
     if (f == NULL)
-	FAIL_STD("%s\n", nameof(fopen));
+    FAIL_STD("%s\n", nameof(fopen));
 
     struct config_init_ch_info init_info = config_get_init_ch_info(f);
     selected_channel = init_info.ch_num;
 
     graphics_start_render(&argc, &argv);
- 
+
     dtv_init(init_info);
 
     gci.ch_num = init_info.ch_num;

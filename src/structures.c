@@ -63,7 +63,8 @@ struct pmt_body get_pmt_body(const uint8_t *buffer)
 }
 
 
-struct teletext_descriptor_header get_teletext_descriptor_header(const uint8_t *buffer)
+struct teletext_descriptor_header
+    get_teletext_descriptor_header(const uint8_t *buffer)
 {
     return *(const struct teletext_descriptor_header *)buffer;
 }
@@ -71,32 +72,32 @@ struct teletext_descriptor_header get_teletext_descriptor_header(const uint8_t *
 
 struct sdt_header get_sdt_header(const uint8_t *buffer)
 {
-	struct sdt_header sdt_h =
-		*(const struct sdt_header *)buffer;
-		
-	fix_table_header(&sdt_h.hdr);
-	sdt_h.tsi = ntohs(sdt_h.tsi);
-	sdt_h.oni = ntohs(sdt_h.oni);
-	
-	return sdt_h;
+    struct sdt_header sdt_h =
+        *(const struct sdt_header *)buffer;
+        
+    fix_table_header(&sdt_h.hdr);
+    sdt_h.tsi = ntohs(sdt_h.tsi);
+    sdt_h.oni = ntohs(sdt_h.oni);
+    
+    return sdt_h;
 }
 
 
 struct sdt_body get_sdt_body(const uint8_t *buffer)
 {
-	struct sdt_body sdt_b =
-		*(const struct sdt_body *)buffer;
-		
-	sdt_b.sid = ntohs(sdt_b.sid);
-	sdt_b.b2u.bitfield2 = ntohs(sdt_b.b2u.bitfield2);
-	
-	return sdt_b;
+    struct sdt_body sdt_b =
+        *(const struct sdt_body *)buffer;
+
+    sdt_b.sid = ntohs(sdt_b.sid);
+    sdt_b.b2u.bitfield2 = ntohs(sdt_b.b2u.bitfield2);
+
+    return sdt_b;
 }
 
 
 struct sdt_descriptor1 get_sdt_descriptor1(const uint8_t *buffer)
 {
-	return *(const struct sdt_descriptor1 *)buffer;
+    return *(const struct sdt_descriptor1 *)buffer;
 }
 
 
@@ -113,7 +114,7 @@ struct tot_header get_tot_header(const uint8_t *buffer)
 
     fix_table_header(&tot_h.hdr);
     tot_h.b1u.bitfield1 = ntohs(tot_h.b1u.bitfield1);
-	
+
     return tot_h;
 }
 
