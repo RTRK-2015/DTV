@@ -1,0 +1,55 @@
+\hypertarget{rc_8c}{}\section{src/rc.c File Reference}
+\label{rc_8c}\index{src/rc.\+c@{src/rc.\+c}}
+
+
+Contains the implementation of the remote control interface.  
+
+
+{\ttfamily \#include \char`\"{}rc.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$linux/input.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\\*
+Include dependency graph for rc.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{rc_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structargs}{args}
+\begin{DoxyCompactList}\small\item\em A shim structure to pass main arguments to Direct\+FB. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries \+\_\+\+P\+O\+S\+I\+X\+\_\+\+C\+\_\+\+S\+O\+U\+R\+CE}~200809L\hypertarget{rc_8c_a3024ccd4a9af5109d24e6c57565d74a1}{}\label{rc_8c_a3024ccd4a9af5109d24e6c57565d74a1}
+
+\item 
+\#define {\bfseries L\+O\+G\+\_\+\+RC}(fmt, ...)~\hyperlink{common_8h_ac464f11a32500a31842789297a3c31f4}{L\+OG}(\char`\"{}RC\char`\"{}, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\hypertarget{rc_8c_a138b57d1bbcd7a781b2b3ab70a1c0076}{}\label{rc_8c_a138b57d1bbcd7a781b2b3ab70a1c0076}
+
+\item 
+\#define \hyperlink{rc_8c_a8a2db8e958654a630c12ff9ffa568ea6}{E\+V\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+P\+R\+E\+SS}~1\hypertarget{rc_8c_a8a2db8e958654a630c12ff9ffa568ea6}{}\label{rc_8c_a8a2db8e958654a630c12ff9ffa568ea6}
+
+\begin{DoxyCompactList}\small\item\em Specifies that a key press has occurred. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__rc_ga16d20af699334f6207d806701067ac96}{rc\+\_\+start\+\_\+loop} (const char $\ast$dev, \hyperlink{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{rc\+\_\+key\+\_\+callback} kc)
+\begin{DoxyCompactList}\small\item\em A function that starts the loop that waits for input events from the remote control. \end{DoxyCompactList}\item 
+void \hyperlink{group__rc_ga6d6de982bd06432345e8164a4c453fcc}{rc\+\_\+stop\+\_\+loop} ()
+\begin{DoxyCompactList}\small\item\em Stops the event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains the implementation of the remote control interface. 
+

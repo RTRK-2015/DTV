@@ -1,0 +1,58 @@
+\hypertarget{main_8c}{}\section{src/main.c File Reference}
+\label{main_8c}\index{src/main.\+c@{src/main.\+c}}
+
+
+Contains the implementation that glues other modules together.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}graphics.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}dtv.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rc.\+h\char`\"{}}\\*
+Include dependency graph for main.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries \+\_\+\+P\+O\+S\+I\+X\+\_\+\+C\+\_\+\+S\+O\+U\+R\+CE}~200809L\hypertarget{main_8c_a3024ccd4a9af5109d24e6c57565d74a1}{}\label{main_8c_a3024ccd4a9af5109d24e6c57565d74a1}
+
+\item 
+\#define {\bfseries L\+O\+G\+\_\+\+M\+A\+IN}(fmt, ...)~\hyperlink{common_8h_ac464f11a32500a31842789297a3c31f4}{L\+OG}(\char`\"{}Main\char`\"{}, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\hypertarget{main_8c_a03d48c884c8c9db8cb3413f3411c0a1e}{}\label{main_8c_a03d48c884c8c9db8cb3413f3411c0a1e}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a2ac88a8040c89c43521f48e500eea700}{handle\+\_\+signal} (int signum)\hypertarget{main_8c_a2ac88a8040c89c43521f48e500eea700}{}\label{main_8c_a2ac88a8040c89c43521f48e500eea700}
+
+\begin{DoxyCompactList}\small\item\em Function that handles S\+I\+G\+I\+NT and S\+I\+G\+T\+E\+RT, by ensuring graceful exit. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a73d711c2ea70f5243f68a2ecb7aa3698}{calculate\+\_\+time} ()\hypertarget{main_8c_a73d711c2ea70f5243f68a2ecb7aa3698}{}\label{main_8c_a73d711c2ea70f5243f68a2ecb7aa3698}
+
+\begin{DoxyCompactList}\small\item\em Function that calculates the amount of time that has passed since T\+OT table was received, and adjusts the time to be displayed accordingly. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a4fdc17e5cad8065f01f410bf398756c5}{confirm\+\_\+channel} (union sigval s)\hypertarget{main_8c_a4fdc17e5cad8065f01f410bf398756c5}{}\label{main_8c_a4fdc17e5cad8065f01f410bf398756c5}
+
+\begin{DoxyCompactList}\small\item\em Function that switches channels once the change has been confirmed. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_af669e03dbaedb31097f0f42e857e9ff4}{react\+\_\+to\+\_\+keypress} (int key\+\_\+code)\hypertarget{main_8c_af669e03dbaedb31097f0f42e857e9ff4}{}\label{main_8c_af669e03dbaedb31097f0f42e857e9ff4}
+
+\begin{DoxyCompactList}\small\item\em Function that reacts to a keypress from the remote control. \end{DoxyCompactList}\item 
+int {\bfseries main} (int argc, char $\ast$$\ast$argv)\hypertarget{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains the implementation that glues other modules together. 
+

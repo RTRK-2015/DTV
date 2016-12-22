@@ -1,3 +1,6 @@
+/*! \file rc.c
+    \brief Contains the implementation of the remote control interface.
+*/
 #define _POSIX_C_SOURCE 200809L
 // Matching include
 #include "rc.h"
@@ -20,13 +23,14 @@
 
 #define LOG_RC(fmt, ...) LOG("RC", fmt, ##__VA_ARGS__)
 
+/// Specifies that a key press has occurred.
 #define EVENT_KEY_PRESS 1
-#define EVENT_KEY_AUTOREPEAT 2
 
 
 static pthread_t event_th;
 
 
+/// \brief Function to read keys from the remote control.
 static ssize_t get_keys(int fd, size_t count, char *buf)
 {
     ssize_t ret = read(fd, buf, count * sizeof(struct input_event));
@@ -38,6 +42,7 @@ static ssize_t get_keys(int fd, size_t count, char *buf)
 }
 
 
+/// A shim structure to pass arguments to event thread.
 struct args
 {
     int fd;
@@ -47,7 +52,7 @@ struct args
 
 static pthread_mutex_t args_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
-bool stop = false;
+/// Function that polls for remote control events.
 static void* event_loop(void *args)
 {
     static const size_t NUM_EVENTS = 5;
@@ -67,7 +72,7 @@ static void* event_loop(void *args)
         {
             if (event_buffer[i].value == EVENT_KEY_PRESS)
             {
-            	a.kc(event_buffer[i].code);
+                a.kc(event_buffer[i].code);
             }
         }
     }

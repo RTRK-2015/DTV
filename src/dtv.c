@@ -24,17 +24,8 @@
 static pthread_cond_t status_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t status_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static pthread_cond_t pat_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t pat_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-static pthread_cond_t pmt_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t pmt_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-static pthread_cond_t tot_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t tot_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-static pthread_cond_t sdt_cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t sdt_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t filter_cond = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t filter_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static uint16_t sdt_ch_num;
 
@@ -46,6 +37,8 @@ static uint32_t
     audio_handle;
 
 
+/// \brief Structure that keeps information about what should be deinitialized
+/// at the end of the program.
 static struct
 {
     uint32_t tuner : 1;
@@ -62,6 +55,7 @@ static struct
 
 
 
+/// \brief A callback function that responds to frequency locking attempts.
 static int32_t status_callback(t_LockStatus status)
 {
     static size_t tries = 0;
@@ -82,8 +76,11 @@ static struct pat my_pat;
 static struct pmt my_pmt;
 static struct tm my_tm;
 static struct sdt my_sdt;
+/// \brief A callback function that calls parsing routines.
 static int32_t filter_callback(uint8_t *buffer)
 {
+    LOG_DTV("In filter callback!\n");
+
     if (buffer[0] == 0x00)
     {
         LOG_DTV("Parsing pat...\n");
@@ -93,43 +90,38 @@ static int32_t filter_callback(uint8_t *buffer)
         LOG_DTV("Found pat\n");
         for (size_t i = 0; i < my_pat.pmt_len; ++i)
         LOG_DTV("with pmt %d on pid %d\n", my_pat.pmts[i].ch_num, my_pat.pmts[i].pid);
-
-        pthread_cond_signal(&pat_cond);
     }
     else if (buffer[0] == 0x02)
     {
         LOG_DTV("Parsing pmt...\n");
         my_pmt = parse_pmt(buffer);
         Demux_Free_Filter(player_handle, filter_handle);
-    
+
         LOG_DTV("Found pmt\n");
         LOG_DTV("audio_pid: %d\n", my_pmt.audio_pid);
         LOG_DTV("video_pid: %d\n", my_pmt.video_pid);
-
-        pthread_cond_signal(&pmt_cond);
     }
     else if (buffer[0] == 0x73)
     {
         LOG_DTV("Parsing tot...\n");
         my_tm = parse_tot(buffer);
         Demux_Free_Filter(player_handle, filter_handle);
-
-        pthread_cond_signal(&tot_cond);
     }
     else if (buffer[0] == 0x42)
     {
         LOG_DTV("Parsing sdt...\n");
         my_sdt = parse_sdt(buffer, sdt_ch_num);
         Demux_Free_Filter(player_handle, filter_handle);
-
-        pthread_cond_signal(&sdt_cond);
     }
+
+    pthread_cond_signal(&filter_cond);
 
     return 0;
 }
 
 
 static uint16_t *channels = NULL;
+/// \brief 
 void dtv_get_channels()
 {
     if (channels == NULL)
@@ -197,9 +189,9 @@ void dtv_init(struct config_init_ch_info init_info)
     clock_gettime(CLOCK_REALTIME, &ts_pat);
     ts_pat.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&pat_cond, &pat_mutex, &ts_pat) > 0)
+    if (pthread_cond_timedwait(&filter_cond, &filter_mutex, &ts_pat) > 0)
         FAIL("%s\n", nameof(pthread_cond_timedwait));
-    
+
     if (Player_Stream_Create
         ( player_handle
            , source_handle
@@ -290,7 +282,7 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
     clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&pmt_cond, &pmt_mutex, &ts) > 0)
+    if (pthread_cond_timedwait(&filter_cond, &filter_mutex, &ts) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
     LOG_DTV("Got pmt\n");
 
@@ -355,7 +347,7 @@ struct tm dtv_get_time()
     clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += 30;
 
-    if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) > 0)
+    if (pthread_cond_timedwait(&filter_cond, &filter_mutex, &ts) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_wait));
 
     return my_tm;
@@ -367,14 +359,15 @@ struct sdt dtv_get_info(uint16_t ch_num)
     sdt_ch_num = ch_num;
 
     if (Demux_Set_Filter(player_handle, 0x0011, 0x42, &filter_handle) == ERROR)
-        FAIL("%s\n", nameof(Demux_Set_FilteR));
+        FAIL("%s\n", nameof(Demux_Set_Filter));
 
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += 5;
 
-    if (pthread_cond_timedwait(&sdt_cond, &sdt_mutex, &ts) > 0)
-        FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
+    LOG_DTV("waiting info\n");
+    pthread_cond_timedwait(&filter_cond, &filter_mutex, &ts);
+
 
     return my_sdt;
 }
@@ -387,7 +380,7 @@ void dtv_deinit()
     if (channels != NULL)
     {
         LOG_DTV("Freeing channels\n");
-    free(channels);
+        free(channels);
     }
 
     if (exit_flags.video)

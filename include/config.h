@@ -26,6 +26,7 @@ struct config_init_ch_info
     enum t_StreamType vtype; ///< type of the inital video stream.
     enum t_StreamType atype; ///< type of the initial audio stream.
     uint32_t ch_num; ///< Channel number.
+    int teletext; ///< Whether the channel has teletext.
 };
 
 

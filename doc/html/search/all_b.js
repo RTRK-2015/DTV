@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['remote_2dcontrol_20interface',['Remote-control interface',['../group__rc.html',1,'']]],
-  ['rc_2eh',['rc.h',['../rc_8h.html',1,'']]],
-  ['rc_5fkey_5fcallback',['rc_key_callback',['../group__rc.html#gaa7ca8d3e24ef0c270366ce6fd9bcd258',1,'rc.h']]],
-  ['rc_5fstart_5floop',['rc_start_loop',['../group__rc.html#ga16d20af699334f6207d806701067ac96',1,'rc_start_loop(const char *dev, rc_key_callback callback):&#160;rc.c'],['../group__rc.html#ga16d20af699334f6207d806701067ac96',1,'rc_start_loop(const char *dev, rc_key_callback kc):&#160;rc.c']]],
-  ['rc_5fstop_5floop',['rc_stop_loop',['../group__rc.html#ga6d6de982bd06432345e8164a4c453fcc',1,'rc_stop_loop():&#160;rc.c'],['../group__rc.html#ga6d6de982bd06432345e8164a4c453fcc',1,'rc_stop_loop():&#160;rc.c']]]
+  ['main_2ec',['main.c',['../main_8c.html',1,'']]],
+  ['make_5fgetter',['MAKE_GETTER',['../config_8c.html#a73e900891c40d086984338bdb587270b',1,'MAKE_GETTER():&#160;config.c'],['../config_8c.html#a749f05febee67a1cc32e3d2141561414',1,'MAKE_GETTER(uint32_t, frequency, NO_FREQUENCY,&quot;%&quot;SCNu32):&#160;config.c'],['../config_8c.html#ac9993275589f8863d8b2cec36a151a8d',1,'MAKE_GETTER(uint32_t, bandwidth, NO_BANDWIDTH,&quot;%&quot;SCNu32):&#160;config.c'],['../config_8c.html#a9aeda71de4e31859c1a7af2dc0ba654f',1,'MAKE_GETTER(uint16_t, video_pid, NO_VIDEO_PID,&quot;%&quot;SCNu16):&#160;config.c'],['../config_8c.html#a1dc6cc472e5f6554581ae29cfbfb597b',1,'MAKE_GETTER(uint16_t, audio_pid, NO_AUDIO_PID,&quot;%&quot;SCNu16):&#160;config.c'],['../config_8c.html#a0d86b42ab3a09de149ae3f8b47af516a',1,'MAKE_GETTER(uint16_t, ch_num, NO_CH_NUM,&quot;%&quot;SCNu16):&#160;config.c'],['../config_8c.html#a988fcd0abc704e9d3af03d840a426393',1,'MAKE_GETTER(int, module, NO_MODULE,&quot;%d&quot;):&#160;config.c'],['../config_8c.html#a2bef078a01875edb5403d6cd1c4b0cab',1,'MAKE_GETTER(int, video_type, NO_VIDEO_TYPE,&quot;%d&quot;):&#160;config.c'],['../config_8c.html#ad0b1b545727615f439cd1d8da5f0cdf7',1,'MAKE_GETTER(int, audio_type, NO_AUDIO_TYPE,&quot;%d&quot;):&#160;config.c'],['../config_8c.html#a670ef589443019e66fc5d4b9a967746d',1,'MAKE_GETTER(int, teletext, NO_TELETEXT,&quot;%d&quot;):&#160;config.c']]],
+  ['module',['module',['../structconfig__init__ch__info.html#a0853c4a90403d73518f4c8625befcfbd',1,'config_init_ch_info']]],
+  ['mute',['mute',['../structgraphics__flags.html#a3309b3b318980c66dc349e26707f039c',1,'graphics_flags']]]
 ];

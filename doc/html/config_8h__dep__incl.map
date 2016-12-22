@@ -1,3 +1,5 @@
 <map id="include/config.h" name="include/config.h">
-<area shape="rect" id="node2" href="$dtv_8h.html" title="Contains DTV API. " alt="" coords="14,80,110,107"/>
+<area shape="rect" id="node2" href="$dtv_8h.html" title="Contains DTV API. " alt="" coords="5,80,101,107"/>
+<area shape="rect" id="node3" href="$main_8c.html" title="Contains the implementation that glues other modules together. " alt="" coords="55,155,137,181"/>
+<area shape="rect" id="node4" href="$config_8c.html" title="Implementation for the configuration file interface. " alt="" coords="176,80,267,107"/>
 </map>

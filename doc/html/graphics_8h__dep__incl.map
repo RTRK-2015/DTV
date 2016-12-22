@@ -1,3 +1,5 @@
 <map id="include/graphics.h" name="include/graphics.h">
-<area shape="rect" id="node2" href="$drawing_8h.html" title="Contains API for drawing graphics elements. " alt="" coords="7,80,130,107"/>
+<area shape="rect" id="node2" href="$drawing_8h.html" title="Contains API for drawing graphics elements. " alt="" coords="5,80,128,107"/>
+<area shape="rect" id="node3" href="$graphics_8c.html" title="Contains implementation for graphics interface. " alt="" coords="64,155,168,181"/>
+<area shape="rect" id="node4" href="$main_8c.html" title="Contains the implementation that glues other modules together. " alt="" coords="203,80,285,107"/>
 </map>

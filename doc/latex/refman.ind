@@ -1,0 +1,138 @@
+\begin{theindex}
+
+  \item {args}, \hyperpage{17}
+
+  \indexspace
+
+  \item {B\+U\+F\+\_\+\+S\+I\+ZE}
+    \subitem {config.\+c}, \hyperpage{49}
+
+  \indexspace
+
+  \item {ch\+\_\+num}
+    \subitem {structures.\+h}, \hyperpage{47}
+  \item {common.\+h}
+    \subitem {F\+A\+I\+L\+\_\+\+S\+TD}, \hyperpage{34}
+    \subitem {F\+A\+IL}, \hyperpage{34}
+    \subitem {L\+OG}, \hyperpage{34}
+  \item {config.\+c}
+    \subitem {B\+U\+F\+\_\+\+S\+I\+ZE}, \hyperpage{49}
+    \subitem {M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}, \hyperpage{49}
+  \item {config\+\_\+get\+\_\+init\+\_\+ch\+\_\+info}
+    \subitem {Configuration file interface}, \hyperpage{7}
+  \item {config\+\_\+init\+\_\+ch\+\_\+info}, \hyperpage{17}
+  \item {Configuration file interface}, \hyperpage{7}
+    \subitem {config\+\_\+get\+\_\+init\+\_\+ch\+\_\+info}, 
+		\hyperpage{7}
+
+  \indexspace
+
+  \item {D\+R\+A\+W\+C\+H\+E\+CK}
+    \subitem {graphics.\+c}, \hyperpage{51}
+  \item {D\+T\+V interface}, \hyperpage{9}
+    \subitem {dtv\+\_\+set\+\_\+volume}, \hyperpage{9}
+  \item {D\+V\+B table retrieval interface}, \hyperpage{14}
+  \item {draw\+\_\+interface}, \hyperpage{18}
+  \item {Drawing interface}, \hyperpage{8}
+  \item {dtv\+\_\+channel\+\_\+info}, \hyperpage{19}
+  \item {dtv\+\_\+set\+\_\+volume}
+    \subitem {D\+T\+V interface}, \hyperpage{9}
+
+  \indexspace
+
+  \item {F\+A\+I\+L\+\_\+\+S\+TD}
+    \subitem {common.\+h}, \hyperpage{34}
+  \item {F\+A\+IL}
+    \subitem {common.\+h}, \hyperpage{34}
+
+  \indexspace
+
+  \item {G\+\_\+\+E\+R\+R\+OR}
+    \subitem {graphics.\+c}, \hyperpage{52}
+  \item {G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}
+    \subitem {graphics.\+c}, \hyperpage{52}
+  \item {g\+\_\+error}
+    \subitem {graphics.\+c}, \hyperpage{52}
+  \item {Graphics interface}, \hyperpage{10}
+    \subitem {graphics\+\_\+show\+\_\+volume}, \hyperpage{10}
+  \item {graphics.\+c}
+    \subitem {D\+R\+A\+W\+C\+H\+E\+CK}, \hyperpage{51}
+    \subitem {G\+\_\+\+E\+R\+R\+OR}, \hyperpage{52}
+    \subitem {G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}, \hyperpage{52}
+    \subitem {g\+\_\+error}, \hyperpage{52}
+  \item {graphics\+\_\+channel\+\_\+info}, \hyperpage{19}
+  \item {graphics\+\_\+flags}, \hyperpage{20}
+  \item {graphics\+\_\+show\+\_\+volume}
+    \subitem {Graphics interface}, \hyperpage{10}
+
+  \indexspace
+
+  \item {include/common.\+h}, \hyperpage{33}
+  \item {include/config.\+h}, \hyperpage{35}
+  \item {include/drawing.\+h}, \hyperpage{36}
+  \item {include/dtv.\+h}, \hyperpage{38}
+  \item {include/graphics.\+h}, \hyperpage{40}
+  \item {include/parsing.\+h}, \hyperpage{41}
+  \item {include/rc.\+h}, \hyperpage{43}
+  \item {include/structures.\+h}, \hyperpage{44}
+
+  \indexspace
+
+  \item {L\+OG}
+    \subitem {common.\+h}, \hyperpage{34}
+  \item {len}
+    \subitem {structures.\+h}, \hyperpage{47}
+
+  \indexspace
+
+  \item {M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}
+    \subitem {config.\+c}, \hyperpage{49}
+
+  \indexspace
+
+  \item {pat}, \hyperpage{21}
+  \item {pat\+::pmt\+\_\+basic}, \hyperpage{24}
+  \item {pat\+\_\+body}, \hyperpage{22}
+  \item {pat\+\_\+header}, \hyperpage{22}
+  \item {pid}
+    \subitem {structures.\+h}, \hyperpage{47}
+  \item {pmt}, \hyperpage{23}
+  \item {pmt\+\_\+body}, \hyperpage{24}
+  \item {pmt\+\_\+header}, \hyperpage{25}
+
+  \indexspace
+
+  \item {rc\+\_\+start\+\_\+loop}
+    \subitem {Remote-\/control interface}, \hyperpage{13}
+  \item {Remote-\/control interface}, \hyperpage{13}
+    \subitem {rc\+\_\+start\+\_\+loop}, \hyperpage{13}
+
+  \indexspace
+
+  \item {sdt}, \hyperpage{26}
+  \item {sdt\+\_\+body}, \hyperpage{26}
+  \item {sdt\+\_\+descriptor1}, \hyperpage{27}
+  \item {sdt\+\_\+descriptor2}, \hyperpage{28}
+  \item {sdt\+\_\+header}, \hyperpage{28}
+  \item {src/config.\+c}, \hyperpage{48}
+  \item {src/graphics.\+c}, \hyperpage{50}
+  \item {src/main.\+c}, \hyperpage{52}
+  \item {src/rc.\+c}, \hyperpage{53}
+  \item {structures.\+h}
+    \subitem {ch\+\_\+num}, \hyperpage{47}
+    \subitem {len}, \hyperpage{47}
+    \subitem {pid}, \hyperpage{47}
+    \subitem {type}, \hyperpage{47}
+
+  \indexspace
+
+  \item {Table parsing interface}, \hyperpage{12}
+  \item {table\+\_\+header}, \hyperpage{29}
+  \item {teletext\+\_\+descriptor\+\_\+header}, \hyperpage{30}
+  \item {tot\+\_\+descriptor\+\_\+body}, \hyperpage{30}
+  \item {tot\+\_\+descriptor\+\_\+header}, \hyperpage{31}
+  \item {tot\+\_\+header}, \hyperpage{31}
+  \item {type}
+    \subitem {structures.\+h}, \hyperpage{47}
+
+\end{theindex}

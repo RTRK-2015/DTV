@@ -9,6 +9,26 @@
 #include "tdp_api.h"
 
 
+/// Specifies the code of the back key.
+#define KEY_BACK 1
+/// Specifies the code of the 1 key.
+#define KEY_1 2
+/// Specifies the code of the 0 key.
+#define KEY_0 11
+/// Specifies the code of the mute key.
+#define KEY_MUTE 60
+/// Specifies the code of the channel down key.
+#define KEY_CHANNEL_DOWN 61
+/// Specifies the code of the channelup key.
+#define KEY_CHANNEL_UP 62
+/// Specifies the code of the volume up key.
+#define KEY_VOLUME_UP 63
+/// Specifies the code of the volume down key.
+#define KEY_VOLUME_DOWN 64
+/// Specifies the code of the info key.
+#define KEY_INFO 358
+
+
 /// \defgroup rc Remote-control interface
 /// \addtogroup rc
 /// @{

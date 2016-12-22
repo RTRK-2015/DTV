@@ -72,6 +72,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_vars.html"><span>Variables</span></a></li>
       <li><a href="globals_type.html"><span>Typedefs</span></a></li>
+      <li><a href="globals_enum.html"><span>Enumerations</span></a></li>
+      <li><a href="globals_eval.html"><span>Enumerator</span></a></li>
       <li><a href="globals_defs.html"><span>Macros</span></a></li>
     </ul>
   </div>
@@ -80,6 +82,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
+      <li><a href="#index_h"><span>h</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
       <li class="current"><a href="#index_r"><span>r</span></a></li>
     </ul>
@@ -103,8 +107,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 &#160;
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>calculate_time()
+: <a class="el" href="main_8c.html#a73d711c2ea70f5243f68a2ecb7aa3698">main.c</a>
+</li>
 <li>config_get_init_ch_info()
 : <a class="el" href="group__config.html#gad7d820530151b1bb2b6cf6e992f48331">config.h</a>
+, <a class="el" href="group__config.html#gad7d820530151b1bb2b6cf6e992f48331">config.c</a>
+</li>
+<li>confirm_channel()
+: <a class="el" href="main_8c.html#a4fdc17e5cad8065f01f410bf398756c5">main.c</a>
 </li>
 </ul>
 
@@ -206,39 +217,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>graphics_blackscreen()
 : <a class="el" href="group__graphics.html#gac220b5d62d022399bb1e3a9cf6b1dce2">graphics.h</a>
+, <a class="el" href="group__graphics.html#gac220b5d62d022399bb1e3a9cf6b1dce2">graphics.c</a>
 </li>
 <li>graphics_clear()
-: <a class="el" href="group__graphics.html#ga46d440f27511750ed679ec47c7491579">graphics.h</a>
+: <a class="el" href="group__graphics.html#ga46d440f27511750ed679ec47c7491579">graphics.c</a>
+, <a class="el" href="group__graphics.html#ga46d440f27511750ed679ec47c7491579">graphics.h</a>
 </li>
 <li>graphics_hide_init()
 : <a class="el" href="group__graphics.html#gaa14c15905aaa8584ac0d41629e63179e">graphics.h</a>
+, <a class="el" href="group__graphics.html#gaa14c15905aaa8584ac0d41629e63179e">graphics.c</a>
 </li>
 <li>graphics_hide_mute()
 : <a class="el" href="group__graphics.html#ga56554c1a2cf638c4a3804f36656a75f9">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga56554c1a2cf638c4a3804f36656a75f9">graphics.c</a>
+</li>
+<li>graphics_render()
+: <a class="el" href="graphics_8c.html#a5945a267b0c42c153e55a7f5d9d6be7a">graphics.c</a>
 </li>
 <li>graphics_show_channel_info()
 : <a class="el" href="group__graphics.html#ga741d634a2444a13cc83411c4bb98d948">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga741d634a2444a13cc83411c4bb98d948">graphics.c</a>
 </li>
 <li>graphics_show_channel_number()
 : <a class="el" href="group__graphics.html#ga6832a9b03441e5a9d47d3c8e3e01a591">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga6832a9b03441e5a9d47d3c8e3e01a591">graphics.c</a>
 </li>
 <li>graphics_show_init()
 : <a class="el" href="group__graphics.html#ga07d069f854ed989682f48d8eb2b96392">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga07d069f854ed989682f48d8eb2b96392">graphics.c</a>
 </li>
 <li>graphics_show_mute()
-: <a class="el" href="group__graphics.html#ga88347b80264b415007253f935d32023c">graphics.h</a>
+: <a class="el" href="group__graphics.html#ga88347b80264b415007253f935d32023c">graphics.c</a>
+, <a class="el" href="group__graphics.html#ga88347b80264b415007253f935d32023c">graphics.h</a>
 </li>
 <li>graphics_show_time()
-: <a class="el" href="group__graphics.html#ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda">graphics.h</a>
+: <a class="el" href="group__graphics.html#ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda">graphics.c</a>
+, <a class="el" href="group__graphics.html#ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda">graphics.h</a>
 </li>
 <li>graphics_show_volume()
-: <a class="el" href="group__graphics.html#gaf1c74824677854f7abe3e6590343580f">graphics.h</a>
+: <a class="el" href="group__graphics.html#gaf1c74824677854f7abe3e6590343580f">graphics.c</a>
+, <a class="el" href="group__graphics.html#gaf1c74824677854f7abe3e6590343580f">graphics.h</a>
 </li>
 <li>graphics_start_render()
 : <a class="el" href="group__graphics.html#ga96cea86bf40f2181cadf6686b82f28a3">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga96cea86bf40f2181cadf6686b82f28a3">graphics.c</a>
 </li>
 <li>graphics_stop()
 : <a class="el" href="group__graphics.html#ga0807641f1877b4586e9537144b80f6b6">graphics.h</a>
+, <a class="el" href="group__graphics.html#ga0807641f1877b4586e9537144b80f6b6">graphics.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
+<li>handle_signal()
+: <a class="el" href="main_8c.html#a2ac88a8040c89c43521f48e500eea700">main.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>MAKE_GETTER()
+: <a class="el" href="config_8c.html#a749f05febee67a1cc32e3d2141561414">config.c</a>
 </li>
 </ul>
 
@@ -262,9 +302,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>rc_start_loop()
 : <a class="el" href="group__rc.html#ga16d20af699334f6207d806701067ac96">rc.h</a>
+, <a class="el" href="group__rc.html#ga16d20af699334f6207d806701067ac96">rc.c</a>
 </li>
 <li>rc_stop_loop()
-: <a class="el" href="group__rc.html#ga6d6de982bd06432345e8164a4c453fcc">rc.h</a>
+: <a class="el" href="group__rc.html#ga6d6de982bd06432345e8164a4c453fcc">rc.c</a>
+, <a class="el" href="group__rc.html#ga6d6de982bd06432345e8164a4c453fcc">rc.h</a>
+</li>
+<li>react_to_keypress()
+: <a class="el" href="main_8c.html#af669e03dbaedb31097f0f42e857e9ff4">main.c</a>
 </li>
 </ul>
 </div><!-- contents -->

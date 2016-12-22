@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Abc.  
+<p>Contains the implementation that glues other modules together.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -113,12 +113,12 @@ Include dependency graph for main.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8c__incl.png" border="0" usemap="#src_2main_8c" alt=""/></div>
 <map name="src_2main_8c" id="src_2main_8c">
-<area shape="rect" id="node9" href="common_8h.html" title="Contains functions that all modules use. " alt="" coords="54,80,137,107"/>
-<area shape="rect" id="node12" href="graphics_8h.html" title="Contains the graphics API. " alt="" coords="399,80,482,107"/>
-<area shape="rect" id="node16" href="config_8h.html" title="Contains configuration file API. " alt="" coords="979,155,1047,181"/>
-<area shape="rect" id="node17" href="dtv_8h.html" title="Contains DTV API. " alt="" coords="706,80,757,107"/>
-<area shape="rect" id="node19" href="rc_8h.html" title="Contains Remote Control API. " alt="" coords="911,155,955,181"/>
-<area shape="rect" id="node14" href="parsing_8h.html" title="Contains streamlined internal representations of tables. " alt="" coords="403,155,478,181"/>
+<area shape="rect" id="node9" href="common_8h.html" title="Contains functions that all modules use. " alt="" coords="105,80,188,107"/>
+<area shape="rect" id="node12" href="graphics_8h.html" title="Contains the graphics API. " alt="" coords="437,80,520,107"/>
+<area shape="rect" id="node15" href="config_8h.html" title="Contains configuration file API. " alt="" coords="929,155,997,181"/>
+<area shape="rect" id="node17" href="dtv_8h.html" title="Contains DTV API. " alt="" coords="651,80,701,107"/>
+<area shape="rect" id="node19" href="rc_8h.html" title="Contains Remote Control API. " alt="" coords="861,155,905,181"/>
+<area shape="rect" id="node13" href="parsing_8h.html" title="Contains streamlined internal representations of tables. " alt="" coords="404,155,479,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -130,60 +130,31 @@ Macros</h2></td></tr>
 <tr class="memitem:a03d48c884c8c9db8cb3413f3411c0a1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03d48c884c8c9db8cb3413f3411c0a1e"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>LOG_MAIN</b>(fmt, ...)&#160;&#160;&#160;<a class="el" href="common_8h.html#ac464f11a32500a31842789297a3c31f4">LOG</a>(&quot;Main&quot;, fmt, ##__VA_ARGS__)</td></tr>
 <tr class="separator:a03d48c884c8c9db8cb3413f3411c0a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad79ba6770b2ab25b890f7819357a125d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad79ba6770b2ab25b890f7819357a125d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_BACK</b>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ad79ba6770b2ab25b890f7819357a125d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7fd35018971faa28dacd3e33a8f737"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a7fd35018971faa28dacd3e33a8f737"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_1</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a5a7fd35018971faa28dacd3e33a8f737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51ca76d1508339b071a974798b90474b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51ca76d1508339b071a974798b90474b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_0</b>&#160;&#160;&#160;11</td></tr>
-<tr class="separator:a51ca76d1508339b071a974798b90474b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a222c823dcaa3e4638edf14e5d0b102d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a222c823dcaa3e4638edf14e5d0b102d1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_MUTE</b>&#160;&#160;&#160;60</td></tr>
-<tr class="separator:a222c823dcaa3e4638edf14e5d0b102d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a5ca0598ce4e46d6bf0766b3da20aa7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a5ca0598ce4e46d6bf0766b3da20aa7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_CHANNEL_DOWN</b>&#160;&#160;&#160;61</td></tr>
-<tr class="separator:a6a5ca0598ce4e46d6bf0766b3da20aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3f801e1571016a4e9a344cb966de9a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3f801e1571016a4e9a344cb966de9a5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_CHANNEL_UP</b>&#160;&#160;&#160;62</td></tr>
-<tr class="separator:ae3f801e1571016a4e9a344cb966de9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a476a0201859679ecc47815a321476c29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a476a0201859679ecc47815a321476c29"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_VOLUME_UP</b>&#160;&#160;&#160;63</td></tr>
-<tr class="separator:a476a0201859679ecc47815a321476c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ac8047db7d6b2c9e1514bba8dfbda28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ac8047db7d6b2c9e1514bba8dfbda28"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_VOLUME_DOWN</b>&#160;&#160;&#160;64</td></tr>
-<tr class="separator:a9ac8047db7d6b2c9e1514bba8dfbda28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42078df7e3b9448fa8070761ee10bf77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42078df7e3b9448fa8070761ee10bf77"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_POWEROFF</b>&#160;&#160;&#160;116</td></tr>
-<tr class="separator:a42078df7e3b9448fa8070761ee10bf77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0660be25c82280ce01d0bdaaf97e1e44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0660be25c82280ce01d0bdaaf97e1e44"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KEY_INFO</b>&#160;&#160;&#160;358</td></tr>
-<tr class="separator:a0660be25c82280ce01d0bdaaf97e1e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a2ac88a8040c89c43521f48e500eea700"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ac88a8040c89c43521f48e500eea700"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handle_signal</b> (int signum)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2ac88a8040c89c43521f48e500eea700">handle_signal</a> (int signum)</td></tr>
+<tr class="memdesc:a2ac88a8040c89c43521f48e500eea700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that handles SIGINT and SIGTERT, by ensuring graceful exit. <br /></td></tr>
 <tr class="separator:a2ac88a8040c89c43521f48e500eea700"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d711c2ea70f5243f68a2ecb7aa3698"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73d711c2ea70f5243f68a2ecb7aa3698"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_time</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a73d711c2ea70f5243f68a2ecb7aa3698">calculate_time</a> ()</td></tr>
+<tr class="memdesc:a73d711c2ea70f5243f68a2ecb7aa3698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculates the amount of time that has passed since TOT table was received, and adjusts the time to be displayed accordingly. <br /></td></tr>
 <tr class="separator:a73d711c2ea70f5243f68a2ecb7aa3698"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fdc17e5cad8065f01f410bf398756c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fdc17e5cad8065f01f410bf398756c5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>confirm_channel</b> (union sigval s)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a4fdc17e5cad8065f01f410bf398756c5">confirm_channel</a> (union sigval s)</td></tr>
+<tr class="memdesc:a4fdc17e5cad8065f01f410bf398756c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that switches channels once the change has been confirmed. <br /></td></tr>
 <tr class="separator:a4fdc17e5cad8065f01f410bf398756c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af669e03dbaedb31097f0f42e857e9ff4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af669e03dbaedb31097f0f42e857e9ff4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>react_to_keypress</b> (int key_code)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af669e03dbaedb31097f0f42e857e9ff4">react_to_keypress</a> (int key_code)</td></tr>
+<tr class="memdesc:af669e03dbaedb31097f0f42e857e9ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that reacts to a keypress from the remote control. <br /></td></tr>
 <tr class="separator:af669e03dbaedb31097f0f42e857e9ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e905771f6df73049380b1409262df00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e905771f6df73049380b1409262df00"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>update_time</b> (void *<a class="el" href="structargs.html">args</a>)</td></tr>
-<tr class="separator:a3e905771f6df73049380b1409262df00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abc. </p>
+<div class="textblock"><p>Contains the implementation that glues other modules together. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

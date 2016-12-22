@@ -1,0 +1,86 @@
+\hypertarget{drawing_8c}{}\section{src/drawing.c File Reference}
+\label{drawing_8c}\index{src/drawing.\+c@{src/drawing.\+c}}
+
+
+Contains the implementation of the drawing interface.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}drawing.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\\*
+Include dependency graph for drawing.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{drawing_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries L\+O\+G\+\_\+\+D\+R\+A\+W\+I\+NG}(fmt, ...)~\hyperlink{common_8h_ac464f11a32500a31842789297a3c31f4}{L\+OG}(\char`\"{}Drawing\char`\"{}, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\hypertarget{drawing_8c_a5fefdae78cb77872229642aaa8e1c588}{}\label{drawing_8c_a5fefdae78cb77872229642aaa8e1c588}
+
+\item 
+\#define {\bfseries D\+F\+B\+C\+H\+E\+CK}(x...)
+\item 
+\#define {\bfseries T\+I\+M\+E\+\_\+\+S\+I\+ZE}~4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 +1\hypertarget{drawing_8c_ac1c7bc76dbfd8378fc96541a6243afd1}{}\label{drawing_8c_ac1c7bc76dbfd8378fc96541a6243afd1}
+
+\item 
+\#define {\bfseries T\+I\+M\+E\+\_\+\+S\+I\+ZE}~4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 +1\hypertarget{drawing_8c_ac1c7bc76dbfd8378fc96541a6243afd1}{}\label{drawing_8c_ac1c7bc76dbfd8378fc96541a6243afd1}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \hyperlink{group__drawing_ga50526d5e4e244599996608371f410bf2}{draw\+\_\+init} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, int $\ast$argc, char $\ast$$\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Initialize drawing interface. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga37e840145ddb9107f2efbec80697e377}{draw\+\_\+init\+\_\+message} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Draw initializing message. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga71818ed76471623e9aeffe07a0ba26d2}{draw\+\_\+channel\+\_\+info} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, struct \hyperlink{structgraphics__channel__info}{graphics\+\_\+channel\+\_\+info} info)
+\begin{DoxyCompactList}\small\item\em Draw channel\+\_\+info graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gaa19821a33379a186117efe18a67bfea7}{draw\+\_\+time} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, struct tm tm)
+\begin{DoxyCompactList}\small\item\em Draw time graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gae31d79c9ff070efa64603736bee4d252}{draw\+\_\+volume} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, uint8\+\_\+t vol)
+\begin{DoxyCompactList}\small\item\em Draw volume graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga9e57d07e991e2d951ad273cde5d5518a}{draw\+\_\+no\+\_\+channel} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Draw no channel display. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga4136711e3d32c79bf3261c2afb901b6f}{draw\+\_\+audio\+\_\+only} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Draw radio graphics. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gab0f56761fdebd9a7bc3584a43777df94}{draw\+\_\+channel\+\_\+number} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})
+\begin{DoxyCompactList}\small\item\em Draw channel number. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga07cd1d9f76609e912c17aa865cffa403}{draw\+\_\+blackscreen} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Draw a black rectangle. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga7e0866c8dbb4ef95d3708b7fa1a0393d}{draw\+\_\+clear} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Clear the screen. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga485befc089e203ec54c8b06c8e72c9f3}{draw\+\_\+refresh} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Refresh display. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gae59904fcfa6a1ad70e82854e02e7833a}{draw\+\_\+deinit} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)
+\begin{DoxyCompactList}\small\item\em Deinitialize drawing interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains the implementation of the drawing interface. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{drawing.\+c@{drawing.\+c}!D\+F\+B\+C\+H\+E\+CK@{D\+F\+B\+C\+H\+E\+CK}}
+\index{D\+F\+B\+C\+H\+E\+CK@{D\+F\+B\+C\+H\+E\+CK}!drawing.\+c@{drawing.\+c}}
+\subsubsection[{\texorpdfstring{D\+F\+B\+C\+H\+E\+CK}{DFBCHECK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+F\+B\+C\+H\+E\+CK(
+\begin{DoxyParamCaption}
+\item[{}]{x...}
+\end{DoxyParamCaption}
+)}\hypertarget{drawing_8c_a831f0d95b15a618e344f9ae2cb494229}{}\label{drawing_8c_a831f0d95b15a618e344f9ae2cb494229}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{                                                            \(\backslash\)
+DFBResult err = x;                                           \(\backslash\)
+if (err != DFB\_OK)                                           \(\backslash\)
+    \{                                                        \(\backslash\)
+        fprintf(stderr, \textcolor{stringliteral}{"%s <%d>:\(\backslash\)n\(\backslash\)t"}, \_\_FILE\_\_, \_\_LINE\_\_); \(\backslash\)
+        DirectFBErrorFatal( #x, err);                        \(\backslash\)
+    \}                                                        \(\backslash\)
+\}
+\end{DoxyCode}

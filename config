@@ -3,6 +3,7 @@ bandwidth=8
 video_pid=101
 audio_pid=103
 ch_num=490
+teletext=1
 audio_type=10
 video_type=42
 module=0

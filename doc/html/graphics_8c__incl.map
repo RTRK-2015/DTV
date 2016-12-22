@@ -1,0 +1,6 @@
+<map id="src/graphics.c" name="src/graphics.c">
+<area shape="rect" id="node9" href="$common_8h.html" title="Contains functions that all modules use. " alt="" coords="334,80,417,107"/>
+<area shape="rect" id="node13" href="$drawing_8h.html" title="Contains API for drawing graphics elements. " alt="" coords="77,80,156,107"/>
+<area shape="rect" id="node14" href="$graphics_8h.html" title="Contains the graphics API. " alt="" coords="75,155,158,181"/>
+<area shape="rect" id="node16" href="$parsing_8h.html" title="Contains streamlined internal representations of tables. " alt="" coords="130,229,205,256"/>
+</map>

@@ -1,23 +1,30 @@
+/*! \file graphics.c
+    \brief Contains implementation for graphics interface.
+*/
 #define _POSIX_C_SOURCE 200809L
-
-#include <directfb.h>
-#include <pthread.h>
-#include <signal.h>
+// C includes
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
+// Unix includes
+#include <pthread.h>
+#include <signal.h>
 #include <unistd.h>
-
+// Other includes
+#include <directfb.h>
+// Local includes
 #include "common.h"
 #include "drawing.h"
 #include "graphics.h"
 
+
 /// \brief Error codes to be used for internal graphics functions
 typedef enum g_error
 {
-    G_ERROR = -1,
-    G_NO_ERROR
-}g_error;
+    G_ERROR = -1, ///< Specifies that a graphics error has occurred.
+    G_NO_ERROR ///< Specifies that a graphics_error has *not* occurred.
+};
+static enum g_error g_error;
 
 #define LOG_GRAPHICS(fmt, ...) LOG("Graphics", fmt, ##__VA_ARGS__)
 
@@ -31,18 +38,29 @@ typedef enum g_error
      } \
 }
 
-static struct graphics_flags
+
+/// \brief A struct that keeps the state of what should be displayed.
+struct graphics_flags
 {
-    bool info;
-    bool volume;
+    bool info; ///< Specifies whether the info panel should be displayed.
+    bool volume; ///< Specifies whether the volume panel should be displayed.
     bool blackscreen;
+    ///< Specifies whether the screen should be filled with black.
     bool no_channel;
+    ///< Specifies whether the "NO CHANNEL" message should be displayed.
     bool audio_only;
+    ///< Specifies whether the "AUDIO ONLY" message should be displayed.
     bool ch_num;
+    ///< Specifies whether the top left channel number should be displayed.
     bool time;
+    ///< Specifies whether the time should be displayed.
     bool init;
+    ///< Specifies whether the "INITIALIZING" message should be displayed.
     bool mute;
-} gf = { 0 };
+    ///< \brief Specifies whether the mute symbol should be displayed.
+    /// Takes precedence over \ref volume.
+};
+static struct graphics_flags gf = { 0 };
 
 static bool end = false;
 
@@ -62,6 +80,7 @@ static const struct itimerspec sec4 = { .it_value.tv_sec = 4 };
 static const struct itimerspec sec3 = { .it_value.tv_sec = 3 };
 static const struct itimerspec sec1 = { .it_value.tv_sec = 1 };
 
+/// \brief Resets the info panel timer.
 static void reset_info(union sigval s)
 {
     LOG_GRAPHICS("Reset info\n");
@@ -97,6 +116,7 @@ void graphics_show_channel_info(struct graphics_channel_info info)
     gf.info = true;
 }
 
+/// \brief Resets the time panel timer.
 static void reset_time(union sigval s)
 {
     LOG_GRAPHICS("Reset time\n");
@@ -111,6 +131,7 @@ void graphics_show_time(struct tm tm)
     gf.time = true;
 }
 
+/// \brief Resets the volume panel timer.
 static void reset_vol(union sigval s)
 {
     LOG_GRAPHICS("Reset vol\n");
@@ -148,6 +169,7 @@ void graphics_hide_mute()
 }
 
 
+/// \brief Resets the channel number panel timer.
 static void reset_ch_num(union sigval s)
 {
     LOG_GRAPHICS("Reset ch_num\n");
@@ -162,7 +184,8 @@ void graphics_show_channel_number(uint16_t ch_num)
     gf.ch_num = true;
 }
 
-void reset_black(union sigval s)
+/// \brief Resets the black screen timer.
+static void reset_black(union sigval s)
 {
     timer_settime(timer_black, 0, &reset, NULL);
     gf.blackscreen = false;
@@ -183,15 +206,15 @@ void graphics_clear()
     gf.mute = mute;
 }
 
-/// \brief Function called on end of program to deinitialize drawing interface
+/// \brief Function called on end of program to deinitialize drawing interface.
 static void release()
 {
     draw_deinit(&draw_interface);
 }
 
 /// \brief Function that continuously refreshes graphics display
-/// according to the current state of graphics_flags
-g_error graphics_render(int *argc, char ***argv)
+/// according to the current state of graphics_flags.
+enum g_error graphics_render(int *argc, char ***argv)
 {
     LOG_GRAPHICS("Try init draw_interface with arguements: %d, %s\n",
             *argc, *argv[0]);
@@ -278,6 +301,7 @@ g_error graphics_render(int *argc, char ***argv)
 }
 
 
+/// \brief A shim structure to pass main arguments to DirectFB.
 struct args
 {
     int *argcx;
@@ -287,6 +311,7 @@ struct args
 static pthread_mutex_t args_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
 
+/// \brief Function that starts the rendering process.
 static void* graphics_render_loop(void *args)
 {
     struct args a = *(struct args *)args;

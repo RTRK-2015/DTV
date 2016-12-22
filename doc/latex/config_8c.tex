@@ -1,0 +1,118 @@
+\hypertarget{config_8c}{}\section{src/config.c File Reference}
+\label{config_8c}\index{src/config.\+c@{src/config.\+c}}
+
+
+Implementation for the configuration file interface.  
+
+
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tdp\+\_\+api.\+h\char`\"{}}\\*
+Include dependency graph for config.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{config_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{config_8c_a6821bafc3c88dfb2e433a095df9940c6}{B\+U\+F\+\_\+\+S\+I\+ZE}~100
+\item 
+\#define \hyperlink{config_8c_a73e900891c40d086984338bdb587270b}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}(T\+Y\+PE,  N\+A\+ME,  N\+O\+T\+\_\+\+F\+O\+U\+ND,  C\+O\+N\+V\+E\+R\+S\+I\+ON)
+\begin{DoxyCompactList}\small\item\em Creates a getter function for a field. The generated function is named get\+\_\+\+N\+A\+ME, and searches through the file, for the field N\+A\+ME, with type T\+Y\+PE, and input conversion C\+O\+N\+V\+E\+R\+S\+I\+ON. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{config_8c_a749f05febee67a1cc32e3d2141561414}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (uint32\+\_\+t, frequency, N\+O\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY,\char`\"{}\%\char`\"{}S\+C\+Nu32)\hypertarget{config_8c_a749f05febee67a1cc32e3d2141561414}{}\label{config_8c_a749f05febee67a1cc32e3d2141561414}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load frequency from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_ac9993275589f8863d8b2cec36a151a8d}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (uint32\+\_\+t, bandwidth, N\+O\+\_\+\+B\+A\+N\+D\+W\+I\+D\+TH,\char`\"{}\%\char`\"{}S\+C\+Nu32)\hypertarget{config_8c_ac9993275589f8863d8b2cec36a151a8d}{}\label{config_8c_ac9993275589f8863d8b2cec36a151a8d}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load bandwidth from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a9aeda71de4e31859c1a7af2dc0ba654f}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (uint16\+\_\+t, video\+\_\+pid, N\+O\+\_\+\+V\+I\+D\+E\+O\+\_\+\+P\+ID,\char`\"{}\%\char`\"{}S\+C\+Nu16)\hypertarget{config_8c_a9aeda71de4e31859c1a7af2dc0ba654f}{}\label{config_8c_a9aeda71de4e31859c1a7af2dc0ba654f}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load video P\+ID from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a1dc6cc472e5f6554581ae29cfbfb597b}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (uint16\+\_\+t, audio\+\_\+pid, N\+O\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+ID,\char`\"{}\%\char`\"{}S\+C\+Nu16)\hypertarget{config_8c_a1dc6cc472e5f6554581ae29cfbfb597b}{}\label{config_8c_a1dc6cc472e5f6554581ae29cfbfb597b}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load audio P\+ID from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a0d86b42ab3a09de149ae3f8b47af516a}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (uint16\+\_\+t, \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num}, N\+O\+\_\+\+C\+H\+\_\+\+N\+UM,\char`\"{}\%\char`\"{}S\+C\+Nu16)\hypertarget{config_8c_a0d86b42ab3a09de149ae3f8b47af516a}{}\label{config_8c_a0d86b42ab3a09de149ae3f8b47af516a}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load channel number from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a988fcd0abc704e9d3af03d840a426393}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (int, module, N\+O\+\_\+\+M\+O\+D\+U\+LE,\char`\"{}\%d\char`\"{})\hypertarget{config_8c_a988fcd0abc704e9d3af03d840a426393}{}\label{config_8c_a988fcd0abc704e9d3af03d840a426393}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load module type from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a2bef078a01875edb5403d6cd1c4b0cab}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (int, video\+\_\+type, N\+O\+\_\+\+V\+I\+D\+E\+O\+\_\+\+T\+Y\+PE,\char`\"{}\%d\char`\"{})\hypertarget{config_8c_a2bef078a01875edb5403d6cd1c4b0cab}{}\label{config_8c_a2bef078a01875edb5403d6cd1c4b0cab}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load video type from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_ad0b1b545727615f439cd1d8da5f0cdf7}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (int, audio\+\_\+type, N\+O\+\_\+\+A\+U\+D\+I\+O\+\_\+\+T\+Y\+PE,\char`\"{}\%d\char`\"{})\hypertarget{config_8c_ad0b1b545727615f439cd1d8da5f0cdf7}{}\label{config_8c_ad0b1b545727615f439cd1d8da5f0cdf7}
+
+\begin{DoxyCompactList}\small\item\em Attempts to load audio type from file. \end{DoxyCompactList}\item 
+\hyperlink{config_8c_a670ef589443019e66fc5d4b9a967746d}{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER} (int, teletext, N\+O\+\_\+\+T\+E\+L\+E\+T\+E\+XT,\char`\"{}\%d\char`\"{})\hypertarget{config_8c_a670ef589443019e66fc5d4b9a967746d}{}\label{config_8c_a670ef589443019e66fc5d4b9a967746d}
+
+\begin{DoxyCompactList}\small\item\em Attempts t oload teletext from file. \end{DoxyCompactList}\item 
+struct \hyperlink{structconfig__init__ch__info}{config\+\_\+init\+\_\+ch\+\_\+info} \hyperlink{group__config_gad7d820530151b1bb2b6cf6e992f48331}{config\+\_\+get\+\_\+init\+\_\+ch\+\_\+info} (F\+I\+LE $\ast$f)
+\begin{DoxyCompactList}\small\item\em Attempts to load all fields from the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation for the configuration file interface. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{config.\+c@{config.\+c}!B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}}
+\index{B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}!config.\+c@{config.\+c}}
+\subsubsection[{\texorpdfstring{B\+U\+F\+\_\+\+S\+I\+ZE}{BUF_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+U\+F\+\_\+\+S\+I\+ZE~100}\hypertarget{config_8c_a6821bafc3c88dfb2e433a095df9940c6}{}\label{config_8c_a6821bafc3c88dfb2e433a095df9940c6}
+
+\begin{DoxyParams}{Parameters}
+{\em Buffer} & size for reading the file. \\
+\hline
+\end{DoxyParams}
+\index{config.\+c@{config.\+c}!M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER@{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}}
+\index{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER@{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}!config.\+c@{config.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER}{MAKE_GETTER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+K\+E\+\_\+\+G\+E\+T\+T\+ER(
+\begin{DoxyParamCaption}
+\item[{}]{T\+Y\+PE, }
+\item[{}]{N\+A\+ME, }
+\item[{}]{N\+O\+T\+\_\+\+F\+O\+U\+ND, }
+\item[{}]{C\+O\+N\+V\+E\+R\+S\+I\+ON}
+\end{DoxyParamCaption}
+)}\hypertarget{config_8c_a73e900891c40d086984338bdb587270b}{}\label{config_8c_a73e900891c40d086984338bdb587270b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{static} TYPE get\_##NAME(FILE *f) \(\backslash\)
+\{ \(\backslash\)
+    rewind(f); \(\backslash\)
+ \(\backslash\)
+    while (!feof(f)) \(\backslash\)
+    \{ \(\backslash\)
+        char buf[\hyperlink{config_8c_a6821bafc3c88dfb2e433a095df9940c6}{BUF\_SIZE}]; \(\backslash\)
+        fgets(buf, \hyperlink{config_8c_a6821bafc3c88dfb2e433a095df9940c6}{BUF\_SIZE}, f); \(\backslash\)
+ \(\backslash\)
+        TYPE ret; \(\backslash\)
+        if (sscanf(buf, #NAME\textcolor{stringliteral}{" = "}CONVERSION, &ret) == 1) \(\backslash\)
+            return ret; \(\backslash\)
+    \} \(\backslash\)
+ \(\backslash\)
+    return NOT\_FOUND; \(\backslash\)
+\}
+\end{DoxyCode}
+
+
+Creates a getter function for a field. The generated function is named get\+\_\+\+N\+A\+ME, and searches through the file, for the field N\+A\+ME, with type T\+Y\+PE, and input conversion C\+O\+N\+V\+E\+R\+S\+I\+ON. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+Y\+PE} & type of the field, and also return type of the function. \\
+\hline
+{\em N\+A\+ME} & name of the field, which is also part of the function name. \\
+\hline
+{\em N\+O\+T\+\_\+\+F\+O\+U\+ND} & value of type T\+Y\+PE, to be returned if field was not found. \\
+\hline
+{\em C\+O\+N\+V\+E\+R\+S\+I\+ON} & A compile-\/time string that specifies the input conversion à la scanf. \\
+\hline
+\end{DoxyParams}

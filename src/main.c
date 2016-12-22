@@ -1,3 +1,6 @@
+/*! \file main.c
+    \brief Contains the implementation that glues other modules together.
+*/
 #define _POSIX_C_SOURCE 200809L
 // C includes
 #include <stdbool.h>
@@ -32,18 +35,7 @@ static struct graphics_channel_info gci;
 static time_t t_tot = 0, t_start;
 
 
-#define KEY_BACK 1
-#define KEY_1 2
-#define KEY_0 11
-#define KEY_MUTE 60
-#define KEY_CHANNEL_DOWN 61
-#define KEY_CHANNEL_UP 62
-#define KEY_VOLUME_UP 63
-#define KEY_VOLUME_DOWN 64
-#define KEY_POWEROFF 116
-#define KEY_INFO 358
-
-
+/// \brief Function that handles SIGINT and SIGTERT, by ensuring graceful exit.
 void handle_signal(int signum)
 {
     if (signum == SIGINT)
@@ -58,6 +50,8 @@ void handle_signal(int signum)
     exit(EXIT_SUCCESS);
 }
 
+/// \brief Function that calculates the amount of time that has passed since
+/// TOT table was received, and adjusts the time to be displayed accordingly.
 void calculate_time()
 {
     time_t t_current = time(NULL);
@@ -68,6 +62,7 @@ void calculate_time()
     gci.tm = *gmtime(&t_tot);
 }
 
+/// \brief Function that switches channels once the change has been confirmed.
 void confirm_channel(union sigval s)
 {
     pthread_mutex_lock(&channel_mutex);
@@ -93,6 +88,7 @@ void confirm_channel(union sigval s)
 }
 
 
+/// \brief Function that reacts to a keypress from the remote control.
 void react_to_keypress(int key_code)
 {   
     LOG_MAIN("received code: %d\n", key_code);
@@ -174,10 +170,6 @@ void react_to_keypress(int key_code)
         }
         break;
 
-    case KEY_POWEROFF:
-        handle_signal(SIGTERM);
-        break;
-
     case KEY_BACK:
         graphics_clear();
         break;
@@ -187,14 +179,6 @@ void react_to_keypress(int key_code)
         graphics_show_channel_info(gci);
         break;
     }
-}
-
-
-void update_time()
-{
-    struct tm tm = dtv_get_time();
-    t_tot = mktime(&tm);
-    LOG_MAIN("t_tot set to: %d\n", t_tot);
 }
 
 
@@ -209,6 +193,7 @@ int main(int argc, char **argv)
     timer_create(CLOCK_REALTIME, &se, &ch_timer);
     timer_create(CLOCK_REALTIME, &se, &updown_timer);
 
+    // Read configuration options
     FILE *f = fopen(argv[1], "r");
     if (f == NULL)
     FAIL_STD("%s\n", nameof(fopen));
@@ -216,10 +201,28 @@ int main(int argc, char **argv)
     struct config_init_ch_info init_info = config_get_init_ch_info(f);
     selected_channel = init_info.ch_num;
 
+    // Start the graphics module and wait 2 seconds for DirectFB to set
+    // its signal headers, so we can run them over.
     graphics_start_render(&argc, &argv);
+    sleep(2);
 
+    // Start the dtv module
     dtv_init(init_info);
 
+    // Show the initialization screen while the time is being received.
+    graphics_show_init();
+    LOG_MAIN("Getting time\n");
+    
+    struct tm tm = dtv_get_time();
+    t_tot = mktime(&tm);
+    LOG_MAIN("t_tot set to: %d\n", t_tot);
+    graphics_hide_init();
+
+    // Now that we are initialized, enable remote control.
+    rc_start_loop("/dev/input/event0", react_to_keypress);
+
+    // Fill in the channel info structure, using the loaded configuration
+    // options
     gci.ch_num = init_info.ch_num;
     gci.vpid = init_info.vpid;
     gci.apid = init_info.apid;
@@ -228,19 +231,17 @@ int main(int argc, char **argv)
     graphics_show_channel_info(gci);
     graphics_show_channel_number(init_info.ch_num);
 
-    graphics_show_init();
-    LOG_MAIN("Getting time\n");
-    update_time();
-
-    rc_start_loop("/dev/input/event0", react_to_keypress);
-
-    sleep(2);
-    graphics_hide_init();
+    // Set the handler for SIGINT and SIGTERM and register deinit functions
+    // to run at exit.
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
     atexit(graphics_stop);
     atexit(dtv_deinit);
     atexit(rc_stop_loop);
 
-    while (true);
+    while (true)
+    {
+        struct timespec ts = { .tv_nsec = 10000000L };
+        nanosleep(&ts, NULL);
+    }
 }

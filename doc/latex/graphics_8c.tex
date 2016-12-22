@@ -1,0 +1,124 @@
+\hypertarget{graphics_8c}{}\section{src/graphics.c File Reference}
+\label{graphics_8c}\index{src/graphics.\+c@{src/graphics.\+c}}
+
+
+Contains implementation for graphics interface.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$directfb.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}drawing.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}graphics.\+h\char`\"{}}\\*
+Include dependency graph for graphics.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{graphics_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structgraphics__flags}{graphics\+\_\+flags}
+\begin{DoxyCompactList}\small\item\em A struct that keeps the state of what should be displayed. \end{DoxyCompactList}\item 
+struct \hyperlink{structargs}{args}
+\begin{DoxyCompactList}\small\item\em A shim structure to pass main arguments to Direct\+FB. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries \+\_\+\+P\+O\+S\+I\+X\+\_\+\+C\+\_\+\+S\+O\+U\+R\+CE}~200809L\hypertarget{graphics_8c_a3024ccd4a9af5109d24e6c57565d74a1}{}\label{graphics_8c_a3024ccd4a9af5109d24e6c57565d74a1}
+
+\item 
+\#define {\bfseries L\+O\+G\+\_\+\+G\+R\+A\+P\+H\+I\+CS}(fmt, ...)~\hyperlink{common_8h_ac464f11a32500a31842789297a3c31f4}{L\+OG}(\char`\"{}Graphics\char`\"{}, fmt, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)\hypertarget{graphics_8c_ab3c493d3864c2625f36f4fa6eee278ba}{}\label{graphics_8c_ab3c493d3864c2625f36f4fa6eee278ba}
+
+\item 
+\#define {\bfseries D\+R\+A\+W\+C\+H\+E\+CK}(err)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{graphics_8c_a8f99466c4a0862f1c85496dfd103a237}{g\+\_\+error} \{ \hyperlink{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a661f2f26115943a3c0afec6d2bb48d8f}{G\+\_\+\+E\+R\+R\+OR} = -\/1, 
+\hyperlink{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a5ba6282852db042c2f7dbb9b66cf9f70}{G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}
+ \}\begin{DoxyCompactList}\small\item\em Error codes to be used for internal graphics functions. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__graphics_ga741d634a2444a13cc83411c4bb98d948}{graphics\+\_\+show\+\_\+channel\+\_\+info} (struct \hyperlink{structgraphics__channel__info}{graphics\+\_\+channel\+\_\+info} info)
+\begin{DoxyCompactList}\small\item\em Displays some basic information about a channel on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga9cfad8e0d3cdb8597e3f3a2bdfd3bfda}{graphics\+\_\+show\+\_\+time} (struct tm tm)
+\begin{DoxyCompactList}\small\item\em Displays current time. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_gaf1c74824677854f7abe3e6590343580f}{graphics\+\_\+show\+\_\+volume} (uint8\+\_\+t vol)
+\begin{DoxyCompactList}\small\item\em Displays volume information on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga07d069f854ed989682f48d8eb2b96392}{graphics\+\_\+show\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Displays initializing message. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_gaa14c15905aaa8584ac0d41629e63179e}{graphics\+\_\+hide\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Removes initializing message. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga88347b80264b415007253f935d32023c}{graphics\+\_\+show\+\_\+mute} ()
+\begin{DoxyCompactList}\small\item\em Displays mute symbol. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga56554c1a2cf638c4a3804f36656a75f9}{graphics\+\_\+hide\+\_\+mute} ()
+\begin{DoxyCompactList}\small\item\em Removes mute symbol. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga6832a9b03441e5a9d47d3c8e3e01a591}{graphics\+\_\+show\+\_\+channel\+\_\+number} (uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})
+\begin{DoxyCompactList}\small\item\em Displays selected channel number. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_gac220b5d62d022399bb1e3a9cf6b1dce2}{graphics\+\_\+blackscreen} ()
+\begin{DoxyCompactList}\small\item\em Puts a black screen on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga46d440f27511750ed679ec47c7491579}{graphics\+\_\+clear} ()
+\begin{DoxyCompactList}\small\item\em Clears all graphics elements from screen. \end{DoxyCompactList}\item 
+enum \hyperlink{graphics_8c_a8f99466c4a0862f1c85496dfd103a237}{g\+\_\+error} \hyperlink{graphics_8c_a5945a267b0c42c153e55a7f5d9d6be7a}{graphics\+\_\+render} (int $\ast$argc, char $\ast$$\ast$$\ast$argv)\hypertarget{graphics_8c_a5945a267b0c42c153e55a7f5d9d6be7a}{}\label{graphics_8c_a5945a267b0c42c153e55a7f5d9d6be7a}
+
+\begin{DoxyCompactList}\small\item\em Function that continuously refreshes graphics display according to the current state of \hyperlink{structgraphics__flags}{graphics\+\_\+flags}. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga96cea86bf40f2181cadf6686b82f28a3}{graphics\+\_\+start\+\_\+render} (int $\ast$argc, char $\ast$$\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Starts rendering graphic elements on screen. \end{DoxyCompactList}\item 
+void \hyperlink{group__graphics_ga0807641f1877b4586e9537144b80f6b6}{graphics\+\_\+stop} ()
+\begin{DoxyCompactList}\small\item\em Stops graphics rendering loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains implementation for graphics interface. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{graphics.\+c@{graphics.\+c}!D\+R\+A\+W\+C\+H\+E\+CK@{D\+R\+A\+W\+C\+H\+E\+CK}}
+\index{D\+R\+A\+W\+C\+H\+E\+CK@{D\+R\+A\+W\+C\+H\+E\+CK}!graphics.\+c@{graphics.\+c}}
+\subsubsection[{\texorpdfstring{D\+R\+A\+W\+C\+H\+E\+CK}{DRAWCHECK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+R\+A\+W\+C\+H\+E\+CK(
+\begin{DoxyParamCaption}
+\item[{}]{err}
+\end{DoxyParamCaption}
+)}\hypertarget{graphics_8c_a76ab2efd44713dd3a2df776d8cd153c7}{}\label{graphics_8c_a76ab2efd44713dd3a2df776d8cd153c7}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+    if (err != EXIT\_SUCCESS) \(\backslash\)
+    \{ \(\backslash\)
+        fprintf(stderr, \textcolor{stringliteral}{"%s:%d:%s\(\backslash\)n"}, \_\_FILE\_\_, \_\_LINE\_\_, \_\_func\_\_); \(\backslash\)
+        release(); \(\backslash\)
+        return \hyperlink{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a661f2f26115943a3c0afec6d2bb48d8f}{G\_ERROR}; \(\backslash\)
+     \} \(\backslash\)
+\}
+\end{DoxyCode}
+
+
+\subsection{Enumeration Type Documentation}
+\index{graphics.\+c@{graphics.\+c}!g\+\_\+error@{g\+\_\+error}}
+\index{g\+\_\+error@{g\+\_\+error}!graphics.\+c@{graphics.\+c}}
+\subsubsection[{\texorpdfstring{g\+\_\+error}{g_error}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf g\+\_\+error}}\hypertarget{graphics_8c_a8f99466c4a0862f1c85496dfd103a237}{}\label{graphics_8c_a8f99466c4a0862f1c85496dfd103a237}
+
+
+Error codes to be used for internal graphics functions. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\+\_\+\+E\+R\+R\+OR@{G\+\_\+\+E\+R\+R\+OR}!graphics.\+c@{graphics.\+c}}\index{graphics.\+c@{graphics.\+c}!G\+\_\+\+E\+R\+R\+OR@{G\+\_\+\+E\+R\+R\+OR}}\item[{\em 
+G\+\_\+\+E\+R\+R\+OR\hypertarget{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a661f2f26115943a3c0afec6d2bb48d8f}{}\label{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a661f2f26115943a3c0afec6d2bb48d8f}
+}]Specifies that a graphics error has occurred. \index{G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR@{G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}!graphics.\+c@{graphics.\+c}}\index{graphics.\+c@{graphics.\+c}!G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR@{G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}}\item[{\em 
+G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR\hypertarget{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a5ba6282852db042c2f7dbb9b66cf9f70}{}\label{graphics_8c_a8f99466c4a0862f1c85496dfd103a237a5ba6282852db042c2f7dbb9b66cf9f70}
+}]Specifies that a graphics\+\_\+error has {\itshape not} occurred. \end{description}
+\end{Desc}

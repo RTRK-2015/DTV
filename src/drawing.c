@@ -1,7 +1,7 @@
-
+// C includes
 #include <stdlib.h>
 #include <string.h>
-
+// Local includes
 #include "drawing.h"
 #include "common.h"
 
@@ -141,6 +141,8 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
 
 int32_t draw_init_message(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_init_message));
+
     const int16_t window_width = 400;
     const int16_t window_height = 70;
     const int16_t window_x = draw_i->screen_width/2 - window_width/2;
@@ -206,6 +208,7 @@ int32_t draw_channel_info
 , struct graphics_channel_info info
 )
 {
+    LOG_DRAWING("In %s\n", nameof(draw_channel_info));
     const int16_t window_width = 800;
     const int16_t window_height = 300;
     const int16_t frame_width = window_width + 2 * border;
@@ -318,6 +321,7 @@ int32_t draw_channel_info
 
 int32_t draw_time(struct draw_interface *draw_i, struct tm tm)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_time));
     const int16_t window_width = 600;
     const int16_t window_height = 70;
     const int16_t window_x = offset;
@@ -382,6 +386,7 @@ int32_t draw_time(struct draw_interface *draw_i, struct tm tm)
 
 int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_volume));
     int32_t image_height, image_width;
 
     DFBCHECK(draw_i->vol_surfaces[0]->GetSize
@@ -407,6 +412,7 @@ int32_t draw_volume(struct draw_interface *draw_i, uint8_t vol)
 
 int32_t draw_no_channel(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_no_channel));
     const int16_t window_width = 400;
     const int16_t window_height = 70;
     const int16_t window_x = draw_i->screen_width/2 - window_width/2;
@@ -467,6 +473,7 @@ int32_t draw_no_channel(struct draw_interface *draw_i)
 
 int32_t draw_audio_only(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_audio_only));
     const int16_t window_width = 400;
     const int16_t window_height = 70;
     const int16_t window_x = draw_i->screen_width/2 - window_width/2;
@@ -527,6 +534,7 @@ int32_t draw_audio_only(struct draw_interface *draw_i)
 
 int32_t draw_channel_number(struct draw_interface *draw_i, uint16_t ch_num)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_channel_number));
     const int16_t str_x = 150 + offset;
     const int16_t str_y = font_height + offset;
     char ch_num_str[5];
@@ -552,6 +560,7 @@ int32_t draw_channel_number(struct draw_interface *draw_i, uint16_t ch_num)
 
 int32_t draw_blackscreen(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_blackscreen));
     DFBCHECK(draw_i->surface->SetColor(draw_i->surface, 0, 0, 0, 0xff));
     DFBCHECK(draw_i->surface->FillRectangle
     ( draw_i->surface
@@ -566,6 +575,7 @@ int32_t draw_blackscreen(struct draw_interface *draw_i)
 
 int32_t draw_clear(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_clear));
     DFBCHECK(draw_i->surface->Clear(draw_i->surface, 0, 0, 0, 0));
 
     return EXIT_SUCCESS;
@@ -573,6 +583,7 @@ int32_t draw_clear(struct draw_interface *draw_i)
 
 int32_t draw_refresh(struct draw_interface *draw_i)
 {
+    LOG_DRAWING("In %s\n", nameof(draw_refresh));
     DFBCHECK(draw_i->surface->Flip(draw_i->surface, NULL, 0));
 
     return EXIT_SUCCESS;
