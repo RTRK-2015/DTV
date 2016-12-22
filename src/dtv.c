@@ -334,7 +334,9 @@ t_Error dtv_set_volume(uint8_t vol)
     if (vol > 10)
         return ERROR;
 
-    return Player_Volume_Set(player_handle, vol);
+    const uint32_t adjusted_volume = (uint32_t)vol * 200000000L;
+
+    return Player_Volume_Set(player_handle, adjusted_volume);
 }
 
 
