@@ -256,7 +256,6 @@ enum g_error graphics_render(int *argc, char ***argv)
 
         if (gf.info)
         {
-            LOG_GRAPHICS("About to draw info\n");
             DRAWCHECK(draw_channel_info(&draw_interface, to_draw_info));
         }
 
@@ -281,7 +280,6 @@ enum g_error graphics_render(int *argc, char ***argv)
 
         DRAWCHECK(draw_refresh(&draw_interface));
 
-        LOG_GRAPHICS("Getting current time\n");
         struct timespec ts;
         clock_gettime(CLOCK_REALTIME, &ts);
 
@@ -289,11 +287,9 @@ enum g_error graphics_render(int *argc, char ***argv)
         const long elapsed = ts.tv_nsec - tp.tv_nsec;
         if (ts.tv_sec - tp.tv_sec == 0 && elapsed < fps60)
         {
-            LOG_GRAPHICS("Sleeping\n");
             struct timespec tr = { .tv_nsec = fps60 - elapsed };
             nanosleep(&tr, NULL);
         }
-        LOG_GRAPHICS("Continuing after sleeping\n");
     } while (!end);
 
     LOG_GRAPHICS("Finish render loop\n");
