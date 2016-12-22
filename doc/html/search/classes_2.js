@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['draw_5finterface',['draw_interface',['../structdraw__interface.html',1,'']]],
-  ['dtv_5fchannel_5finfo',['dtv_channel_info',['../structdtv__channel__info.html',1,'']]]
+  ['graphics_5fargs',['graphics_args',['../structgraphics__args.html',1,'']]],
+  ['graphics_5fchannel_5finfo',['graphics_channel_info',['../structgraphics__channel__info.html',1,'']]],
+  ['graphics_5fflags',['graphics_flags',['../structgraphics__flags.html',1,'']]]
 ];

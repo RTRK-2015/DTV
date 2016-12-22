@@ -13,10 +13,10 @@
 \indexentry{Remote-\/control interface@{Remote-\/control interface}!rc\+\_\+start\+\_\+loop@{rc\+\_\+start\+\_\+loop}|hyperpage}{13}
 \indexentry{rc\+\_\+start\+\_\+loop@{rc\+\_\+start\+\_\+loop}!Remote-\/control interface@{Remote-\/control interface}|hyperpage}{13}
 \indexentry{D\+V\+B table retrieval interface@{D\+V\+B table retrieval interface}|hyperpage}{14}
-\indexentry{args@{args}|hyperpage}{17}
 \indexentry{config\+\_\+init\+\_\+ch\+\_\+info@{config\+\_\+init\+\_\+ch\+\_\+info}|hyperpage}{17}
 \indexentry{draw\+\_\+interface@{draw\+\_\+interface}|hyperpage}{18}
-\indexentry{dtv\+\_\+channel\+\_\+info@{dtv\+\_\+channel\+\_\+info}|hyperpage}{19}
+\indexentry{dtv\+\_\+channel\+\_\+info@{dtv\+\_\+channel\+\_\+info}|hyperpage}{18}
+\indexentry{graphics\+\_\+args@{graphics\+\_\+args}|hyperpage}{19}
 \indexentry{graphics\+\_\+channel\+\_\+info@{graphics\+\_\+channel\+\_\+info}|hyperpage}{19}
 \indexentry{graphics\+\_\+flags@{graphics\+\_\+flags}|hyperpage}{20}
 \indexentry{pat@{pat}|hyperpage}{21}
@@ -26,16 +26,17 @@
 \indexentry{pat\+::pmt\+\_\+basic@{pat\+::pmt\+\_\+basic}|hyperpage}{24}
 \indexentry{pmt\+\_\+body@{pmt\+\_\+body}|hyperpage}{24}
 \indexentry{pmt\+\_\+header@{pmt\+\_\+header}|hyperpage}{25}
+\indexentry{rc\+\_\+args@{rc\+\_\+args}|hyperpage}{26}
 \indexentry{sdt@{sdt}|hyperpage}{26}
-\indexentry{sdt\+\_\+body@{sdt\+\_\+body}|hyperpage}{26}
+\indexentry{sdt\+\_\+body@{sdt\+\_\+body}|hyperpage}{27}
 \indexentry{sdt\+\_\+descriptor1@{sdt\+\_\+descriptor1}|hyperpage}{27}
 \indexentry{sdt\+\_\+descriptor2@{sdt\+\_\+descriptor2}|hyperpage}{28}
-\indexentry{sdt\+\_\+header@{sdt\+\_\+header}|hyperpage}{28}
+\indexentry{sdt\+\_\+header@{sdt\+\_\+header}|hyperpage}{29}
 \indexentry{table\+\_\+header@{table\+\_\+header}|hyperpage}{29}
 \indexentry{teletext\+\_\+descriptor\+\_\+header@{teletext\+\_\+descriptor\+\_\+header}|hyperpage}{30}
-\indexentry{tot\+\_\+descriptor\+\_\+body@{tot\+\_\+descriptor\+\_\+body}|hyperpage}{30}
+\indexentry{tot\+\_\+descriptor\+\_\+body@{tot\+\_\+descriptor\+\_\+body}|hyperpage}{31}
 \indexentry{tot\+\_\+descriptor\+\_\+header@{tot\+\_\+descriptor\+\_\+header}|hyperpage}{31}
-\indexentry{tot\+\_\+header@{tot\+\_\+header}|hyperpage}{31}
+\indexentry{tot\+\_\+header@{tot\+\_\+header}|hyperpage}{32}
 \indexentry{include/common.\+h@{include/common.\+h}|hyperpage}{33}
 \indexentry{common.\+h@{common.\+h}!F\+A\+IL@{F\+A\+IL}|hyperpage}{34}
 \indexentry{F\+A\+IL@{F\+A\+IL}!common.\+h@{common.\+h}|hyperpage}{34}

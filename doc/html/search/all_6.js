@@ -17,6 +17,7 @@ var searchData=
   ['graphics_20interface',['Graphics interface',['../group__graphics.html',1,'']]],
   ['graphics_2ec',['graphics.c',['../graphics_8c.html',1,'']]],
   ['graphics_2eh',['graphics.h',['../graphics_8h.html',1,'']]],
+  ['graphics_5fargs',['graphics_args',['../structgraphics__args.html',1,'']]],
   ['graphics_5fblackscreen',['graphics_blackscreen',['../group__graphics.html#gac220b5d62d022399bb1e3a9cf6b1dce2',1,'graphics_blackscreen():&#160;graphics.c'],['../group__graphics.html#gac220b5d62d022399bb1e3a9cf6b1dce2',1,'graphics_blackscreen():&#160;graphics.c']]],
   ['graphics_5fchannel_5finfo',['graphics_channel_info',['../structgraphics__channel__info.html',1,'']]],
   ['graphics_5fclear',['graphics_clear',['../group__graphics.html#ga46d440f27511750ed679ec47c7491579',1,'graphics_clear():&#160;graphics.c'],['../group__graphics.html#ga46d440f27511750ed679ec47c7491579',1,'graphics_clear():&#160;graphics.c']]],

@@ -1,9 +1,5 @@
 \begin{theindex}
 
-  \item {args}, \hyperpage{17}
-
-  \indexspace
-
   \item {B\+U\+F\+\_\+\+S\+I\+ZE}
     \subitem {config.\+c}, \hyperpage{49}
 
@@ -34,7 +30,7 @@
   \item {D\+V\+B table retrieval interface}, \hyperpage{14}
   \item {draw\+\_\+interface}, \hyperpage{18}
   \item {Drawing interface}, \hyperpage{8}
-  \item {dtv\+\_\+channel\+\_\+info}, \hyperpage{19}
+  \item {dtv\+\_\+channel\+\_\+info}, \hyperpage{18}
   \item {dtv\+\_\+set\+\_\+volume}
     \subitem {D\+T\+V interface}, \hyperpage{9}
 
@@ -60,6 +56,7 @@
     \subitem {G\+\_\+\+E\+R\+R\+OR}, \hyperpage{52}
     \subitem {G\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}, \hyperpage{52}
     \subitem {g\+\_\+error}, \hyperpage{52}
+  \item {graphics\+\_\+args}, \hyperpage{19}
   \item {graphics\+\_\+channel\+\_\+info}, \hyperpage{19}
   \item {graphics\+\_\+flags}, \hyperpage{20}
   \item {graphics\+\_\+show\+\_\+volume}
@@ -102,6 +99,7 @@
 
   \indexspace
 
+  \item {rc\+\_\+args}, \hyperpage{26}
   \item {rc\+\_\+start\+\_\+loop}
     \subitem {Remote-\/control interface}, \hyperpage{13}
   \item {Remote-\/control interface}, \hyperpage{13}
@@ -110,10 +108,10 @@
   \indexspace
 
   \item {sdt}, \hyperpage{26}
-  \item {sdt\+\_\+body}, \hyperpage{26}
+  \item {sdt\+\_\+body}, \hyperpage{27}
   \item {sdt\+\_\+descriptor1}, \hyperpage{27}
   \item {sdt\+\_\+descriptor2}, \hyperpage{28}
-  \item {sdt\+\_\+header}, \hyperpage{28}
+  \item {sdt\+\_\+header}, \hyperpage{29}
   \item {src/config.\+c}, \hyperpage{48}
   \item {src/graphics.\+c}, \hyperpage{50}
   \item {src/main.\+c}, \hyperpage{52}
@@ -129,9 +127,9 @@
   \item {Table parsing interface}, \hyperpage{12}
   \item {table\+\_\+header}, \hyperpage{29}
   \item {teletext\+\_\+descriptor\+\_\+header}, \hyperpage{30}
-  \item {tot\+\_\+descriptor\+\_\+body}, \hyperpage{30}
+  \item {tot\+\_\+descriptor\+\_\+body}, \hyperpage{31}
   \item {tot\+\_\+descriptor\+\_\+header}, \hyperpage{31}
-  \item {tot\+\_\+header}, \hyperpage{31}
+  \item {tot\+\_\+header}, \hyperpage{32}
   \item {type}
     \subitem {structures.\+h}, \hyperpage{47}
 

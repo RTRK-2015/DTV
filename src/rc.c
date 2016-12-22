@@ -43,7 +43,7 @@ static ssize_t get_keys(int fd, size_t count, char *buf)
 
 
 /// A shim structure to pass arguments to event thread.
-struct args
+struct rc_args
 {
     int fd;
     rc_key_callback kc;
@@ -56,7 +56,7 @@ static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
 static void* event_loop(void *args)
 {
     static const size_t NUM_EVENTS = 5;
-    struct args a = *(struct args *)args;
+    struct rc_args a = *(struct rc_args *)args;
     pthread_cond_signal(&args_cond);
 
     struct input_event *event_buffer = malloc(
@@ -91,7 +91,7 @@ void rc_start_loop(const char *dev, rc_key_callback kc)
     if (ioctl(fd, EVIOCGNAME(sizeof(device_name)), device_name) < 0)
         FAIL_STD("%s\n", nameof(ioctl));
 
-    struct args a = { .fd = fd, .kc = kc };
+    struct rc_args a = { .fd = fd, .kc = kc };
 
     if (pthread_create(&event_th, NULL, event_loop, (void *)&a) > 0)
         FAIL_STD("%s\n", nameof(pthread_create));

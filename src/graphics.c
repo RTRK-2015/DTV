@@ -302,7 +302,7 @@ enum g_error graphics_render(int *argc, char ***argv)
 
 
 /// \brief A shim structure to pass main arguments to DirectFB.
-struct args
+struct graphics_args
 {
     int *argcx;
     char ***argvx;
@@ -314,7 +314,7 @@ static pthread_cond_t args_cond = PTHREAD_COND_INITIALIZER;
 /// \brief Function that starts the rendering process.
 static void* graphics_render_loop(void *args)
 {
-    struct args a = *(struct args *)args;
+    struct graphics_args a = *(struct graphics_args *)args;
     pthread_cond_signal(&args_cond);
 
     if (graphics_render(a.argcx, a.argvx) == G_ERROR)
@@ -363,7 +363,7 @@ void graphics_start_render(int *argc, char ***argv)
     timer_create(CLOCK_REALTIME, &se_black, &timer_black);
     
         
-    struct args a =
+    struct graphics_args a =
     {
         .argcx = argc,
         .argvx = argv
