@@ -40,6 +40,7 @@ static struct graphics_flags
     bool audio_only;
     bool ch_num;
     bool time;
+    bool init;
     bool mute;
 } gf = { 0 };
 
@@ -55,16 +56,11 @@ static struct draw_interface draw_interface =
     .font_interface = NULL
 };
 
-static timer_t timer_info, timer_time, timer_num, timer_vol;
+static timer_t timer_info, timer_time, timer_num, timer_vol, timer_black;
 static const struct itimerspec reset = { 0 };
-static const struct itimerspec sec3 =
-{
-    .it_value.tv_sec = 3
-};
-static const struct itimerspec sec1 =
-{
-    .it_value.tv_sec = 1
-};
+static const struct itimerspec sec4 = { .it_value.tv_sec = 4 };
+static const struct itimerspec sec3 = { .it_value.tv_sec = 3 };
+static const struct itimerspec sec1 = { .it_value.tv_sec = 1 };
 
 static void reset_info(union sigval s)
 {
@@ -130,6 +126,17 @@ void graphics_show_volume(uint8_t vol)
 }
 
 
+void graphics_show_init()
+{
+    gf.init = true;
+}
+
+void graphics_hide_init()
+{
+    gf.init = false;
+}
+
+
 void graphics_show_mute()
 {
     gf.mute = true;
@@ -155,14 +162,25 @@ void graphics_show_channel_number(uint16_t ch_num)
     gf.ch_num = true;
 }
 
+void reset_black(union sigval s)
+{
+    timer_settime(timer_black, 0, &reset, NULL);
+    gf.blackscreen = false;
+}
+
 void graphics_blackscreen()
 {
     gf.blackscreen = true;
+    timer_settime(timer_black, 0, &sec4, NULL);
 }
 
 void graphics_clear()
 {
+    bool mute = gf.mute;
+
     memset(&gf, 0, sizeof(gf));
+
+    gf.mute = mute;
 }
 
 /// \brief Function called on end of program to deinitialize drawing interface
@@ -190,6 +208,17 @@ g_error graphics_render(int *argc, char ***argv)
         clock_gettime(CLOCK_REALTIME, &tp);
 
         DRAWCHECK(draw_clear(&draw_interface));
+
+        if (gf.blackscreen)
+        {
+            DRAWCHECK(draw_blackscreen(&draw_interface));
+        }
+
+        if (gf.init)
+        {
+            DRAWCHECK(draw_blackscreen(&draw_interface));
+            DRAWCHECK(draw_init_message(&draw_interface));
+        }
 
         if (gf.no_channel)
         {
@@ -300,6 +329,13 @@ void graphics_start_render(int *argc, char ***argv)
         .sigev_notify = SIGEV_THREAD
     };
     timer_create(CLOCK_REALTIME, &se_num, &timer_num);
+
+    struct sigevent se_black =
+    {
+        .sigev_notify_function = reset_black,
+        .sigev_notify = SIGEV_THREAD
+    };
+    timer_create(CLOCK_REALTIME, &se_black, &timer_black);
     
         
     struct args a =

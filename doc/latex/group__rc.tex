@@ -1,0 +1,46 @@
+\hypertarget{group__rc}{}\section{Remote-\/control interface}
+\label{group__rc}\index{Remote-\/control interface@{Remote-\/control interface}}
+
+
+Functions and structures for remote control interaction.  
+
+
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{rc\+\_\+key\+\_\+callback}) (int key\+\_\+no)\hypertarget{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{}\label{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}
+
+\begin{DoxyCompactList}\small\item\em A callback that should take action on key press. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__rc_ga16d20af699334f6207d806701067ac96}{rc\+\_\+start\+\_\+loop} (const char $\ast$dev, \hyperlink{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{rc\+\_\+key\+\_\+callback} callback)
+\begin{DoxyCompactList}\small\item\em A function that starts the loop that waits for input events from the remote control. \end{DoxyCompactList}\item 
+void \hyperlink{group__rc_ga6d6de982bd06432345e8164a4c453fcc}{rc\+\_\+stop\+\_\+loop} ()\hypertarget{group__rc_ga6d6de982bd06432345e8164a4c453fcc}{}\label{group__rc_ga6d6de982bd06432345e8164a4c453fcc}
+
+\begin{DoxyCompactList}\small\item\em Stops the event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions and structures for remote control interaction. 
+
+
+
+\subsection{Function Documentation}
+\index{Remote-\/control interface@{Remote-\/control interface}!rc\+\_\+start\+\_\+loop@{rc\+\_\+start\+\_\+loop}}
+\index{rc\+\_\+start\+\_\+loop@{rc\+\_\+start\+\_\+loop}!Remote-\/control interface@{Remote-\/control interface}}
+\subsubsection[{\texorpdfstring{rc\+\_\+start\+\_\+loop(const char $\ast$dev, rc\+\_\+key\+\_\+callback callback)}{rc_start_loop(const char *dev, rc_key_callback callback)}}]{\setlength{\rightskip}{0pt plus 5cm}void rc\+\_\+start\+\_\+loop (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{dev, }
+\item[{{\bf rc\+\_\+key\+\_\+callback}}]{callback}
+\end{DoxyParamCaption}
+)}\hypertarget{group__rc_ga16d20af699334f6207d806701067ac96}{}\label{group__rc_ga16d20af699334f6207d806701067ac96}
+
+
+A function that starts the loop that waits for input events from the remote control. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & Name of the device to capture events from. \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,36 @@
+\hypertarget{group__parsing}{}\section{Table parsing interface}
+\label{group__parsing}\index{Table parsing interface@{Table parsing interface}}
+
+
+Functions and structures for parsing D\+VB tables into internal form.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structpat}{pat}
+\begin{DoxyCompactList}\small\item\em Contains important info from the P\+AT table. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt}{pmt}
+\begin{DoxyCompactList}\small\item\em Contains important info from the P\+MT table. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt}{sdt}
+\begin{DoxyCompactList}\small\item\em Contains important info from the S\+DT table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structpat}{pat} \hyperlink{group__parsing_ga15422ae30e0e1e43a15691ec066fb50f}{parse\+\_\+pat} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__parsing_ga15422ae30e0e1e43a15691ec066fb50f}{}\label{group__parsing_ga15422ae30e0e1e43a15691ec066fb50f}
+
+\begin{DoxyCompactList}\small\item\em Parses the given buffer as a P\+AT table. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt}{pmt} \hyperlink{group__parsing_ga1b750ab710b8dd637d53f464889bc179}{parse\+\_\+pmt} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__parsing_ga1b750ab710b8dd637d53f464889bc179}{}\label{group__parsing_ga1b750ab710b8dd637d53f464889bc179}
+
+\begin{DoxyCompactList}\small\item\em Parses the given buffer as a P\+MT table. \end{DoxyCompactList}\item 
+struct tm \hyperlink{group__parsing_gaf17c5270835b375f54f4752583f65287}{parse\+\_\+tot} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__parsing_gaf17c5270835b375f54f4752583f65287}{}\label{group__parsing_gaf17c5270835b375f54f4752583f65287}
+
+\begin{DoxyCompactList}\small\item\em Parses the given buffer as a T\+OT table and converts its info to C representation of time. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt}{sdt} \hyperlink{group__parsing_ga675aeacd9c1963445cce9f2e78b6b2a1}{parse\+\_\+sdt} (const uint8\+\_\+t $\ast$buffer, uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})\hypertarget{group__parsing_ga675aeacd9c1963445cce9f2e78b6b2a1}{}\label{group__parsing_ga675aeacd9c1963445cce9f2e78b6b2a1}
+
+\begin{DoxyCompactList}\small\item\em Parses the given buffer as a S\+DT table and extracts information about the specified channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions and structures for parsing D\+VB tables into internal form. 
+

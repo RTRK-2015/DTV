@@ -33,7 +33,11 @@ struct draw_interface
 int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv);
 
 /// \brief Draw channel_info graphics element.
-int32_t draw_channel_info(struct draw_interface *draw_i, struct graphics_channel_info info);
+int32_t draw_channel_info(struct draw_interface *draw_i
+    , struct graphics_channel_info info);
+
+/// \brief Draw initializing message.
+int32_t draw_init_message(struct draw_interface *draw_i);
 
 /// \brief Draw time graphics element.
 int32_t draw_time(struct draw_interface *draw_i, struct tm tm);

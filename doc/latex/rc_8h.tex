@@ -1,0 +1,32 @@
+\hypertarget{rc_8h}{}\section{include/rc.h File Reference}
+\label{rc_8h}\index{include/rc.\+h@{include/rc.\+h}}
+
+
+Contains Remote Control A\+PI.  
+
+
+{\ttfamily \#include \char`\"{}tdp\+\_\+api.\+h\char`\"{}}\\*
+Include dependency graph for rc.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=147pt]{rc_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{rc\+\_\+key\+\_\+callback}) (int key\+\_\+no)
+\begin{DoxyCompactList}\small\item\em A callback that should take action on key press. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__rc_ga16d20af699334f6207d806701067ac96}{rc\+\_\+start\+\_\+loop} (const char $\ast$dev, \hyperlink{group__rc_gaa7ca8d3e24ef0c270366ce6fd9bcd258}{rc\+\_\+key\+\_\+callback} callback)
+\begin{DoxyCompactList}\small\item\em A function that starts the loop that waits for input events from the remote control. \end{DoxyCompactList}\item 
+void \hyperlink{group__rc_ga6d6de982bd06432345e8164a4c453fcc}{rc\+\_\+stop\+\_\+loop} ()
+\begin{DoxyCompactList}\small\item\em Stops the event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains Remote Control A\+PI. 
+

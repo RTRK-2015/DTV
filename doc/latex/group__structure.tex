@@ -1,0 +1,89 @@
+\hypertarget{group__structure}{}\section{D\+VB table retrieval interface}
+\label{group__structure}\index{D\+V\+B table retrieval interface@{D\+V\+B table retrieval interface}}
+
+
+These functions retrieve the corresponding structures from the stream, performing the needed network-\/to-\/host conversions.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtable__header}{table\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Header that is part of all tables. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__header}{pat\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents P\+AT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__body}{pat\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents P\+AT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__header}{pmt\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents P\+MT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__body}{pmt\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents P\+MT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents the teletext descriptor header. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__header}{sdt\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents S\+DT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__body}{sdt\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents S\+DT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1}
+\begin{DoxyCompactList}\small\item\em Represents the first half of the service descriptor. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2}
+\begin{DoxyCompactList}\small\item\em Represents the second half of the service descriptor. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__header}{tot\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT descriptor header. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT descriptor body. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtable__header}{table\+\_\+header} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((packed))\hypertarget{group__structure_ga510c41bef1974f6149a916faf7ff1d92}{}\label{group__structure_ga510c41bef1974f6149a916faf7ff1d92}
+
+\item 
+struct \hyperlink{structpat__header}{pat\+\_\+header} \hyperlink{group__structure_ga251eb9b1a59ade4a6230b32bdb6d83b1}{get\+\_\+pat\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_ga251eb9b1a59ade4a6230b32bdb6d83b1}{}\label{group__structure_ga251eb9b1a59ade4a6230b32bdb6d83b1}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpat__header}{pat\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__body}{pat\+\_\+body} \hyperlink{group__structure_gac40b4dc77494cdc5b83144784224ad4a}{get\+\_\+pat\+\_\+body} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gac40b4dc77494cdc5b83144784224ad4a}{}\label{group__structure_gac40b4dc77494cdc5b83144784224ad4a}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpat__body}{pat\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__header}{pmt\+\_\+header} \hyperlink{group__structure_gaf0918f359410beb3897aee11d8bf1334}{get\+\_\+pmt\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gaf0918f359410beb3897aee11d8bf1334}{}\label{group__structure_gaf0918f359410beb3897aee11d8bf1334}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpmt__header}{pmt\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__body}{pmt\+\_\+body} \hyperlink{group__structure_gae658cd1a590981159afcdd22a715837f}{get\+\_\+pmt\+\_\+body} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gae658cd1a590981159afcdd22a715837f}{}\label{group__structure_gae658cd1a590981159afcdd22a715837f}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpmt__body}{pmt\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} \hyperlink{group__structure_gafbe380702060a8096a8c693c32294bf9}{get\+\_\+teletext\+\_\+descriptor\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gafbe380702060a8096a8c693c32294bf9}{}\label{group__structure_gafbe380702060a8096a8c693c32294bf9}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__header}{sdt\+\_\+header} \hyperlink{group__structure_ga8dccc2fbbab4df8588ea3f4154cd661a}{get\+\_\+sdt\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_ga8dccc2fbbab4df8588ea3f4154cd661a}{}\label{group__structure_ga8dccc2fbbab4df8588ea3f4154cd661a}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__header}{sdt\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__body}{sdt\+\_\+body} \hyperlink{group__structure_gae8b16533467e7fb2a1c53b103a52542d}{get\+\_\+sdt\+\_\+body} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gae8b16533467e7fb2a1c53b103a52542d}{}\label{group__structure_gae8b16533467e7fb2a1c53b103a52542d}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__body}{sdt\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1} \hyperlink{group__structure_ga5df466f6e5e2fbd311ce4478f2693501}{get\+\_\+sdt\+\_\+descriptor1} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_ga5df466f6e5e2fbd311ce4478f2693501}{}\label{group__structure_ga5df466f6e5e2fbd311ce4478f2693501}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2} \hyperlink{group__structure_gaf3c5355cc1713bbc5648511e06058627}{get\+\_\+sdt\+\_\+descriptor2} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gaf3c5355cc1713bbc5648511e06058627}{}\label{group__structure_gaf3c5355cc1713bbc5648511e06058627}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__header}{tot\+\_\+header} \hyperlink{group__structure_ga1a559bff189dc6665fbe0a18373868c0}{get\+\_\+tot\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_ga1a559bff189dc6665fbe0a18373868c0}{}\label{group__structure_ga1a559bff189dc6665fbe0a18373868c0}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__header}{tot\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header} \hyperlink{group__structure_gac4d9385a215e5da728266f73841f0db3}{get\+\_\+tot\+\_\+descriptor\+\_\+header} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_gac4d9385a215e5da728266f73841f0db3}{}\label{group__structure_gac4d9385a215e5da728266f73841f0db3}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body} \hyperlink{group__structure_ga4b0d2feed4e5af5e0a842dded06ef469}{get\+\_\+tot\+\_\+descriptor\+\_\+body} (const uint8\+\_\+t $\ast$buffer)\hypertarget{group__structure_ga4b0d2feed4e5af5e0a842dded06ef469}{}\label{group__structure_ga4b0d2feed4e5af5e0a842dded06ef469}
+
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body} from the stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+}\hypertarget{group__structure_ga7fb4862380fb668276c4b2941dbf65c3}{}\label{group__structure_ga7fb4862380fb668276c4b2941dbf65c3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+These functions retrieve the corresponding structures from the stream, performing the needed network-\/to-\/host conversions. 
+

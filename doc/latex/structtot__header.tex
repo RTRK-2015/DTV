@@ -1,0 +1,50 @@
+\hypertarget{structtot__header}{}\section{tot\+\_\+header Struct Reference}
+\label{structtot__header}\index{tot\+\_\+header@{tot\+\_\+header}}
+
+
+Represents T\+OT header.  
+
+
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+
+
+Collaboration diagram for tot\+\_\+header\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=152pt]{structtot__header__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtable__header}{table\+\_\+header} {\bfseries hdr}\hypertarget{structtot__header_a1c3d697481719a0e48acac326a2907b8}{}\label{structtot__header_a1c3d697481719a0e48acac326a2907b8}
+
+\item 
+uint8\+\_\+t \hyperlink{structtot__header_aca49dc8fbba34272aa461fab3540209a}{time} \mbox{[}5\mbox{]}\hypertarget{structtot__header_aca49dc8fbba34272aa461fab3540209a}{}\label{structtot__header_aca49dc8fbba34272aa461fab3540209a}
+
+\begin{DoxyCompactList}\small\item\em Brain-\/dead encoded time information. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \hyperlink{structtot__header_acbbfb5cc5320d11a1f02ed41ba726540}{dlen}: 12\\
+\>\>\>{\em Length of the descriptor section. }\\
+\>\>uint16\_t {\bfseries res}: 4\\
+\>\} {\bfseries b1s}\\
+\>uint16\_t {\bfseries bitfield1}\\
+\} {\bfseries b1u}\hypertarget{structtot__header_ad2cc8b0ba1378f78a2f331441003da34}{}\label{structtot__header_ad2cc8b0ba1378f78a2f331441003da34}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents T\+OT header. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{structures_8h}{structures.\+h}\end{DoxyCompactItemize}

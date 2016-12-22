@@ -1,0 +1,201 @@
+\hypertarget{structures_8h}{}\section{include/structures.h File Reference}
+\label{structures_8h}\index{include/structures.\+h@{include/structures.\+h}}
+
+
+Contains nitty-\/gritty D\+VB details.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for structures.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{structures_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtable__header}{table\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Header that is part of all tables. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__header}{pat\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents P\+AT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__body}{pat\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents P\+AT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__header}{pmt\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents P\+MT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__body}{pmt\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents P\+MT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents the teletext descriptor header. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__header}{sdt\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents S\+DT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__body}{sdt\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents S\+DT body. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1}
+\begin{DoxyCompactList}\small\item\em Represents the first half of the service descriptor. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2}
+\begin{DoxyCompactList}\small\item\em Represents the second half of the service descriptor. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__header}{tot\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT header. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT descriptor header. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body}
+\begin{DoxyCompactList}\small\item\em Represents T\+OT descriptor body. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtable__header}{table\+\_\+header} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((packed))
+\item 
+struct \hyperlink{structpat__header}{pat\+\_\+header} \hyperlink{group__structure_ga251eb9b1a59ade4a6230b32bdb6d83b1}{get\+\_\+pat\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpat__header}{pat\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpat__body}{pat\+\_\+body} \hyperlink{group__structure_gac40b4dc77494cdc5b83144784224ad4a}{get\+\_\+pat\+\_\+body} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpat__body}{pat\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__header}{pmt\+\_\+header} \hyperlink{group__structure_gaf0918f359410beb3897aee11d8bf1334}{get\+\_\+pmt\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpmt__header}{pmt\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structpmt__body}{pmt\+\_\+body} \hyperlink{group__structure_gae658cd1a590981159afcdd22a715837f}{get\+\_\+pmt\+\_\+body} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structpmt__body}{pmt\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} \hyperlink{group__structure_gafbe380702060a8096a8c693c32294bf9}{get\+\_\+teletext\+\_\+descriptor\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__header}{sdt\+\_\+header} \hyperlink{group__structure_ga8dccc2fbbab4df8588ea3f4154cd661a}{get\+\_\+sdt\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__header}{sdt\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__body}{sdt\+\_\+body} \hyperlink{group__structure_gae8b16533467e7fb2a1c53b103a52542d}{get\+\_\+sdt\+\_\+body} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__body}{sdt\+\_\+body} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1} \hyperlink{group__structure_ga5df466f6e5e2fbd311ce4478f2693501}{get\+\_\+sdt\+\_\+descriptor1} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__descriptor1}{sdt\+\_\+descriptor1} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2} \hyperlink{group__structure_gaf3c5355cc1713bbc5648511e06058627}{get\+\_\+sdt\+\_\+descriptor2} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structsdt__descriptor2}{sdt\+\_\+descriptor2} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__header}{tot\+\_\+header} \hyperlink{group__structure_ga1a559bff189dc6665fbe0a18373868c0}{get\+\_\+tot\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__header}{tot\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header} \hyperlink{group__structure_gac4d9385a215e5da728266f73841f0db3}{get\+\_\+tot\+\_\+descriptor\+\_\+header} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__descriptor__header}{tot\+\_\+descriptor\+\_\+header} from the stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body} \hyperlink{group__structure_ga4b0d2feed4e5af5e0a842dded06ef469}{get\+\_\+tot\+\_\+descriptor\+\_\+body} (const uint8\+\_\+t $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Retrieves \hyperlink{structtot__descriptor__body}{tot\+\_\+descriptor\+\_\+body} from the stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{structures_8h_a6f1dddf458f4e57fe3444309a958c73a}{tid}\hypertarget{structures_8h_a6f1dddf458f4e57fe3444309a958c73a}{}\label{structures_8h_a6f1dddf458f4e57fe3444309a958c73a}
+
+\begin{DoxyCompactList}\small\item\em Table id. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \hyperlink{structures_8h_a5723e60ffd628510c699eddbce90be23}{len}: 12\\
+\>\>\>{\em Length of the rest of the table. }\\
+\>\>uint16\_t {\bfseries res}: 2\\
+\>\>uint16\_t {\bfseries zero}: 1\\
+\>\>uint16\_t {\bfseries ssi}: 1\\
+\>\} {\bfseries b1s}\\
+\>uint16\_t {\bfseries bitfield1}\\
+\} {\bfseries b1u}\hypertarget{structures_8h_a7c2627052dc365d6992cee48817b5592}{}\label{structures_8h_a7c2627052dc365d6992cee48817b5592}
+\\
+
+\end{tabbing}\item 
+struct \hyperlink{structtable__header}{table\+\_\+header} {\bfseries hdr}\hypertarget{structures_8h_acfb7f6dc69d6a8acc2709e1a05c5b43f}{}\label{structures_8h_acfb7f6dc69d6a8acc2709e1a05c5b43f}
+
+\item 
+uint16\+\_\+t {\bfseries tsi}\hypertarget{structures_8h_abed22e95934a64c8a46234a29cd64ff7}{}\label{structures_8h_abed22e95934a64c8a46234a29cd64ff7}
+
+\item 
+uint8\+\_\+t {\bfseries sec}\hypertarget{structures_8h_ad1696900026b287a87c563b733a21bc3}{}\label{structures_8h_ad1696900026b287a87c563b733a21bc3}
+
+\item 
+uint8\+\_\+t {\bfseries lsn}\hypertarget{structures_8h_acf8bf5a5f1df1204006643e403b5a977}{}\label{structures_8h_acf8bf5a5f1df1204006643e403b5a977}
+
+\item 
+uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num}
+\begin{DoxyCompactList}\small\item\em Channel number of the current P\+MT. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint8\_t {\bfseries cni}: 1\\
+\>uint8\_t {\bfseries version}: 5\\
+\>uint8\_t {\bfseries res}: 2\\
+\} {\bfseries b}\hypertarget{structures_8h_a9f4f8f956dfbaca1de306c85502305c9}{}\label{structures_8h_a9f4f8f956dfbaca1de306c85502305c9}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \hyperlink{structures_8h_a43608f79b946eb0b1ee920012497cd56}{pilen}: 12\\
+\>\>\>{\em Length of the \hyperlink{structpmt__body}{pmt\_body} section. }\\
+\>\>uint16\_t {\bfseries res3}: 4\\
+\>\} {\bfseries b2s}\\
+\>uint16\_t {\bfseries bitfield2}\\
+\} {\bfseries b2u}\hypertarget{structures_8h_a5ae7e39b693ee6fc008952410d42796f}{}\label{structures_8h_a5ae7e39b693ee6fc008952410d42796f}
+\\
+
+\end{tabbing}\item 
+uint8\+\_\+t \hyperlink{structures_8h_a1d127017fb298b889f4ba24752d08b8e}{type}
+\begin{DoxyCompactList}\small\item\em Type of stream. \end{DoxyCompactList}\item 
+struct \hyperlink{structteletext__descriptor__header}{teletext\+\_\+descriptor\+\_\+header} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+}
+\item 
+uint16\+\_\+t {\bfseries oni}\hypertarget{structures_8h_acb6b38ae49635f2f5b5c89974037d65c}{}\label{structures_8h_acb6b38ae49635f2f5b5c89974037d65c}
+
+\item 
+uint16\+\_\+t \hyperlink{structures_8h_aa59e5e48a856ba2a010bb5447f79dbbb}{sid}\hypertarget{structures_8h_aa59e5e48a856ba2a010bb5447f79dbbb}{}\label{structures_8h_aa59e5e48a856ba2a010bb5447f79dbbb}
+
+\begin{DoxyCompactList}\small\item\em Service id (same as channel number). \end{DoxyCompactList}\item 
+uint8\+\_\+t {\bfseries tag}\hypertarget{structures_8h_a50ffde9be79dd080d9e8effe3ee52d66}{}\label{structures_8h_a50ffde9be79dd080d9e8effe3ee52d66}
+
+\item 
+uint8\+\_\+t \hyperlink{structures_8h_aa0f57098f04f59828e61140584f69fb1}{spnlen}\hypertarget{structures_8h_aa0f57098f04f59828e61140584f69fb1}{}\label{structures_8h_aa0f57098f04f59828e61140584f69fb1}
+
+\begin{DoxyCompactList}\small\item\em Length of the service provider name. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{structures_8h_a73f1800dbbe09690f1f45bcc2e560236}{snlen}\hypertarget{structures_8h_a73f1800dbbe09690f1f45bcc2e560236}{}\label{structures_8h_a73f1800dbbe09690f1f45bcc2e560236}
+
+\begin{DoxyCompactList}\small\item\em Length of the service name. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{structures_8h_a2f9f6d70359ec15fe3f50f1909636a90}{time} \mbox{[}5\mbox{]}\hypertarget{structures_8h_a2f9f6d70359ec15fe3f50f1909636a90}{}\label{structures_8h_a2f9f6d70359ec15fe3f50f1909636a90}
+
+\begin{DoxyCompactList}\small\item\em Brain-\/dead encoded time information. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{structures_8h_ae880b80206885df092c53d4aef122e44}{lto}\hypertarget{structures_8h_ae880b80206885df092c53d4aef122e44}{}\label{structures_8h_ae880b80206885df092c53d4aef122e44}
+
+\begin{DoxyCompactList}\small\item\em Local time offset. \end{DoxyCompactList}\item 
+uint8\+\_\+t {\bfseries toc} \mbox{[}5\mbox{]}\hypertarget{structures_8h_a93261cc350a49481bb3737b19e89fcea}{}\label{structures_8h_a93261cc350a49481bb3737b19e89fcea}
+
+\item 
+uint16\+\_\+t {\bfseries nto}\hypertarget{structures_8h_a075e40dfcaf09b8e3edf0b1d0e77461e}{}\label{structures_8h_a075e40dfcaf09b8e3edf0b1d0e77461e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains nitty-\/gritty D\+VB details. 
+
+
+
+\subsection{Variable Documentation}
+\index{structures.\+h@{structures.\+h}!ch\+\_\+num@{ch\+\_\+num}}
+\index{ch\+\_\+num@{ch\+\_\+num}!structures.\+h@{structures.\+h}}
+\subsubsection[{\texorpdfstring{ch\+\_\+num}{ch_num}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t ch\+\_\+num}\hypertarget{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{}\label{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}
+
+
+Channel number of the current P\+MT. 
+
+Channel number. \index{structures.\+h@{structures.\+h}!len@{len}}
+\index{len@{len}!structures.\+h@{structures.\+h}}
+\subsubsection[{\texorpdfstring{len}{len}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t len}\hypertarget{structures_8h_a5723e60ffd628510c699eddbce90be23}{}\label{structures_8h_a5723e60ffd628510c699eddbce90be23}
+
+
+Length of the rest of the table. 
+
+Length of the descriptor body.
+
+Length of the descriptor. \index{structures.\+h@{structures.\+h}!pid@{pid}}
+\index{pid@{pid}!structures.\+h@{structures.\+h}}
+\subsubsection[{\texorpdfstring{pid}{pid}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t pid}\hypertarget{structures_8h_a9089e9c40db82122a499b9620e2cb54e}{}\label{structures_8h_a9089e9c40db82122a499b9620e2cb54e}
+
+
+P\+ID of the P\+MT table. 
+
+P\+ID of the PS. \index{structures.\+h@{structures.\+h}!type@{type}}
+\index{type@{type}!structures.\+h@{structures.\+h}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t type}\hypertarget{structures_8h_a1d127017fb298b889f4ba24752d08b8e}{}\label{structures_8h_a1d127017fb298b889f4ba24752d08b8e}
+
+
+Type of stream. 
+
+Type of service (channel). 

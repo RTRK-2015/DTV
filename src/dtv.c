@@ -42,7 +42,6 @@ static uint32_t
     player_handle,
     source_handle,
     filter_handle,
-    tot_handle,
     video_handle,
     audio_handle;
 
@@ -113,7 +112,7 @@ static int32_t filter_callback(uint8_t *buffer)
     {
         LOG_DTV("Parsing tot...\n");
         my_tm = parse_tot(buffer);
-        Demux_Free_Filter(player_handle, tot_handle);
+        Demux_Free_Filter(player_handle, filter_handle);
 
         pthread_cond_signal(&tot_cond);
     }
@@ -224,6 +223,38 @@ void dtv_init(struct config_init_ch_info init_info)
 }
 
 
+static void dtv_remove_stream()
+{
+    LOG_DTV("Video handle: %d\n", video_handle);
+    if (video_handle != (uint32_t)-1)
+    {
+        if (Player_Stream_Remove
+        ( player_handle
+        , source_handle
+        , video_handle
+        ) == ERROR)
+            FAIL("%s\n", nameof(Player_Stream_Remove));
+    }
+    exit_flags.video = 0;
+    video_handle = -1;
+    LOG_DTV("Removed video\n");
+
+    LOG_DTV("Audio handle: %d\n", audio_handle);
+    if (audio_handle != (uint32_t)-1)
+    {
+        if (Player_Stream_Remove
+        ( player_handle
+        , source_handle
+        , audio_handle
+        ) == ERROR)
+            FAIL("%s\n", nameof(Player_Stream_Remove));
+    }
+    exit_flags.audio = 0;
+    audio_handle = -1;
+    LOG_DTV("Removed audio\n");
+}
+
+
 struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
 {
     uint16_t pid = UINT16_C(0xFFFF);
@@ -232,23 +263,25 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
     {
         if (my_pat.pmts[i].ch_num == ch_num)
         {
-        pid = my_pat.pmts[i].pid;
-        break;
+            pid = my_pat.pmts[i].pid;
+            break;
         }
     }
 
     LOG_DTV("pmt pid: %d\n", pid);
     if (pid == UINT16_C(0xFFFF))
-        {
-            struct dtv_channel_info channel_info =
-            { .ch_num = ch_num
-            , .vpid = -1
-            , .apid = -1
-            , .teletext = false
-            };
+    {
+        struct dtv_channel_info channel_info =
+        { .ch_num = ch_num
+        , .vpid = -1
+        , .apid = -1
+        , .teletext = false
+        };
 
-            return channel_info;
-        }
+        dtv_remove_stream();
+
+        return channel_info;
+    }
 
     if (Demux_Set_Filter(player_handle, pid, 0x02, &filter_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_Filter));
@@ -261,25 +294,8 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
         FAIL_STD("%s\n", nameof(pthread_cond_timedwait));
     LOG_DTV("Got pmt\n");
 
-        LOG_DTV("Video handle: %d\n", video_handle);
-    if (video_handle != (uint32_t)-1)
-        {
-            LOG_DTV("%d != %d\n", video_handle, (uint32_t)-1);
-        if (Player_Stream_Remove(player_handle, source_handle, video_handle) == ERROR)
-        FAIL("%s\n", nameof(Player_Stream_Remove));
-        }
-    exit_flags.video = 0;
-    video_handle = -1;
-    LOG_DTV("Removed video\n");
+    dtv_remove_stream();
 
-        LOG_DTV("Audio handle: %d\n", audio_handle);
-    if (audio_handle != (uint32_t)-1)
-        if (Player_Stream_Remove(player_handle, source_handle, audio_handle) == ERROR)
-        FAIL("%s\n", nameof(Player_Stream_Remove));
-    exit_flags.audio = 0;
-    audio_handle = -1;
-    LOG_DTV("Removed audio\n");
-    
     if (my_pmt.video_pid != UINT16_C(0xFFFF))
     {
         if (Player_Stream_Create
@@ -308,14 +324,14 @@ struct dtv_channel_info dtv_switch_channel(uint16_t ch_num)
         exit_flags.audio = 1;
     }
 
-        struct dtv_channel_info channel_info =
-        { .ch_num = ch_num
-        , .vpid = my_pmt.video_pid
-        , .apid = my_pmt.audio_pid
-        , .teletext = my_pmt.teletext
-        };
+    struct dtv_channel_info channel_info =
+    { .ch_num = ch_num
+    , .vpid = my_pmt.video_pid
+    , .apid = my_pmt.audio_pid
+    , .teletext = my_pmt.teletext
+    };
 
-        return channel_info;
+    return channel_info;
 }
 
 
@@ -332,10 +348,14 @@ t_Error dtv_set_volume(uint8_t vol)
 
 struct tm dtv_get_time()
 {
-    if (Demux_Set_Filter(player_handle, 0x0014, 0x73, &tot_handle) == ERROR)
+    if (Demux_Set_Filter(player_handle, 0x0014, 0x73, &filter_handle) == ERROR)
         FAIL("%s\n", nameof(Demux_Set_Filter));
 
-    if (pthread_cond_wait(&tot_cond, &tot_mutex) > 0)
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    ts.tv_sec += 30;
+
+    if (pthread_cond_timedwait(&tot_cond, &tot_mutex, &ts) > 0)
         FAIL_STD("%s\n", nameof(pthread_cond_wait));
 
     return my_tm;

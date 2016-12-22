@@ -1,0 +1,56 @@
+\hypertarget{group__drawing}{}\section{Drawing interface}
+\label{group__drawing}\index{Drawing interface@{Drawing interface}}
+
+
+Functions and structures for drawing.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdraw__interface}{draw\+\_\+interface}
+\begin{DoxyCompactList}\small\item\em Basic interface necessary to display graphics elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \hyperlink{group__drawing_ga50526d5e4e244599996608371f410bf2}{draw\+\_\+init} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, int $\ast$argc, char $\ast$$\ast$$\ast$argv)\hypertarget{group__drawing_ga50526d5e4e244599996608371f410bf2}{}\label{group__drawing_ga50526d5e4e244599996608371f410bf2}
+
+\begin{DoxyCompactList}\small\item\em Initialize drawing interface. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga71818ed76471623e9aeffe07a0ba26d2}{draw\+\_\+channel\+\_\+info} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, struct \hyperlink{structgraphics__channel__info}{graphics\+\_\+channel\+\_\+info} info)\hypertarget{group__drawing_ga71818ed76471623e9aeffe07a0ba26d2}{}\label{group__drawing_ga71818ed76471623e9aeffe07a0ba26d2}
+
+\begin{DoxyCompactList}\small\item\em Draw channel\+\_\+info graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga37e840145ddb9107f2efbec80697e377}{draw\+\_\+init\+\_\+message} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga37e840145ddb9107f2efbec80697e377}{}\label{group__drawing_ga37e840145ddb9107f2efbec80697e377}
+
+\begin{DoxyCompactList}\small\item\em Draw initializing message. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gaa19821a33379a186117efe18a67bfea7}{draw\+\_\+time} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, struct tm tm)\hypertarget{group__drawing_gaa19821a33379a186117efe18a67bfea7}{}\label{group__drawing_gaa19821a33379a186117efe18a67bfea7}
+
+\begin{DoxyCompactList}\small\item\em Draw time graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gae31d79c9ff070efa64603736bee4d252}{draw\+\_\+volume} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, uint8\+\_\+t vol)\hypertarget{group__drawing_gae31d79c9ff070efa64603736bee4d252}{}\label{group__drawing_gae31d79c9ff070efa64603736bee4d252}
+
+\begin{DoxyCompactList}\small\item\em Draw volume graphics element. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga9e57d07e991e2d951ad273cde5d5518a}{draw\+\_\+no\+\_\+channel} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga9e57d07e991e2d951ad273cde5d5518a}{}\label{group__drawing_ga9e57d07e991e2d951ad273cde5d5518a}
+
+\begin{DoxyCompactList}\small\item\em Draw no channel display. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga4136711e3d32c79bf3261c2afb901b6f}{draw\+\_\+audio\+\_\+only} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga4136711e3d32c79bf3261c2afb901b6f}{}\label{group__drawing_ga4136711e3d32c79bf3261c2afb901b6f}
+
+\begin{DoxyCompactList}\small\item\em Draw radio graphics. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gab0f56761fdebd9a7bc3584a43777df94}{draw\+\_\+channel\+\_\+number} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i, uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})\hypertarget{group__drawing_gab0f56761fdebd9a7bc3584a43777df94}{}\label{group__drawing_gab0f56761fdebd9a7bc3584a43777df94}
+
+\begin{DoxyCompactList}\small\item\em Draw channel number. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga07cd1d9f76609e912c17aa865cffa403}{draw\+\_\+blackscreen} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga07cd1d9f76609e912c17aa865cffa403}{}\label{group__drawing_ga07cd1d9f76609e912c17aa865cffa403}
+
+\begin{DoxyCompactList}\small\item\em Draw a black rectangle. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga7e0866c8dbb4ef95d3708b7fa1a0393d}{draw\+\_\+clear} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga7e0866c8dbb4ef95d3708b7fa1a0393d}{}\label{group__drawing_ga7e0866c8dbb4ef95d3708b7fa1a0393d}
+
+\begin{DoxyCompactList}\small\item\em Clear the screen. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_ga485befc089e203ec54c8b06c8e72c9f3}{draw\+\_\+refresh} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_ga485befc089e203ec54c8b06c8e72c9f3}{}\label{group__drawing_ga485befc089e203ec54c8b06c8e72c9f3}
+
+\begin{DoxyCompactList}\small\item\em Refresh display. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{group__drawing_gae59904fcfa6a1ad70e82854e02e7833a}{draw\+\_\+deinit} (struct \hyperlink{structdraw__interface}{draw\+\_\+interface} $\ast$draw\+\_\+i)\hypertarget{group__drawing_gae59904fcfa6a1ad70e82854e02e7833a}{}\label{group__drawing_gae59904fcfa6a1ad70e82854e02e7833a}
+
+\begin{DoxyCompactList}\small\item\em Deinitialize drawing interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions and structures for drawing. 
+

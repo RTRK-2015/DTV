@@ -77,6 +77,7 @@ void confirm_channel(union sigval s)
     started_selecting = false; 
 
     LOG_MAIN("Confirmed channel: %d\n", selected_channel);
+    graphics_blackscreen();
     struct dtv_channel_info dci = dtv_switch_channel(selected_channel);
     struct sdt sdt = dtv_get_info(selected_channel);
 
@@ -189,14 +190,11 @@ void react_to_keypress(int key_code)
 }
 
 
-void* update_time(void *args)
+void update_time()
 {
-    LOG_MAIN("Got tm\n");
     struct tm tm = dtv_get_time();
     t_tot = mktime(&tm);
     LOG_MAIN("t_tot set to: %d\n", t_tot);
-
-    return NULL;
 }
 
 
@@ -230,15 +228,14 @@ int main(int argc, char **argv)
     graphics_show_channel_info(gci);
     graphics_show_channel_number(init_info.ch_num);
 
-    pthread_t time_th;
-    if (pthread_create(&time_th, 0, update_time, NULL) < 0)
-        FAIL_STD("%s\n", nameof(pthread_create));
-    if (pthread_detach(time_th) < 0)
-        FAIL_STD("%s\n", nameof(pthread_detach));
+    graphics_show_init();
+    LOG_MAIN("Getting time\n");
+    update_time();
 
     rc_start_loop("/dev/input/event0", react_to_keypress);
 
     sleep(2);
+    graphics_hide_init();
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
     atexit(graphics_stop);

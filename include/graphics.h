@@ -31,6 +31,10 @@ struct graphics_channel_info
 
 /// \brief Displays some basic information about a channel on the screen.
 void graphics_show_channel_info(struct graphics_channel_info info);
+/// \brief Displays initializing message.
+void graphics_show_init();
+/// \brief Removes initializing message.
+void graphics_hide_init();
 /// \brief Displays current time.
 void graphics_show_time(struct tm tm);
 /// \brief Displays volume information on the screen.

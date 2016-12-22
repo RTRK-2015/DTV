@@ -1,0 +1,113 @@
+\hypertarget{common_8h}{}\section{include/common.h File Reference}
+\label{common_8h}\index{include/common.\+h@{include/common.\+h}}
+
+
+Contains functions that all modules use.  
+
+
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+Include dependency graph for common.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=261pt]{common_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{common_8h_a235bdec0a6bf62f3b3af87e528109847}{nameof}(x)~\#x\hypertarget{common_8h_a235bdec0a6bf62f3b3af87e528109847}{}\label{common_8h_a235bdec0a6bf62f3b3af87e528109847}
+
+\begin{DoxyCompactList}\small\item\em Gets the string representation of its parameter. \end{DoxyCompactList}\item 
+\#define \hyperlink{common_8h_aec09b115ba14ee07180282a0c2c87de5}{F\+A\+IL}(fmt, ...)
+\begin{DoxyCompactList}\small\item\em Prints an error message to stderr and exits the program. \end{DoxyCompactList}\item 
+\#define \hyperlink{common_8h_ab927a63ec0a50836c92ac3fe62a60dc3}{F\+A\+I\+L\+\_\+\+S\+TD}(fmt, ...)~\hyperlink{common_8h_aec09b115ba14ee07180282a0c2c87de5}{F\+A\+IL}(\char`\"{}\%s\+: \char`\"{}fmt, strerror(errno), \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)
+\begin{DoxyCompactList}\small\item\em Same as \hyperlink{common_8h_aec09b115ba14ee07180282a0c2c87de5}{F\+A\+IL}, except that it also prints the string representation of errno. \end{DoxyCompactList}\item 
+\#define \hyperlink{common_8h_ac464f11a32500a31842789297a3c31f4}{L\+OG}(module,  fmt, ...)
+\begin{DoxyCompactList}\small\item\em Prints out a log message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains functions that all modules use. 
+
+
+
+\subsection{Macro Definition Documentation}
+\index{common.\+h@{common.\+h}!F\+A\+IL@{F\+A\+IL}}
+\index{F\+A\+IL@{F\+A\+IL}!common.\+h@{common.\+h}}
+\subsubsection[{\texorpdfstring{F\+A\+IL}{FAIL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+A\+IL(
+\begin{DoxyParamCaption}
+\item[{}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{common_8h_aec09b115ba14ee07180282a0c2c87de5}{}\label{common_8h_aec09b115ba14ee07180282a0c2c87de5}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \(\backslash\)
+    \{ \(\backslash\)
+        fprintf(stderr, \textcolor{stringliteral}{"%s:%d:%s: Error: "}fmt, \(\backslash\)
+        \_\_FILE\_\_, \_\_LINE\_\_, \_\_func\_\_, ##\_\_VA\_ARGS\_\_); \(\backslash\)
+        exit(EXIT\_FAILURE); \(\backslash\)
+    \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+
+
+Prints an error message to stderr and exits the program. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & A printf-\/like format string. \\
+\hline
+{\em ...} & printf-\/like arguments to print. \\
+\hline
+\end{DoxyParams}
+\index{common.\+h@{common.\+h}!F\+A\+I\+L\+\_\+\+S\+TD@{F\+A\+I\+L\+\_\+\+S\+TD}}
+\index{F\+A\+I\+L\+\_\+\+S\+TD@{F\+A\+I\+L\+\_\+\+S\+TD}!common.\+h@{common.\+h}}
+\subsubsection[{\texorpdfstring{F\+A\+I\+L\+\_\+\+S\+TD}{FAIL_STD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+A\+I\+L\+\_\+\+S\+TD(
+\begin{DoxyParamCaption}
+\item[{}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)~{\bf F\+A\+IL}(\char`\"{}\%s\+: \char`\"{}fmt, strerror(errno), \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)}\hypertarget{common_8h_ab927a63ec0a50836c92ac3fe62a60dc3}{}\label{common_8h_ab927a63ec0a50836c92ac3fe62a60dc3}
+
+
+Same as \hyperlink{common_8h_aec09b115ba14ee07180282a0c2c87de5}{F\+A\+IL}, except that it also prints the string representation of errno. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & A printf-\/like format string. \\
+\hline
+{\em ...} & printf-\/like arguments to print. \\
+\hline
+\end{DoxyParams}
+\index{common.\+h@{common.\+h}!L\+OG@{L\+OG}}
+\index{L\+OG@{L\+OG}!common.\+h@{common.\+h}}
+\subsubsection[{\texorpdfstring{L\+OG}{LOG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+OG(
+\begin{DoxyParamCaption}
+\item[{}]{module, }
+\item[{}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{common_8h_ac464f11a32500a31842789297a3c31f4}{}\label{common_8h_ac464f11a32500a31842789297a3c31f4}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \(\backslash\)
+    \{ \(\backslash\)
+        printf(module\textcolor{stringliteral}{": "}fmt, ##\_\_VA\_ARGS\_\_); \(\backslash\)
+    \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+
+
+Prints out a log message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em module} & A string that identifies the module in which L\+OG is called. \\
+\hline
+{\em fmt} & A printf-\/like format string. \\
+\hline
+{\em ...} & printf-\/like arguments to print. \\
+\hline
+\end{DoxyParams}

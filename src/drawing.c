@@ -138,6 +138,69 @@ int32_t draw_init(struct draw_interface *draw_i, int *argc, char ***argv)
     return EXIT_SUCCESS;
 }
 
+
+int32_t draw_init_message(struct draw_interface *draw_i)
+{
+    const int16_t window_width = 400;
+    const int16_t window_height = 70;
+    const int16_t window_x = draw_i->screen_width/2 - window_width/2;
+    const int16_t window_y = draw_i->screen_height/2 - window_height/2;
+    const int16_t frame_width = window_width + 2 * border;
+    const int16_t frame_height = window_height + 2 * border;
+
+    DFBCHECK(draw_i->surface->SetColor
+    ( draw_i->surface
+    , frame_color.r
+    , frame_color.g
+    , frame_color.b
+    , frame_color.a
+    ));
+    DFBCHECK(draw_i->surface->FillRectangle
+    ( draw_i->surface
+    , window_x - border
+    , window_y - border
+    , frame_width
+    , frame_height
+    ));
+    DFBCHECK(draw_i->surface->SetColor
+    ( draw_i->surface
+    , back_color.r
+    , back_color.g
+    , back_color.b
+    , back_color.a
+    ));
+    DFBCHECK(draw_i->surface->FillRectangle
+    ( draw_i->surface
+    , window_x
+    , window_y
+    , window_width
+    , window_height
+    ));
+
+    const char init_str[] = "INITIALIZING";
+    const int16_t str_x = window_x + offset;
+    const int16_t str_y = window_y + font_height;
+    DFBCHECK(draw_i->surface->SetColor
+    ( draw_i->surface
+    , text_color.r
+    , text_color.g
+    , text_color.b
+    , text_color.a
+    ));
+    DFBCHECK(draw_i->surface->DrawString
+    ( draw_i->surface
+    , init_str
+    , -1
+    , str_x
+    , str_y
+    , DSTF_LEFT
+    ));
+
+    return EXIT_SUCCESS;
+
+}
+
+
 int32_t draw_channel_info
 ( struct draw_interface *draw_i
 , struct graphics_channel_info info

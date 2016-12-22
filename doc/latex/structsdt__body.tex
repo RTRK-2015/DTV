@@ -1,0 +1,49 @@
+\hypertarget{structsdt__body}{}\section{sdt\+\_\+body Struct Reference}
+\label{structsdt__body}\index{sdt\+\_\+body@{sdt\+\_\+body}}
+
+
+Represents S\+DT body.  
+
+
+
+
+{\ttfamily \#include $<$structures.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{structsdt__body_afcbfe244b8b3ac5ce90476403d80b942}{sid}\hypertarget{structsdt__body_afcbfe244b8b3ac5ce90476403d80b942}{}\label{structsdt__body_afcbfe244b8b3ac5ce90476403d80b942}
+
+\begin{DoxyCompactList}\small\item\em Service id (same as channel number). \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>uint8\_t {\bfseries epff}: 1\\
+\>uint8\_t {\bfseries esf}: 1\\
+\>uint8\_t {\bfseries res}: 6\\
+\} {\bfseries b1s}\hypertarget{structsdt__body_a2a62cac7031e11b79a4e8901126f5abe}{}\label{structsdt__body_a2a62cac7031e11b79a4e8901126f5abe}
+\\
+
+\end{tabbing}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \hyperlink{structsdt__body_a228e2b0e07a2989524f454aec4f005a6}{dlen}: 12\\
+\>\>\>{\em Length of the descriptor section. }\\
+\>\>uint16\_t {\bfseries fcm}: 1\\
+\>\>uint16\_t {\bfseries rs}: 3\\
+\>\} {\bfseries b2s}\\
+\>uint16\_t {\bfseries bitfield2}\\
+\} {\bfseries b2u}\hypertarget{structsdt__body_a9cb497af4c7fdd9f47d0120b08404faa}{}\label{structsdt__body_a9cb497af4c7fdd9f47d0120b08404faa}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents S\+DT body. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{structures_8h}{structures.\+h}\end{DoxyCompactItemize}

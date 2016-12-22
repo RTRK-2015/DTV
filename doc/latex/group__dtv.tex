@@ -1,0 +1,56 @@
+\hypertarget{group__dtv}{}\section{D\+TV interface}
+\label{group__dtv}\index{D\+T\+V interface@{D\+T\+V interface}}
+
+
+Functions and structures for controling D\+TV functionality.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdtv__channel__info}{dtv\+\_\+channel\+\_\+info}
+\begin{DoxyCompactList}\small\item\em Contains basic channel info. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__dtv_ga7da3a709e8d58fa00ee48687c5bf26a7}{dtv\+\_\+init} (struct \hyperlink{structconfig__init__ch__info}{config\+\_\+init\+\_\+ch\+\_\+info} init\+\_\+info)\hypertarget{group__dtv_ga7da3a709e8d58fa00ee48687c5bf26a7}{}\label{group__dtv_ga7da3a709e8d58fa00ee48687c5bf26a7}
+
+\begin{DoxyCompactList}\small\item\em Function that initializes internal D\+TV state. \end{DoxyCompactList}\item 
+struct \hyperlink{structdtv__channel__info}{dtv\+\_\+channel\+\_\+info} \hyperlink{group__dtv_gaadc265544bf474e6847f614d8a6d438e}{dtv\+\_\+switch\+\_\+channel} (uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})\hypertarget{group__dtv_gaadc265544bf474e6847f614d8a6d438e}{}\label{group__dtv_gaadc265544bf474e6847f614d8a6d438e}
+
+\begin{DoxyCompactList}\small\item\em Tries to switch to the desired channel. \end{DoxyCompactList}\item 
+t\+\_\+\+Error \hyperlink{group__dtv_gaa7f54804b10abbefca93d03afdc5aaab}{dtv\+\_\+set\+\_\+volume} (uint8\+\_\+t vol)
+\begin{DoxyCompactList}\small\item\em Tries to set the volume to the desired value. \end{DoxyCompactList}\item 
+struct tm \hyperlink{group__dtv_ga999f0d08fc5ddc8d4d781ccbfe10218e}{dtv\+\_\+get\+\_\+time} ()\hypertarget{group__dtv_ga999f0d08fc5ddc8d4d781ccbfe10218e}{}\label{group__dtv_ga999f0d08fc5ddc8d4d781ccbfe10218e}
+
+\begin{DoxyCompactList}\small\item\em Gets the time information. \end{DoxyCompactList}\item 
+struct \hyperlink{structsdt}{sdt} \hyperlink{group__dtv_ga3b7df96e66fac38b64c96e703d65e710}{dtv\+\_\+get\+\_\+info} (uint16\+\_\+t \hyperlink{structures_8h_abcdde739cb26f5c6c2c0b87e83d1f421}{ch\+\_\+num})\hypertarget{group__dtv_ga3b7df96e66fac38b64c96e703d65e710}{}\label{group__dtv_ga3b7df96e66fac38b64c96e703d65e710}
+
+\begin{DoxyCompactList}\small\item\em Gets the S\+DT information for the specified channel. \end{DoxyCompactList}\item 
+void \hyperlink{group__dtv_ga9d48e779ec2fdad4693156fe8923fe7b}{dtv\+\_\+deinit} ()\hypertarget{group__dtv_ga9d48e779ec2fdad4693156fe8923fe7b}{}\label{group__dtv_ga9d48e779ec2fdad4693156fe8923fe7b}
+
+\begin{DoxyCompactList}\small\item\em Deinitializes the internal D\+TV state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions and structures for controling D\+TV functionality. 
+
+
+
+\subsection{Function Documentation}
+\index{D\+T\+V interface@{D\+T\+V interface}!dtv\+\_\+set\+\_\+volume@{dtv\+\_\+set\+\_\+volume}}
+\index{dtv\+\_\+set\+\_\+volume@{dtv\+\_\+set\+\_\+volume}!D\+T\+V interface@{D\+T\+V interface}}
+\subsubsection[{\texorpdfstring{dtv\+\_\+set\+\_\+volume(uint8\+\_\+t vol)}{dtv_set_volume(uint8_t vol)}}]{\setlength{\rightskip}{0pt plus 5cm}t\+\_\+\+Error dtv\+\_\+set\+\_\+volume (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{vol}
+\end{DoxyParamCaption}
+)}\hypertarget{group__dtv_gaa7f54804b10abbefca93d03afdc5aaab}{}\label{group__dtv_gaa7f54804b10abbefca93d03afdc5aaab}
+
+
+Tries to set the volume to the desired value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vol} & Desired volume, should be \mbox{[}0-\/10\mbox{]}. \\
+\hline
+\end{DoxyParams}
