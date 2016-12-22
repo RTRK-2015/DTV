@@ -10,7 +10,6 @@
 #include <directfb.h>
 // Local includes
 #include "graphics.h"
-#include "tdp_api.h"
 
 
 /// \defgroup drawing Drawing interface

@@ -12,7 +12,24 @@
 #include "drawing.h"
 #include "graphics.h"
 
+/// \brief Error codes to be used for internal graphics functions
+typedef enum g_error
+{
+    G_ERROR = -1,
+    G_NO_ERROR
+}g_error;
+
 #define LOG_GRAPHICS(fmt, ...) LOG("Graphics", fmt, ##__VA_ARGS__)
+
+#define DRAWCHECK(err) \
+{ \
+    if (err != EXIT_SUCCESS) \
+    { \
+        fprintf(stderr, "%s:%d:%s\n", __FILE__, __LINE__, __func__); \
+        release(); \
+        return G_ERROR; \
+     } \
+}
 
 static struct graphics_flags
 {
@@ -148,16 +165,20 @@ void graphics_clear()
     memset(&gf, 0, sizeof(gf));
 }
 
-
+/// \brief Function called on end of program to deinitialize drawing interface
 static void release()
 {
     draw_deinit(&draw_interface);
 }
 
-t_Error graphics_render(int *argc, char ***argv)
+/// \brief Function that continuously refreshes graphics display
+/// according to the current state of graphics_flags
+g_error graphics_render(int *argc, char ***argv)
 {
-    LOG_GRAPHICS("Try init draw_interface with arguements: %d, %s\n", *argc, *argv[0]);
-    if (draw_init(&draw_interface, argc, argv) < 0)
+    LOG_GRAPHICS("Try init draw_interface with arguements: %d, %s\n",
+            *argc, *argv[0]);
+
+    if (draw_init(&draw_interface, argc, argv) != EXIT_SUCCESS)
         FAIL("%s\n", nameof(draw_init));
 
     LOG_GRAPHICS("Successfully init draw_i, screen width: %d, screen height: %d\n", 
@@ -168,91 +189,45 @@ t_Error graphics_render(int *argc, char ***argv)
         struct timespec tp;
         clock_gettime(CLOCK_REALTIME, &tp);
 
-        if (draw_clear(&draw_interface) < 0)
-        {
-            release();
-            return ERROR;
-        }
+        DRAWCHECK(draw_clear(&draw_interface));
 
-                
         if (gf.no_channel)
         {
-            if (draw_blackscreen(&draw_interface) < 0)
-            {
-                release();
-                return ERROR;
-            }
-            if (draw_no_channel(&draw_interface) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_blackscreen(&draw_interface));
+            DRAWCHECK(draw_no_channel(&draw_interface));
         }
 
         if (gf.audio_only)
         {
-            if (draw_blackscreen(&draw_interface) < 0)
-            {
-                release();
-                return ERROR;
-            }
-            if (draw_audio_only(&draw_interface) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_blackscreen(&draw_interface));
+            DRAWCHECK(draw_audio_only(&draw_interface));
         }
 
         if (gf.info)
         {
-            if (draw_channel_info(&draw_interface, to_draw_info) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_channel_info(&draw_interface, to_draw_info));
         }
 
         if (gf.mute)
         {
-            if (draw_volume(&draw_interface, -1) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_volume(&draw_interface, -1));
         }
         else if (gf.volume)
         {
-            if (draw_volume(&draw_interface, to_draw_vol) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_volume(&draw_interface, to_draw_vol));
         }
 
         if (gf.time)
         {
-            if (draw_time(&draw_interface, to_draw_tm) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_time(&draw_interface, to_draw_tm));
         }
 
         if (gf.ch_num)
         {
-            if (draw_channel_number(&draw_interface, to_draw_ch_num) < 0)
-            {
-                release();
-                return ERROR;
-            }
+            DRAWCHECK(draw_channel_number(&draw_interface, to_draw_ch_num));
         }
 
-
-        if (draw_refresh(&draw_interface) < 0)
-        {
-            release();
-            return ERROR;
-        }
+        DRAWCHECK(draw_refresh(&draw_interface));
 
         struct timespec ts;
         clock_gettime(CLOCK_REALTIME, &ts);
@@ -270,7 +245,7 @@ t_Error graphics_render(int *argc, char ***argv)
     LOG_GRAPHICS("Finish render loop\n");
     release();
 
-    return NO_ERROR;
+    return G_NO_ERROR;
 }
 
 
@@ -288,7 +263,9 @@ static void* graphics_render_loop(void *args)
     struct args a = *(struct args *)args;
     pthread_cond_signal(&args_cond);
 
-    graphics_render(a.argcx, a.argvx);
+    if (graphics_render(a.argcx, a.argvx) == G_ERROR)
+        FAIL("%s", nameof(graphics_render));
+
     return NULL;
 }
 
