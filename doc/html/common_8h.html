@@ -158,7 +158,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> \</div><div class="line">    { \</div><div class="line">        fprintf(stderr, <span class="stringliteral">&quot;%s:%d:%s: Error: &quot;</span>fmt, \</div><div class="line">        __FILE__, __LINE__, __func__, ##__VA_ARGS__); \</div><div class="line">        exit(EXIT_FAILURE); \</div><div class="line">    } <span class="keywordflow">while</span> (0)</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> \</div><div class="line">    { \</div><div class="line">        fprintf(stderr, <span class="stringliteral">&quot;%s:%d:%s: Error: &quot;</span>fmt, \</div><div class="line">            __FILE__, __LINE__, __func__, ##__VA_ARGS__); \</div><div class="line">        exit(EXIT_FAILURE); \</div><div class="line">    } <span class="keywordflow">while</span> (0)</div></div><!-- fragment -->
 <p>Prints an error message to stderr and exits the program. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

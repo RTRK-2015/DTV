@@ -5,7 +5,14 @@
 #include "drawing.h"
 #include "common.h"
 
-#define LOG_DRAWING(fmt, ...) LOG("Drawing", fmt, ##__VA_ARGS__)
+#define DRAW_NDEBUG 1
+
+#define LOG_DRAWING(fmt, ...) \
+    do \
+    { \
+        if (!DRAW_NDEBUG) \
+            LOG("Drawing", fmt, ##__VA_ARGS__); \
+    } while (0)
 
 #define DFBCHECK(x...)                                       \
 {                                                            \
@@ -585,7 +592,7 @@ int32_t draw_refresh(struct draw_interface *draw_i)
 {
     LOG_DRAWING("In %s\n", nameof(draw_refresh));
     DFBCHECK(draw_i->surface->Flip(draw_i->surface, NULL, 0));
-
+    LOG_DRAWING("Finished %s\n", nameof(draw_refresh));
     return EXIT_SUCCESS;
 }
 

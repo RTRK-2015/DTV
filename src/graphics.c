@@ -24,7 +24,6 @@ typedef enum g_error
     G_ERROR = -1, ///< Specifies that a graphics error has occurred.
     G_NO_ERROR ///< Specifies that a graphics_error has *not* occurred.
 };
-static enum g_error g_error;
 
 #define LOG_GRAPHICS(fmt, ...) LOG("Graphics", fmt, ##__VA_ARGS__)
 
@@ -35,7 +34,7 @@ static enum g_error g_error;
         fprintf(stderr, "%s:%d:%s\n", __FILE__, __LINE__, __func__); \
         release(); \
         return G_ERROR; \
-     } \
+    } \
 }
 
 
@@ -257,6 +256,7 @@ enum g_error graphics_render(int *argc, char ***argv)
 
         if (gf.info)
         {
+            LOG_GRAPHICS("About to draw info\n");
             DRAWCHECK(draw_channel_info(&draw_interface, to_draw_info));
         }
 
@@ -281,17 +281,19 @@ enum g_error graphics_render(int *argc, char ***argv)
 
         DRAWCHECK(draw_refresh(&draw_interface));
 
+        LOG_GRAPHICS("Getting current time\n");
         struct timespec ts;
         clock_gettime(CLOCK_REALTIME, &ts);
 
-        if (ts.tv_sec - tp.tv_sec == 0 && ts.tv_nsec - tp.tv_nsec < 16000000)
+        static const long fps60 = 16666667L;
+        const long elapsed = ts.tv_nsec - tp.tv_nsec;
+        if (ts.tv_sec - tp.tv_sec == 0 && elapsed < fps60)
         {
-            struct timespec tr;
-            tr.tv_sec = ts.tv_sec;
-            tr.tv_nsec = 160000000 - (ts.tv_nsec - tp.tv_nsec);
+            LOG_GRAPHICS("Sleeping\n");
+            struct timespec tr = { .tv_nsec = fps60 - elapsed };
             nanosleep(&tr, NULL);
         }
-
+        LOG_GRAPHICS("Continuing after sleeping\n");
     } while (!end);
 
     LOG_GRAPHICS("Finish render loop\n");

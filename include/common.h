@@ -22,7 +22,7 @@
     do \
     { \
         fprintf(stderr, "%s:%d:%s: Error: "fmt, \
-        __FILE__, __LINE__, __func__, ##__VA_ARGS__); \
+            __FILE__, __LINE__, __func__, ##__VA_ARGS__); \
         exit(EXIT_FAILURE); \
     } while (0)
 

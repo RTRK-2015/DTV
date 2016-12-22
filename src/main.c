@@ -201,10 +201,10 @@ int main(int argc, char **argv)
     struct config_init_ch_info init_info = config_get_init_ch_info(f);
     selected_channel = init_info.ch_num;
 
-    // Start the graphics module and wait 2 seconds for DirectFB to set
+    // Start the graphics module and wait 3 seconds for DirectFB to set
     // its signal headers, so we can run them over.
     graphics_start_render(&argc, &argv);
-    sleep(2);
+    sleep(3);
 
     // Start the dtv module
     dtv_init(init_info);
@@ -228,6 +228,7 @@ int main(int argc, char **argv)
     gci.apid = init_info.apid;
     gci.teletext = true;
     gci.sdt = dtv_get_info(init_info.ch_num);
+    calculate_time();
     graphics_show_channel_info(gci);
     graphics_show_channel_number(init_info.ch_num);
 
